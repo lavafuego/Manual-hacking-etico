@@ -119,7 +119,7 @@ Approximate trip times:
 ## OTRAS FORMAS
 -traceroute:
 
-```BASH
+```bash
 traceroute <ip>
 ```
 ejemplo:
