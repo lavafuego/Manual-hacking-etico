@@ -125,7 +125,8 @@ traceroute <ip>
 ejemplo:
 ```bash
 traceroute 172.17.0.2
-```                                                                                                                                    
+```
+```                                                                                                                                   
 traceroute to 172.17.0.2 (172.17.0.2), 30 hops max, 60 byte packets
  1  172.17.0.2 (172.17.0.2)  0.156 ms  0.049 ms  0.037 ms
 ```
