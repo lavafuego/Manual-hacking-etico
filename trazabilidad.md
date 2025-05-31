@@ -50,7 +50,8 @@ min/avg/max: Todos iguales (0.112 ms), porque solo hiciste 1 intento.
 
 mdev: Desviación estándar (0.000 porque solo se envió un paquete).
 
-para nosotros lo importante es que aparezca
+## ------PARA NOSOTROS LO IMPORTANTE ES:---- 
+que aparezca
 ```
 1 packets transmitted, 1 received
 ```
