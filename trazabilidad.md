@@ -96,7 +96,12 @@ comprimimos
 ```
 uso:
 ```bash
-./tcping 172.17.0.2
+./tcping <ip>
+```
+
+EJEMPLO:
+```bash
+./tcping 172.17.0.2 
 ```
 ```
 Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=215.809µs dns=0s
@@ -110,3 +115,45 @@ Ping statistics tcp://172.17.0.2:80
 Approximate trip times:
         Minimum = 215.809µs, Maximum = 747.234µs, Average = 450.006µs%
 ```
+
+## OTRAS FORMAS
+-traceroute:
+
+```BASH
+traceroute <ip>
+```
+ejemplo:
+```bash
+traceroute 172.17.0.2
+```                                                                                                                                    
+traceroute to 172.17.0.2 (172.17.0.2), 30 hops max, 60 byte packets
+ 1  172.17.0.2 (172.17.0.2)  0.156 ms  0.049 ms  0.037 ms
+```
+
+-nmap
+
+```bash
+nmap -Pn <IP>
+```
+ejemplo:
+```bash
+nmap -Pn 172.17.0.2
+```
+```
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-05-31 13:05 EDT
+Nmap scan report for 172.17.0.2
+Host is up (0.0000070s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+MAC Address: 02:42:AC:11:00:02 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.37 seconds
+```
+-Pn evita que nmap use ping (ideal si ICMP está bloqueado).
+
+-También puedes usar nmap -sT para hacer escaneo TCP.
+
+
+
