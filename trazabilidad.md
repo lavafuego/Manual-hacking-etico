@@ -59,7 +59,10 @@ y no
 ```
 1 packets transmitted, 0 received
 ```
-ademas el ttl porque dependiendo de su valor sabremos que sistema opetativo corre:
+En esta segunda vemos 0 recived y eso nos indica que hemos mandado un paquete y no hemos
+recibido la respuesta, luego no tenemos trazabilidad con la máquina
+
+ademas también nos importa el valor del ttl porque dependiendo de su valor sabremos que sistema opetativo corre:
 ```bash
 | Sistema Operativo      | TTL Inicial Típico | TTL que Sueles Ver en Ping |
 |------------------------|--------------------|-----------------------------|
