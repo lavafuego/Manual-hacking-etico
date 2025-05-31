@@ -75,3 +75,38 @@ ademas también nos importa el valor del ttl porque dependiendo de su valor sabr
 | AIX                    | 64                 | 64                          |
 | HP-UX                  | 64                 | 64                          |
 ```
+
+## SI FALLA PING
+
+Hay otras opciones a ping, para ello clonamos el repositorio de tcping:
+```bash
+git clone https://github.com/cloverstd/tcping.git
+```
+entramos en la capeta crada
+```bash
+cd tcping
+```
+compilamos:
+```bash
+ go build -ldflags "-s -w" .
+```
+comprimimos
+```bash
+ upx brute tcping
+```
+uso:
+```bash
+./tcping 172.17.0.2
+```
+```
+Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=215.809µs dns=0s
+Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=747.234µs dns=0s
+Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=579.401µs dns=0s
+Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=257.58µs dns=0s
+
+Ping statistics tcp://172.17.0.2:80
+        4 probes sent.
+        4 successful, 0 failed.
+Approximate trip times:
+        Minimum = 215.809µs, Maximum = 747.234µs, Average = 450.006µs%
+```
