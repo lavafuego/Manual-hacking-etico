@@ -1,3 +1,14 @@
+# 📑 Índice de Contenidos
+
+- [🔍 Trazabilidad](#-trazabilidad)
+  - [📡 Usando ping](#-usando-ping)
+  - [📖 Interpretación de la salida](#-interpretación-de-la-salida)
+  - [🧠 Deducción del sistema operativo por TTL](#-deducción-del-sistema-operativo-por-ttl)
+  - [❌ ¿Ping no funciona?](#-ping-no-funciona)
+    - [🔁 tcping](#-tcping)
+  - [🌐 Otras herramientas](#-otras-herramientas)
+    - [🔍 traceroute](#-traceroute)
+    - [🛠️ nmap](#️-nmap)
 
 # 🔍 TRAZABILIDAD
 
