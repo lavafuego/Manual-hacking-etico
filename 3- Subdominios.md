@@ -7,7 +7,7 @@
     - [🔎 Port-Based](#-port-based)
     - [🔎 Name-Based](#-name-based)
   - [🚀 Fuzzing de Subdominios](#-fuzzing-de-subdominios)
-    - [Otras opciones útiles](#otras-opciones-utiles)
+    - [Otras opciones utiles](#otras-opciones-utiles)
 - [📚 DICCIONARIOS QUE RECOMIENDO](#-diccionarios-que-recomiendo)
   - [1. directory-list-2.3-medium.txt](#1-directory-list-23-mediumtxt)
   - [2. rockyou.txt](#2-rockyoutxt)
