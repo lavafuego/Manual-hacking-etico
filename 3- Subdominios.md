@@ -8,11 +8,12 @@
     - [🔎 Name-Based](#-name-based)
   - [🚀 Fuzzing de Subdominios](#-fuzzing-de-subdominios)
     - [🛠️ Otras opciones útiles](#-🛠️-otras-opciones-útiles)
-    - [💡 Alternativas con grep](#-alternativas-con-grep)
-  - [📚 Diccionarios Recomendados](#-diccionarios-recomendados)
-    - [directory-list-2.3-medium.txt](#directory-list-23-mediumtxt)
-    - [rockyou.txt](#rockyoutxt)
-    - [SecLists](#seclists)
+
+- [📚 DICCIONARIOS QUE RECOMIENDO](#-📚-diccionarios-que-recomiendo)
+  - [1. directory-list-2.3-medium.txt](#1-directory-list-2-3-mediumtxt)
+  - [2. rockyou.txt](#2-rockyoutxt)
+  - [3. SecLists](#3-seclists)
+
 
 
 ## 🔍 ENUMERACIÓN DE SUBDOMINIOS Y VIRTUAL HOSTING
