@@ -1,0 +1,13 @@
+## ❓ ¿Qué es hacer Fuzzing?
+
+Básicamente, **fuzzing** es utilizar un diccionario de palabras para descubrir rutas ocultas o interesantes dentro de una página web.
+
+Este proceso puede ayudarnos a encontrar:
+
+- Páginas de presentación
+- Paneles de registro o administración
+- Secciones de descargas
+- Rutas no documentadas o restringidas
+
+El fuzzing permite identificar rutas que quizás **no deberían ser visibles** o que contienen errores que podrían ser **explotables**.
+
