@@ -16,7 +16,7 @@
   - [🛠 Script alternativo en bash](#-si-no-funciona-el-scan-por-udp-ni-tcpip-podemos-usar-este-script)
 
  - [🔍 Nmap: Uso de Scripts para Detectar Vulnerabilidades](#-nmap-uso-de-scripts-para-detectar-vulnerabilidades)
-   - [🔎 Escaneo básico](#-escaneo-básico)
+   - [🔎 Escaneo básico](#-escaneo-básico-con)
    - [📋 Escaneo avanzado](#-escaneo-avanzado)
    - [🎯 Selección de scripts específicos](#-selección-de-scripts-específicos)
    - [📚 Scripts comunes](#-scripts-comunes)
