@@ -7,7 +7,7 @@
     - [🔎 Port-Based](#-port-based)
     - [🔎 Name-Based](#-name-based)
   - [🚀 Fuzzing de Subdominios](#-fuzzing-de-subdominios)
-    - [🛠️ Otras opciones útiles](#otras-opciones-utiles)
+    - [🛠️ Otras opciones útiles](#-otras-opciones)
 - [📚 DICCIONARIOS QUE RECOMIENDO](#-diccionarios-que-recomiendo)
   - [1. directory-list-2.3-medium.txt](#1-directory-list-23-mediumtxt)
   - [2. rockyou.txt](#2-rockyoutxt)
@@ -74,7 +74,7 @@ wfuzz -c --hc=404 -w <DICCIONARIO> -H "Host: FUZZ.DOMINIO" http://DOMINIO | tee 
 | `http://realgob.dl`          | Dominio base que responde al virtual host                                     |                                                                 |
 | \`                           | tee dominios\`                                                                | Guarda la salida en un archivo y también la muestra en pantalla |
 
-## 🛠️ Otras opciones útiles
+## 🛠️ Otras opciones
 
 -L → Sigue redirecciones
 
