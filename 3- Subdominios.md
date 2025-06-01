@@ -74,7 +74,7 @@ wfuzz -c --hc=404 -w <DICCIONARIO> -H "Host: FUZZ.DOMINIO" http://DOMINIO | tee 
 | `http://realgob.dl`          | Dominio base que responde al virtual host                                     |                                                                 |
 | \`                           | tee dominios\`                                                                | Guarda la salida en un archivo y también la muestra en pantalla |
 
-## Otras opciones útiles
+## 🛠️ Otras opciones útiles
 
 -L → Sigue redirecciones
 
