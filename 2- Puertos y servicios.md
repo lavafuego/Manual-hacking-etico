@@ -69,7 +69,7 @@ nmap [tipo de escaneo] [opciones] {objetivo(s)}
 
 ---
 
-## tipos de escaneo comunes
+## 🧪tipos de escaneo comunes
 
 | Opción | Descripción |
 |--------|-------------|
