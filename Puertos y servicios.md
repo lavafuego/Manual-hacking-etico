@@ -177,7 +177,7 @@ A continuación se muestran los puertos más comunes que suelen estar abiertos e
 **Nota:** Esta lista no es exhaustiva, pero cubre la mayoría de servicios usados en redes típicas.
 
 
-Si no funciona el scan por UDP ni TCP/IP podemos usar este script:
+🛠🛠🛠🛠Si no funciona el scan por UDP ni TCP/IP podemos usar este script:
 
 ```bash
 #!/bin/bash
