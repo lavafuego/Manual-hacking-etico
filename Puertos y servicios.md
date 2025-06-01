@@ -128,7 +128,7 @@ nmap -sU <IP> <puertos>
 #### 📌 Ejemplo:
 
 ```bash
-nmap -sU 172.17.0.2 --top-ports 100 -oN UDPscan
+nmap -sU 172.17.0.2 --top-ports=100 -oN UDPscan
 ```
 
 > ⚠️ **No se recomienda `-p-` con `-sU`** salvo que sea estrictamente necesario, por su lentitud.
@@ -136,3 +136,76 @@ nmap -sU 172.17.0.2 --top-ports 100 -oN UDPscan
 ---
 
 ✅ **Consejo final:** puedes combinar múltiples IPs, múltiples opciones de salida, escaneos mixtos TCP/UDP y más. Nmap es extremadamente potente si se domina bien.
+
+
+
+# 🔌 PUERTOS MÁS COMUNES Y SUS SERVICIOS
+
+A continuación se muestran los puertos más comunes que suelen estar abiertos en sistemas y redes, junto con los servicios típicos que corren en ellos.
+
+| Puerto | Protocolo | Servicio común        | Descripción                          |
+|--------|-----------|----------------------|------------------------------------|
+| 22     | TCP       | SSH                  | Secure Shell (acceso remoto seguro)|
+| 21     | TCP       | FTP                  | File Transfer Protocol             |
+| 23     | TCP       | Telnet               | Terminal remoto no seguro           |
+| 25     | TCP       | SMTP                 | Protocolo para envío de correo     |
+| 53     | TCP/UDP   | DNS                  | Resolución de nombres de dominio   |
+| 67     | UDP       | DHCP Server           | Asignación dinámica de IP           |
+| 68     | UDP       | DHCP Client           | Cliente DHCP                       |
+| 80     | TCP       | HTTP                 | Protocolo web sin cifrado          |
+| 110    | TCP       | POP3                 | Protocolo de correo para recibir   |
+| 119    | TCP       | NNTP                 | Protocolo para grupos de noticias  |
+| 123    | UDP       | NTP                  | Sincronización de tiempo           |
+| 143    | TCP       | IMAP                 | Protocolo de correo para recibir   |
+| 161    | UDP       | SNMP                 | Monitorización y gestión de red    |
+| 194    | TCP       | IRC                  | Chat en tiempo real                 |
+| 443    | TCP       | HTTPS                | HTTP seguro con TLS/SSL             |
+| 445    | TCP       | SMB                  | Compartición de archivos Windows   |
+| 465    | TCP       | SMTP (SSL)            | SMTP con cifrado SSL/TLS            |
+| 514    | UDP       | Syslog               | Envío de mensajes de sistema       |
+| 587    | TCP       | SMTP (Submission)     | Envío de correo con autenticación  |
+| 993    | TCP       | IMAPS                | IMAP con cifrado SSL/TLS            |
+| 995    | TCP       | POP3S                | POP3 con cifrado SSL/TLS            |
+| 3306   | TCP       | MySQL                | Base de datos MySQL                |
+| 3389   | TCP       | RDP                  | Escritorio remoto Windows          |
+| 5432   | TCP       | PostgreSQL           | Base de datos PostgreSQL           |
+| 5900   | TCP       | VNC                  | Control remoto de escritorios      |
+| 8080   | TCP       | HTTP-Alt             | Servidor HTTP alternativo           |
+
+---
+
+**Nota:** Esta lista no es exhaustiva, pero cubre la mayoría de servicios usados en redes típicas.
+
+
+Si no funciona el scan por UDP ni TCP/IP podemos usar este script:
+
+```bash
+#!/bin/bash
+# Escaneo básico de TODOS los puertos TCP (1-65535) usando /dev/tcp
+# Uso: ./scan_all_ports.sh <IP>
+
+trap ctrl_c INT
+
+function ctrl_c() {
+  echo -e "\n[!] Escaneo interrumpido por el usuario."
+  exit 1
+}
+
+if [ "$#" -ne 1 ]; then
+  echo "Uso: $0 <IP>"
+  exit 1
+fi
+
+IP=$1
+
+echo "Escaneando todos los puertos TCP en $IP (1-65535)... (Ctrl+C para detener)"
+
+for ((port=1; port<=65535; port++)); do
+  (echo > /dev/tcp/$IP/$port) >/dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "Puerto $port está abierto"
+  fi
+done
+
+echo "Escaneo completado."
+```
