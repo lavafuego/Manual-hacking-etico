@@ -88,7 +88,7 @@ Este es un diccionario muy utilizado para fuzzing de directorios y archivos.
 ```bash
 /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
-2. rockyou.txt
+### 2. rockyou.txt
 Este es uno de los diccionarios más famosos para ataques de fuerza bruta sobre contraseñas.
 
 Ruta típica (comprimido):
@@ -99,7 +99,7 @@ Para poder usar rockyou.txt, primero debes descomprimirlo:
 ```bash
 gunzip /usr/share/wordlists/rockyou.txt.gz
 ```
-3. SecLists
+### 3. SecLists
 SecLists es un repositorio muy completo de diccionarios para múltiples propósitos (subdominios, directorios, contraseñas, fuzzing, etc.).
 
 Para descargarlo:
