@@ -10,9 +10,10 @@
     - [🛠️ Otras opciones útiles](#-🛠️-otras-opciones-útiles)
 
 - [📚 DICCIONARIOS QUE RECOMIENDO](#-📚-diccionarios-que-recomiendo)
-  - [1. directory-list-2.3-medium.txt](#1-directory-list-2-3-mediumtxt)
+  - [1. directory-list-2.3-medium.txt](#1-directory-list-23-mediumtxt)
   - [2. rockyou.txt](#2-rockyoutxt)
   - [3. SecLists](#3-seclists)
+
 
 
 
