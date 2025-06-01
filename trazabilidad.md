@@ -1,18 +1,25 @@
-## TRAZABILIDAD
 
-Lo primero es comprobar la trazabilidad de nuestra máquina atacante con la victima
-para ello utilizaremos herramientas como "ping"
+# 🔍 TRAZABILIDAD
+
+El primer paso es comprobar la **conectividad (trazabilidad)** entre nuestra máquina atacante y la víctima. Esto nos asegura que existe comunicación entre ambas.
+
+## 📡 Usando `ping`
+
+`ping` envía paquetes ICMP para comprobar si un host está accesible. El parámetro `-c 1` indica que solo se enviará un paquete:
+
 ```bash
 ping -c 1 <IP>
 ```
-ping manda paquetes ICMP con "-c 1" manda un único paquete sin esta opción manda continuamente hasta que abortemos
 
-ejemplo de uso:
+### 📌 Ejemplo:
+
 ```bash
-ping -c 1 172.17.0.2 
+ping -c 1 172.17.0.2
 ```
-salida del comando:
-```
+
+### ✅ Resultado esperado:
+
+```bash
 PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
 64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.112 ms
 
@@ -20,127 +27,127 @@ PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 0.112/0.112/0.112/0.000 ms
 ```
--¿Cómo leer los resultados?
-```
-PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
-```
--En esta parte te dice que manda un paquete ICMP de 56 bytes que con encabezado se convierte en 84
-```
-64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.112 ms
-```
-Recibiste una respuesta desde esa IP.
 
-icmp_seq=1: Es el número de secuencia del paquete ICMP (como un ID).
+## 📖 Interpretación de la salida
 
-ttl=64: "Time to Live", evita bucles infinitos. El valor 64 es típico de sistemas Linux.
+- `56(84) bytes of data`: Se envían 56 bytes de datos; con encabezado IP e ICMP, son 84.
+- `64 bytes from ...`: Se recibió respuesta desde la IP.
+- `icmp_seq=1`: Número de secuencia del paquete (útil para identificar paquetes).
+- `ttl=64`: "Time to Live". Evita bucles infinitos. El valor también da pistas sobre el sistema operativo.
+- `time=0.112 ms`: Tiempo ida y vuelta (RTT), muy bajo en redes locales.
 
-time=0.112 ms: El tiempo que tardó en ir y volver el paquete (muy rápido: 0.112 milisegundos, lo que indica conexión local o de red muy cercana).
-```bash
---- 172.17.0.2 ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 0.112/0.112/0.112/0.000 ms
-```
-1 transmitted, 1 received: El paquete fue enviado y recibido correctamente.
+### ✅ Lo importante:
 
-0% packet loss: No hubo pérdida de paquetes, lo cual es perfecto.
+Nos interesa ver:
 
-rtt: Round Trip Time (tiempo ida y vuelta).
-
-min/avg/max: Todos iguales (0.112 ms), porque solo hiciste 1 intento.
-
-mdev: Desviación estándar (0.000 porque solo se envió un paquete).
-
-## ------PARA NOSOTROS LO IMPORTANTE ES:---- 
-que aparezca
 ```
 1 packets transmitted, 1 received
 ```
-y no
+
+Y **NO**:
+
 ```
 1 packets transmitted, 0 received
 ```
-En esta segunda vemos 0 recived y eso nos indica que hemos mandado un paquete y no hemos
-recibido la respuesta, luego no tenemos trazabilidad con la máquina
 
-ademas también nos importa el valor del ttl porque dependiendo de su valor sabremos que sistema opetativo corre:
-```bash
-| Sistema Operativo      | TTL Inicial Típico | TTL que Sueles Ver en Ping |
-|------------------------|--------------------|-----------------------------|
-| Linux / Unix           | 64                 | 64                          |
-| macOS                  | 64                 | 64                          |
-| Windows (todas)        | 128                | 128                         |
-| Cisco (routers/switch) | 255                | 255                         |
-| Solaris                | 255                | 255                         |
-| FreeBSD / OpenBSD      | 64                 | 64                          |
-| AIX                    | 64                 | 64                          |
-| HP-UX                  | 64                 | 64                          |
-```
+Lo segundo indica que el paquete no tuvo respuesta, por tanto **no hay trazabilidad**.
 
-## SI FALLA PING
+---
 
-Hay otras opciones a ping, para ello clonamos el repositorio de tcping:
+## 🧠 Deducción del sistema operativo por TTL
+
+| Sistema Operativo      | TTL Típico |
+|------------------------|------------|
+| Linux / macOS / BSD    | 64         |
+| Windows                | 128        |
+| Cisco / Solaris        | 255        |
+
+---
+
+## ❌ ¿Ping no funciona?
+
+Si ICMP está bloqueado, hay alternativas:
+
+### 🔁 `tcping`
+
+Permite realizar "ping" a través de TCP (por defecto al puerto 80).
+
+### 🔧 Instalación:
+
 ```bash
 git clone https://github.com/cloverstd/tcping.git
-```
-entramos en la capeta crada
-```bash
 cd tcping
-```
-compilamos:
-```bash
- go build -ldflags "-s -w" .
-```
-comprimimos
-```bash
- upx brute tcping
-```
-uso:
-```bash
-./tcping <ip>
+go build -ldflags "-s -w" .
+upx brute tcping
 ```
 
-EJEMPLO:
+### ▶️ Uso:
+
 ```bash
-./tcping 172.17.0.2 
+./tcping <IP>
 ```
+
+### 📌 Ejemplo:
+
+```bash
+./tcping 172.17.0.2
 ```
-Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=215.809µs dns=0s
-Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=747.234µs dns=0s
-Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=579.401µs dns=0s
-Ping tcp://172.17.0.2:80(172.17.0.2:80) connected - time=257.58µs dns=0s
+
+### 📈 Resultado:
+
+```bash
+Ping tcp://172.17.0.2:80 connected - time=215.809µs dns=0s
+Ping tcp://172.17.0.2:80 connected - time=747.234µs dns=0s
+Ping tcp://172.17.0.2:80 connected - time=579.401µs dns=0s
+Ping tcp://172.17.0.2:80 connected - time=257.580µs dns=0s
 
 Ping statistics tcp://172.17.0.2:80
         4 probes sent.
         4 successful, 0 failed.
 Approximate trip times:
-        Minimum = 215.809µs, Maximum = 747.234µs, Average = 450.006µs%
+        Minimum = 215.809µs, Maximum = 747.234µs, Average = 450.006µs
 ```
 
-## OTRAS FORMAS
--traceroute:
+---
+
+## 🌐 Otras herramientas
+
+### 🔍 `traceroute`
+
+Muestra los saltos que da un paquete hasta su destino:
 
 ```bash
-traceroute <ip>
+traceroute <IP>
 ```
-ejemplo:
+
+#### Ejemplo:
+
 ```bash
 traceroute 172.17.0.2
 ```
-```                                                                                                                                   
+
+```bash
 traceroute to 172.17.0.2 (172.17.0.2), 30 hops max, 60 byte packets
  1  172.17.0.2 (172.17.0.2)  0.156 ms  0.049 ms  0.037 ms
 ```
 
--nmap
+---
+
+### 🛠️ `nmap`
+
+Detecta si el host está activo y qué puertos tiene abiertos. La opción `-Pn` evita que se use ICMP:
 
 ```bash
 nmap -Pn <IP>
 ```
-ejemplo:
+
+#### Ejemplo:
+
 ```bash
 nmap -Pn 172.17.0.2
 ```
-```
+
+```bash
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-05-31 13:05 EDT
 Nmap scan report for 172.17.0.2
 Host is up (0.0000070s latency).
@@ -152,9 +159,6 @@ MAC Address: 02:42:AC:11:00:02 (Unknown)
 
 Nmap done: 1 IP address (1 host up) scanned in 0.37 seconds
 ```
--Pn evita que nmap use ping (ideal si ICMP está bloqueado).
-
--También puedes usar nmap -sT para hacer escaneo TCP.
 
 
 
