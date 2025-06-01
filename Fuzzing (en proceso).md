@@ -141,5 +141,5 @@ Wfuzz probará combinaciones como estas:
 http://<URL>/admin.php
 http://<URL>/login.txt
 http://<URL>/index.php
-
+```
 Esta técnica es muy útil para descubrir archivos con distintas extensiones en un servidor web.
