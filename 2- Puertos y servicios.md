@@ -17,7 +17,7 @@
 
  - [🔍 Nmap: Uso de Scripts para Detectar Vulnerabilidades](#-nmap-uso-de-scripts-para-detectar-vulnerabilidades)
    - [🔎 Escaneo básico](#escaneo-básico-con-scripts-de-vulnerabilidades)
-   - [📋 Escaneo avanzado](#-escaneo-avanzado)
+   - [📋 Escaneo avanzado](#escaneo-avanzado-todos-los-puertos--scripts--detección-de-so-y-versiones)
    - [🎯 Selección de scripts específicos](#-selección-de-scripts-específicos)
    - [📚 Scripts comunes](#-scripts-comunes)
    - [📂 Ver scripts disponibles](#-ver-scripts-disponibles)
