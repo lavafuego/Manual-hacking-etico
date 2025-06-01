@@ -136,10 +136,10 @@ FUZ2Z: marcador para la segunda lista (extensiones).
 
 Wfuzz probará combinaciones como:
 
-http://<URL>/admin.php
+ http://<URL>/admin.php
 
-http://<URL>/login.txt
+ http://<URL>/login.txt
 
-http://<URL>/index.php
+ http://<URL>/index.php
 
 Esta técnica es muy útil para descubrir archivos con distintas extensiones en un servidor web.
