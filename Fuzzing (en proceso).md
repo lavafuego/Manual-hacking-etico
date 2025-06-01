@@ -2,7 +2,9 @@
 - [❓ ¿Qué es hacer Fuzzing?](#qué-es-hacer-fuzzing)
 - [🛠 Herramientas para Fuzzing](#herramientas-para-fuzzing)
   - [🔹 Feroxbuster](#feroxbuster)
-
+  - [🔹 WFUZZ](#wfuzz)
+   - [🔹Códigos de estado comunes](#codigos-comunes)
+   - [📖wfuzz-Doble patrón](#doble-patron)
 ---
 <a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
@@ -61,3 +63,83 @@ Para usar con Burp Suite como proxy:
 ```bash
 feroxbuster -u http://127.0.0.1 --insecure --proxy http://127.0.0.1:8080
 ```
+
+<a name="wfuzz"></a>
+
+### Wfuzz
+
+otra herramienta de las más conocidas es wfuzz, su funcionamiento es sencillo:
+
+```bash
+wfuzz -w [DICCIONARIO] [URL VICTIMA]/FUZZ
+```
+Básicamente lo que hace es susttuir las palabras del diccionario en la palabra FUZZ
+y mediante el código de estado sabremos si existe o no
+
+<a name="codigos-comunes"></a>
+## 📄 Códigos de Estado HTTP Comunes
+
+| Código | Significado                      | Descripción breve                                     |
+|--------|---------------------------------|------------------------------------------------------|
+| 200    | OK                              | La solicitud ha sido procesada correctamente.        |
+| 301    | Moved Permanently               | La URL solicitada ha sido movida permanentemente.    |
+| 302    | Found (Redirección temporal)   | La URL solicitada ha sido movida temporalmente.      |
+| 400    | Bad Request                    | La solicitud no pudo ser entendida por el servidor.  |
+| 401    | Unauthorized                   | Se requiere autenticación para acceder al recurso.   |
+| 403    | Forbidden                     | El servidor entendió la solicitud, pero se niega a cumplirla. |
+| 404    | Not Found                     | El recurso solicitado no se encontró en el servidor. |
+| 500    | Internal Server Error          | Error interno del servidor.                           |
+| 502    | Bad Gateway                   | El servidor actuó como gateway y recibió una respuesta inválida. |
+| 503    | Service Unavailable           | El servidor no está disponible temporalmente.        |
+| 504    | Gateway Timeout               | Tiempo de espera agotado para una respuesta del gateway. |
+
+---
+
+siguiendo con wfuzz aquí os dejo las opciones más comunes
+## ⚙️ Opciones Comunes de Wfuzz
+
+| Opción          | Descripción                                                       | Ejemplo                                      |
+|-----------------|-------------------------------------------------------------------|----------------------------------------------|
+| `-z <modo>`     | Modo de generación de payloads (por ejemplo: `file`, `range`)    | `-z file,wordlist.txt`                        |
+| `-c`            | Colorea la salida para mejor visualización                        | `-c`                                          |
+| `--hc <códigos>`| Oculta respuestas con códigos HTTP específicos (ej: 404, 500)    | `--hc 404,500`                                |
+| `-l`            | Muestra la longitud de la respuesta                               | `-l`                                          |
+| `-w <archivo>`  | Diccionario o wordlist para fuzzing                               | `-w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt` |
+| `-u <URL>`      | URL objetivo con el punto de inyección marcado con `FUZZ`        | `-u http://example.com/FUZZ`                  |
+| `-H <header>`   | Añade encabezados HTTP personalizados                             | `-H "Authorization: Bearer token123"`         |
+| `--hh <longitud>` | Oculta respuestas con longitud específica                       | `--hh 100`                                    |
+| `--hw <palabras>` | Oculta respuestas con número específico de palabras             | `--hw 10`                                     |
+| `--hl <líneas>` | Oculta respuestas con cierta cantidad de líneas                  | `--hl 20`                                     |
+
+---
+
+### Ejemplo básico:
+
+```bash
+wfuzz -c --hc 404 -w wordlist.txt -u http://example.com/FUZZ
+```
+<a name="doble-patron"></a>
+### Opción: Fuzzing con doble patrón (ruta + extensión)
+
+Wfuzz permite hacer fuzzing en dos partes de la URL simultáneamente. Por ejemplo, puedes probar rutas y combinarlas con distintas extensiones para encontrar archivos específicos.
+
+El comando usa dos marcadores `FUZZ` y `FUZ2Z` en la URL para indicar los dos lugares donde se aplicará fuzzing, y la opción `-z list,php-txt` indica que se usan dos listas diferentes: una para las rutas y otra para las extensiones.
+
+```bash
+wfuzz -z list,php-txt http://<URL>/FUZZ.FUZ2Z
+```
+-z list,php-txt: la primera lista (por ejemplo, nombres de archivos o carpetas) y la segunda lista con las extensiones (php, txt, etc.).
+
+FUZZ: marcador para la primera lista (rutas).
+
+FUZ2Z: marcador para la segunda lista (extensiones).
+
+Wfuzz probará combinaciones como:
+
+http://<URL>/admin.php
+
+http://<URL>/login.txt
+
+http://<URL>/index.php
+
+Esta técnica es muy útil para descubrir archivos con distintas extensiones en un servidor web.
