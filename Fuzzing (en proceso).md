@@ -130,16 +130,16 @@ wfuzz -z list,php-txt http://<URL>/FUZZ.FUZ2Z
 ```
 -z list,php-txt: la primera lista (por ejemplo, nombres de archivos o carpetas) y la segunda lista con las extensiones (php, txt, etc.).
 
-FUZZ: marcador para la primera lista (rutas).
+**FUZZ:** marcador para la primera lista (rutas).  
+**FUZ2Z:** marcador para la segunda lista (extensiones).
 
-FUZ2Z: marcador para la segunda lista (extensiones).
+---
 
-Wfuzz probará combinaciones como:
+Wfuzz probará combinaciones como estas:
 
- http://<URL>/admin.php
-
- http://<URL>/login.txt
-
- http://<URL>/index.php
+```plaintext
+http://<URL>/admin.php
+http://<URL>/login.txt
+http://<URL>/index.php
 
 Esta técnica es muy útil para descubrir archivos con distintas extensiones en un servidor web.
