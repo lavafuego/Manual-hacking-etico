@@ -240,7 +240,7 @@ echo "Escaneo completado."
 
 # 🔍 NMAP: Uso de Scripts para Detectar Vulnerabilidades
 
-# Escaneo básico con scripts de vulnerabilidades
+## Escaneo básico con scripts de vulnerabilidades
 nmap --script vuln IP_O_HOST
 # --script vuln: ejecuta todos los scripts relacionados con vulnerabilidades conocidas.
 # IP_O_HOST: dirección IP o nombre del host objetivo.
