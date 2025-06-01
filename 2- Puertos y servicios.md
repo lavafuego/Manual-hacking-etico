@@ -223,27 +223,39 @@ nmap --script vuln 172.17.0.2
 
 # Escaneo avanzado: todos los puertos + scripts + detección de SO y versiones
 sudo nmap -p- -sV -O --script vuln IP_O_HOST -oN archivo_de_salida
-# -p-: escanea todos los 65535 puertos.
-# -sV: detecta versiones de servicios.
-# -O: detecta sistema operativo.
-# --script vuln: ejecuta scripts de vulnerabilidades.
-# -oN archivo_de_salida: guarda la salida en un archivo.
+-p-: escanea todos los 65535 puertos.
+
+-sV: detecta versiones de servicios.
+
+-O: detecta sistema operativo.
+
+--script vuln: ejecuta scripts de vulnerabilidades.
+
+-oN archivo_de_salida: guarda la salida en un archivo.
 
 # Selección de scripts específicos
+```bash
 nmap --script smb-vuln* IP_O_HOST
+```
 # Ejemplo para buscar vulnerabilidades SMB.
 
-# Scripts comunes para vulnerabilidades:
-# http-vuln*   Busca vulnerabilidades en servicios HTTP
-# smb-vuln*    Escanea vulnerabilidades SMB
-# ftp-vuln*    Escanea vulnerabilidades FTP
-# ssl*        Escanea problemas en configuraciones SSL/TLS
+ Scripts comunes para vulnerabilidades:
+http-vuln*   Busca vulnerabilidades en servicios HTTP
+
+smb-vuln*    Escanea vulnerabilidades SMB
+
+ftp-vuln*    Escanea vulnerabilidades FTP
+
+ssl*        Escanea problemas en configuraciones SSL/TLS
 
 # Consultar scripts disponibles
+```bash
 ls /usr/share/nmap/scripts/
-# O para filtrar scripts relacionados con vulnerabilidades:
+```
+ O para filtrar scripts relacionados con vulnerabilidades:
+```bash
 ls /usr/share/nmap/scripts/ | grep vuln
-
+```
 # Escaneo detallado con verbosity máxima
 sudo nmap -p- -sV -O --script vuln -vvv IP_O_HOST
 # -vvv: nivel máximo de verbosity para más detalles en la salida.
