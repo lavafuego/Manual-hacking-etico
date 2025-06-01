@@ -75,3 +75,35 @@ wfuzz -c --hc=404 -w <DICCIONARIO> -H "Host: FUZZ.DOMINIO" http://DOMINIO | tee 
 gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|404"
 ```
 
+# 📚 DICCIONARIOS QUE RECOMIENDO
+
+---
+
+### 1. directory-list-2.3-medium.txt
+
+Este es un diccionario muy utilizado para fuzzing de directorios y archivos.
+
+**Ruta típica:**
+
+```bash
+/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+
+2. rockyou.txt
+Este es uno de los diccionarios más famosos para ataques de fuerza bruta sobre contraseñas.
+
+Ruta típica (comprimido):
+```bash
+/usr/share/wordlists/rockyou.txt.gz
+```
+Para poder usar rockyou.txt, primero debes descomprimirlo:
+```bash
+gunzip /usr/share/wordlists/rockyou.txt.gz
+```
+3. SecLists
+SecLists es un repositorio muy completo de diccionarios para múltiples propósitos (subdominios, directorios, contraseñas, fuzzing, etc.).
+
+Para descargarlo:
+```bash
+git clone https://github.com/danielmiessler/SecLists.git
+```
+
