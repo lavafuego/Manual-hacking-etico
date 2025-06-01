@@ -14,6 +14,7 @@
   - [🌐 Escaneo UDP con Nmap](#-escaneo-udp-con-nmap)
   - [🔌 Puertos más comunes y sus servicios](#-puertos-más-comunes-y-sus-servicios)
   - [🛠 Script alternativo en bash](#-🛠-si-no-funciona-el-scan-por-udp-ni-tcpip-podemos-usar-este-script)
+
  - [🔍 Nmap: Uso de Scripts para Detectar Vulnerabilidades](#-nmap-uso-de-scripts-para-detectar-vulnerabilidades)
    - [🔎 Escaneo básico](#-escaneo-básico)
    - [📋 Escaneo avanzado](#-escaneo-avanzado)
