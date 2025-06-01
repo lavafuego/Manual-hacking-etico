@@ -57,7 +57,7 @@ Más difícil. Se alojan en la misma IP y puerto (`80` o `443`), diferenciándos
     DocumentRoot /var/www/ejemplo2
 </VirtualHost>
 ```
-🚀 FUZZING DE SUBDOMINIOS
+## 🚀 FUZZING DE SUBDOMINIOS
 Una vez que sospechamos que hay Virtual Hosts, podemos detectarlos con herramientas de fuzzing de subdominios como wfuzz y gobuster.
 ```bash
 wfuzz -c --hc=404 -w <DICCIONARIO> -H "Host: FUZZ.DOMINIO" http://DOMINIO | tee dominios
