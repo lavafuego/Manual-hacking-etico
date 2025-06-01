@@ -5,7 +5,7 @@
   - [🔰 Uso básico](#-uso-básico)
   - [⚠️ Nota sobre puertos](#️-nota-sobre-puertos)
   - [🔍 Estructura del comando Nmap](#-estructura-del-comando-nmap)
-  - [🧪 tipos de escaneo comunes](🧪-tipos-de-escaneo-comunes)
+  - [🧪 tipos de escaneo comunes](#-tipos-de-escaneo-comunes)
   - [🎯 Rango de puertos](#-rango-de-puertos)
   - [⚙️ Opciones útiles](#️-opciones-útiles)
   - [🔌 Detección de servicios](#-detección-de-servicios)
