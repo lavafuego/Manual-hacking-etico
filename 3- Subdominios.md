@@ -87,7 +87,7 @@ Este es un diccionario muy utilizado para fuzzing de directorios y archivos.
 
 ```bash
 /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
-
+```
 2. rockyou.txt
 Este es uno de los diccionarios más famosos para ataques de fuerza bruta sobre contraseñas.
 
