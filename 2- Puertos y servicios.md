@@ -1,3 +1,30 @@
+# 📑 Índice de Contenidos
+
+- [🔍 Puertos Abiertos y Servicios Asociados](#-puertos-abiertos-y-servicios-asociados)
+  - [🛠 Herramienta principal: Nmap](#-herramienta-principal-nmap)
+  - [🔰 Uso básico](#-uso-básico)
+  - [⚠️ Nota sobre puertos](#️-nota-sobre-puertos)
+  - [🔍 Estructura del comando Nmap](#-estructura-del-comando-nmap)
+  - [🧪 Tipos de escaneo comunes](#-tipos-de-escaneo-comunes)
+  - [🎯 Rango de puertos](#-rango-de-puertos)
+  - [⚙️ Opciones útiles](#️-opciones-útiles)
+  - [🔌 Detección de servicios](#-detección-de-servicios)
+  - [💾 Guardar la salida](#-guardar-la-salida)
+  - [✅ Comando recomendado (CTF tested)](#-comando-recomendado-ctf-tested)
+  - [🌐 Escaneo UDP con Nmap](#-escaneo-udp-con-nmap)
+  - [🔌 Puertos más comunes y sus servicios](#-puertos-más-comunes-y-sus-servicios)
+  - [🛠 Script alternativo en Bash](#-script-alternativo-en-bash)
+
+- [🔍 Nmap: Uso de Scripts para Detectar Vulnerabilidades](#-nmap-uso-de-scripts-para-detectar-vulnerabilidades)
+  - [🔎 Escaneo básico](#-escaneo-básico)
+  - [📋 Escaneo avanzado](#-escaneo-avanzado)
+  - [🎯 Selección de scripts específicos](#-selección-de-scripts-específicos)
+  - [📚 Scripts comunes](#-scripts-comunes)
+  - [📂 Ver scripts disponibles](#-ver-scripts-disponibles)
+  - [🗣 Escaneo con verbosity](#-escaneo-con-verbosity)
+
+
+
 # 🔍 PUERTOS ABIERTOS Y SERVICIOS ASOCIADOS
 
 Para poder acceder a una máquina vulnerable, es fundamental conocer qué puertos tiene abiertos y qué servicios están corriendo en ellos. Esto nos permite identificar posibles puntos de entrada aprovechando vulnerabilidades.
