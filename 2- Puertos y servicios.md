@@ -211,7 +211,7 @@ echo "Escaneo completado."
 ```
 
 
-# 🔍 NMAP: Uso de Scripts para Detectar Vulnerabilidades
+🔍 NMAP: Uso de Scripts para Detectar Vulnerabilidades
 
 # Escaneo básico con scripts de vulnerabilidades
 nmap --script vuln <IP/O_HOST>
