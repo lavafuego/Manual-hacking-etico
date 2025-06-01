@@ -211,42 +211,46 @@ echo "Escaneo completado."
 ```
 
 
-🔍 NMAP: Uso de Scripts para Detectar Vulnerabilidades
+# 🔍 NMAP: Uso de Scripts para Detectar Vulnerabilidades
 
 # Escaneo básico con scripts de vulnerabilidades
-nmap --script vuln <IP/O_HOST>
-# --script vuln: ejecuta todos los scripts relacionados con vulnerabilidades conocidas.
-# <IP/O_HOST>: dirección IP o nombre del host objetivo.
+nmap --script vuln IP_O_HOST
+** --script vuln: ejecuta todos los scripts relacionados con vulnerabilidades conocidas.
+** IP_O_HOST: dirección IP o nombre del host objetivo.
 
 # Ejemplo:
 nmap --script vuln 172.17.0.2
 
-# Escaneo avanzado: todos los puertos + scripts + detección de SO y versiones
-sudo nmap -p- -sV -O --script vuln <IP/HOST> -oN archivo_de_salida
-# -p-: escanea todos los 65535 puertos.
-# -sV: detecta versiones de servicios.
-# -O: detecta sistema operativo.
-# --script vuln: ejecuta scripts de vulnerabilidades.
-# -oN archivo_de_salida: guarda la salida en un archivo.
+** Escaneo avanzado: todos los puertos + scripts + detección de SO y versiones
+```bash
+sudo nmap -p- -sV -O --script vuln IP_O_HOST -oN archivo_de_salida
+```
+** -p-: escanea todos los 65535 puertos.
+** -sV: detecta versiones de servicios.
+** -O: detecta sistema operativo.
+** --script vuln: ejecuta scripts de vulnerabilidades.
+** -oN archivo_de_salida: guarda la salida en un archivo.
 
-# Selección de scripts específicos
-nmap --script smb-vuln* <IP/HOST>
-# Ejemplo para buscar vulnerabilidades SMB.
+** Selección de scripts específicos
+```bash
+nmap --script smb-vuln* IP_O_HOST
+```
+** Ejemplo para buscar vulnerabilidades SMB.
 
-# Scripts comunes para vulnerabilidades:
-# http-vuln*   Busca vulnerabilidades en servicios HTTP
-# smb-vuln*    Escanea vulnerabilidades SMB
-# ftp-vuln*    Escanea vulnerabilidades FTP
-# ssl*        Escanea problemas en configuraciones SSL/TLS
+** Scripts comunes para vulnerabilidades:
+** http-vuln*   Busca vulnerabilidades en servicios HTTP
+** smb-vuln*    Escanea vulnerabilidades SMB
+** ftp-vuln*    Escanea vulnerabilidades FTP
+** ssl*        Escanea problemas en configuraciones SSL/TLS
 
-# Consultar scripts disponibles
+** Consultar scripts disponibles
 ls /usr/share/nmap/scripts/
-# O para filtrar scripts relacionados con vulnerabilidades:
+** O para filtrar scripts relacionados con vulnerabilidades:
+```bash
 ls /usr/share/nmap/scripts/ | grep vuln
-
-# Escaneo detallado con verbosity máxima
-sudo nmap -p- -sV -O --script vuln -vvv <IP/HOST>
-# -vvv: nivel máximo de verbosity para más detalles en la salida.
-
-
-
+```
+** Escaneo detallado con verbosity máxima
+```bash
+sudo nmap -p- -sV -O --script vuln -vvv IP_O_HOST
+```
+** -vvv: nivel máximo de verbosity para más detalles en la salida.
