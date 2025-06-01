@@ -4,7 +4,7 @@
   - [🔹 Feroxbuster](#feroxbuster)
 
 ---
-
+<a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
 
 Básicamente, **fuzzing** es utilizar un diccionario de palabras para descubrir rutas ocultas o interesantes dentro de una página web.
@@ -19,9 +19,9 @@ Este proceso puede ayudarnos a encontrar:
 El fuzzing permite identificar rutas que quizás **no deberían ser visibles** o que contengan errores que podrían ser **explotables**.
 
 ---
-
+<a name="herramientas-para-fuzzing"></a>
 ## 🛠 Herramientas para Fuzzing
-
+<a name="feroxbuster"></a>
 ### 🔹 Feroxbuster
 
 #### 📦 Instalación
