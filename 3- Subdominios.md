@@ -1,3 +1,20 @@
+# 📑 Índice de Contenidos
+
+- [🔍 Enumeración de Subdominios y Virtual Hosting](#-enumeración-de-subdominios-y-virtual-hosting)
+  - [❓ ¿Qué es el Virtual Hosting?](#-qué-es-el-virtual-hosting)
+  - [🧠 ¿Cómo detectarlo?](#-cómo-detectarlo)
+    - [🔎 IP-Based](#-ip-based)
+    - [🔎 Port-Based](#-port-based)
+    - [🔎 Name-Based](#-name-based)
+  - [🚀 Fuzzing de Subdominios](#-fuzzing-de-subdominios)
+    - [🛠️ Opciones útiles para wfuzz y gobuster](#️-opciones-útiles-para-wfuzz-y-gobuster)
+    - [💡 Alternativas con grep](#-alternativas-con-grep)
+  - [📚 Diccionarios Recomendados](#-diccionarios-recomendados)
+    - [directory-list-2.3-medium.txt](#directory-list-23-mediumtxt)
+    - [rockyou.txt](#rockyoutxt)
+    - [SecLists](#seclists)
+
+
 ## 🔍 ENUMERACIÓN DE SUBDOMINIOS Y VIRTUAL HOSTING
 
 Durante la fase de enumeración, una parte crítica es la búsqueda de **subdominios**, ya que pueden revelar servicios ocultos o vías alternativas de intrusión. Para ello, debemos entender primero qué es el virtual hosting y cómo detectarlo.
