@@ -166,5 +166,6 @@ posteriormente cuando vayamos encontrando subdominios los iremos añadiendo cons
 192.168.1.100 git.miempresa.com dev.git.miempresa.com staging.git.miempresa.com ci.git.miempresa.com
 ```
 ⚠️ Recuerda que /etc/hosts no acepta comodines como *.git.miempresa.com, así que cada subdominio debe añadirse manualmente.
-⚠️⚠️⚠️ Importante en un CTF añadir dominios y subdominios al /etc/hosts para que resuelva correctamente cuando apuntamos a esas páginas
+
+### ⚠️⚠️⚠️ Importante en un CTF añadir dominios y subdominios al /etc/hosts para que resuelva correctamente cuando apuntamos a esas páginas
 
