@@ -174,3 +174,27 @@ Este comando hará fuzzeo en:
     - http://example.com/admin/panel/FUZZ, etc., hasta 3 niveles de profundidad.
 
 ⚠️ Ten en cuenta que a mayor profundidad, mayor será la cantidad de peticiones, por lo tanto puede afectar el rendimiento o ser más detectable.
+
+## fuzzeo autentificado, opciones de cabecera
+
+Algunas veces solo tendremos acceso a partes de la página estando logeados como usuario, para ello debemos hacerlo desde la propia herramienta 
+
+de fuzzin, con wfuzz,Para hacer fuzz autenticado con Wfuzz usando una cookie de sesión, simplemente debes añadir la cabecera Cookie: en la opción -H (header).
+
+Esto es útil cuando ya te has logueado (por ejemplo, en el navegador o con Burp) y copias tu cookie de sesión para tener acceso a rutas que sólo están disponibles para usuarios autenticados.
+```bash
+wfuzz -c -w wordlist.txt -u http://target.com/FUZZ -H "Cookie: SESSION=valor"
+```
+🧪 Ejemplo real:
+Supongamos que tienes esta cookie después de loguearte:
+```
+SESSIONID=abcd1234xyz
+```
+Entonces el comando sería:
+```bash
+-H "Cookie: SESSIONID=abcd1234xyz" -H "User-Agent: Wfuzz"
+```
+
+-Si usas Burp Suite, puedes copiar toda la cabecera de cookies directamente desde una petición ya autenticada y pegarla en Wfuzz.
+
+-También puedes usar el flag --hh para filtrar por tamaño de respuesta (útil para detectar páginas válidas aunque devuelvan 200).
