@@ -6,6 +6,7 @@
     - [🔹Códigos de estado comunes](#codigos-comunes)
     - [📖wfuzz-Doble patrón](#doble-patron)
     - [📖Fuzzeo por niveles con Wfuzz](#fuzz-niveles)
+    - [📖fuzzeo autentificado, opciones de cabecera](#aut-cabezera)
 ---
 <a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
@@ -175,6 +176,7 @@ Este comando hará fuzzeo en:
 
 ⚠️ Ten en cuenta que a mayor profundidad, mayor será la cantidad de peticiones, por lo tanto puede afectar el rendimiento o ser más detectable.
 
+<a name="aut-cabezera"></a>
 ## fuzzeo autentificado, opciones de cabecera
 
 Algunas veces solo tendremos acceso a partes de la página estando logeados como usuario, para ello debemos hacerlo desde la propia herramienta 
