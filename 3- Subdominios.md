@@ -12,7 +12,7 @@
   - [1. directory-list-2.3-medium.txt](#1-directory-list-23-mediumtxt)
   - [2. rockyou.txt](#2-rockyoutxt)
   - [3. SecLists](#3-seclists)
-
+- [🛠️ archivo /etc/hosts](#etc-hosts)
 
 
 
@@ -129,4 +129,40 @@ Para descargarlo:
 ```bash
 git clone https://github.com/danielmiessler/SecLists.git
 ```
+<a name="etc-hosts"></a>
+## 🛠️ Redirección de subdominios Git usando /etc/hosts
 
+📌 ¿Por qué modificar /etc/hosts para subdominios?  
+Cuando trabajas con Git y entornos divididos por subdominios, puede ser útil redirigir esos subdominios manualmente, por ejemplo:
+
+- dev.git.miempresa.com → entorno de desarrollo  
+- staging.git.miempresa.com → entorno de pruebas  
+- ci.git.miempresa.com → servidor de integración continua  
+
+Para lo que a nosotros nos importa es que cuando tenemos una IP víctima y detectamos un dominio, lo
+primero es añadirlo al /etc/hosts para que cuando apuntemos al subdominio nos abra correctamente la 
+página entre otras cosas.
+
+📎 Esto también es útil en pruebas de pentesting o laboratorios cuando el dominio no resuelve por DNS.
+
+---
+
+🛠️ **¿Cómo modificarlo?**
+
+lo abriremos con nano o un editor de texto:
+```bash
+sudo nano /etc/hosts
+```
+y añadiremos una línea al final de la siguiente forma:
+```bash
+<IP>  <DOMINIO>
+```
+posteriormente cuando vayamos encontrando subdominios los iremos añadiendo consecutivamente:
+```bash
+<IP> <DOMINIO> <SUBDOMINIO> <SUBDOMINIO>
+```
+📌 Ejemplo:
+```
+192.168.1.100 git.miempresa.com dev.git.miempresa.com staging.git.miempresa.com ci.git.miempresa.com
+```
+⚠️ Recuerda que /etc/hosts no acepta comodines como *.git.miempresa.com, así que cada subdominio debe añadirse manualmente.
