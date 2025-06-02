@@ -143,3 +143,32 @@ http://<URL>/login.txt
 http://<URL>/index.php
 ```
 Esta técnica es muy útil para descubrir archivos con distintas extensiones en un servidor web.
+
+## 🔍 Fuzzeo por niveles con Wfuzz
+
+**Wfuzz** contempla una opción de fuzzeo recursivo que permite explorar rutas encontradas durante el escaneo inicial.
+
+Si añadimos la opción `-R <nivel>`, primero fuzzeará la página o ruta base. Si encuentra algo interesante (como un directorio accesible), profundizará automáticamente y continuará el fuzzeo dentro de esa nueva ruta.
+
+### 🛠️ Sintaxis de la opción:
+```
+-R <nivel de profundidad desde 1 en adelante>
+```
+
+Puedes especificar cuántos niveles de profundidad deseas explorar. Cuanto mayor sea el número, más profunda será la exploración.
+
+### 📌 Ejemplo:
+```bash
+wfuzz -c --hc 404 -w wordlist.txt -u http://example.com/FUZZ -R 3
+```
+Este comando hará fuzzeo en:
+
+ - http://example.com/FUZZ
+
+ - Y si encuentra rutas válidas como http://example.com/admin/, continuará en:
+
+    - http://example.com/admin/FUZZ
+
+    - http://example.com/admin/panel/FUZZ, etc., hasta 3 niveles de profundidad.
+
+⚠️ Ten en cuenta que a mayor profundidad, mayor será la cantidad de peticiones, por lo tanto puede afectar el rendimiento o ser más detectable.
