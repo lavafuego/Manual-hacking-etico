@@ -3,9 +3,9 @@
 - [🛠 Herramientas para Fuzzing](#herramientas-para-fuzzing)
   - [🔹 Feroxbuster](#feroxbuster)
   - [🔹 WFUZZ](#wfuzz)
-   - [🔹Códigos de estado comunes](#codigos-comunes)
-   - [📖wfuzz-Doble patrón](#doble-patron)
-   - [📖Fuzzeo por niveles con Wfuzz](#fuzz-niveles)
+    - [🔹Códigos de estado comunes](#codigos-comunes)
+    - [📖wfuzz-Doble patrón](#doble-patron)
+    - [📖Fuzzeo por niveles con Wfuzz](#fuzz-niveles)
 ---
 <a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
