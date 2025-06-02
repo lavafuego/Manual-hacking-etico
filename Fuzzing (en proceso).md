@@ -5,6 +5,7 @@
   - [🔹 WFUZZ](#wfuzz)
    - [🔹Códigos de estado comunes](#codigos-comunes)
    - [📖wfuzz-Doble patrón](#doble-patron)
+   - [📖Fuzzeo por niveles con Wfuzz](#fuzz-niveles)
 ---
 <a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
@@ -144,6 +145,7 @@ http://<URL>/index.php
 ```
 Esta técnica es muy útil para descubrir archivos con distintas extensiones en un servidor web.
 
+<a name="fuzz-niveles"></a>
 ## 🔍 Fuzzeo por niveles con Wfuzz
 
 **Wfuzz** contempla una opción de fuzzeo recursivo que permite explorar rutas encontradas durante el escaneo inicial.
