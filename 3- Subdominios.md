@@ -12,7 +12,7 @@
   - [1. directory-list-2.3-medium.txt](#1-directory-list-23-mediumtxt)
   - [2. rockyou.txt](#2-rockyoutxt)
   - [3. SecLists](#3-seclists)
-- [🛠️ archivo /etc/hosts](#etc-hosts)
+- [🛠⚠️⚠️⚠️ archivo /etc/hosts](#etc-hosts)
 
 
 
@@ -130,7 +130,7 @@ Para descargarlo:
 git clone https://github.com/danielmiessler/SecLists.git
 ```
 <a name="etc-hosts"></a>
-## 🛠️ Redirección de subdominios Git usando /etc/hosts
+## 🛠️ Redirección de subdominios usando /etc/hosts
 
 📌 ¿Por qué modificar /etc/hosts para subdominios?  
 Cuando trabajas con Git y entornos divididos por subdominios, puede ser útil redirigir esos subdominios manualmente, por ejemplo:
