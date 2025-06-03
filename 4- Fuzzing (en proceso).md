@@ -7,6 +7,7 @@
     - [📖wfuzz-Doble patrón](#doble-patron)
     - [📖Fuzzeo por niveles con Wfuzz](#fuzz-niveles)
     - [📖fuzzeo autentificado, opciones de cabecera](#aut-cabezera)
+  - [🔹Nmap](#nmap)
 ---
 <a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
@@ -200,3 +201,34 @@ Entonces el comando sería:
 -Si usas Burp Suite, puedes copiar toda la cabecera de cookies directamente desde una petición ya autenticada y pegarla en Wfuzz.
 
 -También puedes usar el flag --hh para filtrar por tamaño de respuesta (útil para detectar páginas válidas aunque devuelvan 200).
+
+<a name="nmap"></a>
+### 🔹 NMAP
+
+Otra forma sin salir de nmap es utilizando scripts, en este caso el "http-enum"
+la forma de usarlo es la siguiente:
+```bash
+nmap --script http-enum -p <PUERTOS> <IP>
+```
+ejemplo:
+```
+nmap --script http-enum -p 80 172.17.0.2
+```
+otra forma si queremos profundizar en una ruta es la siguiente:
+ ```bash
+nmap -p <PUERTO> <IP> --script http-enum --script-args http-enum.basepath=<RUTA>
+```
+ejemplo
+```
+nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login.php
+
+```
+📌 Explicación:
+
+  -p 80: especifica el puerto HTTP.
+
+  172.17.0.2: es la IP del objetivo.
+
+  --script http-enum: usa el script adecuado.
+
+  --script-args http-enum.basepath=/login.php: indica el path desde donde empezar a buscar directorios (debe ser relativo, no incluir el host/IP).
