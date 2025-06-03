@@ -7,6 +7,7 @@
     - [🔎 Port-Based](#-port-based)
     - [🔎 Name-Based](#-name-based)
   - [🚀 Fuzzing de Subdominios con Wfuzz](#wfuzz)
+  - [🚀 Fuzzing de Subdominios con Gobuster](#gobuster)
     - [🛠️ Otras opciones útiles](#otras-opciones)
 - [📚 DICCIONARIOS QUE RECOMIENDO](#-diccionarios-que-recomiendo)
   - [1. directory-list-2.3-medium.txt](#1-directory-list-23-mediumtxt)
@@ -98,6 +99,13 @@ wfuzz -c --hc=404 -w <DICCIONARIO> -H "Host: FUZZ.DOMINIO" http://DOMINIO | tee 
 ```bash
 gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|404"
 ```
+<a name="gobuuster"></a>
+## 🚀 FUZZING DE SUBDOMINIOS CON GOBUSTER
+Otra herramienta que gusta por su rapidez es Gobuster, la forma de buscr subdominios con esta herramienta es la siguiente:
+```bash
+gobuster vhost -u http://<dominio> -w <DICCIONARIO> <OPCIONES>
+```
+
 
 # 📚 DICCIONARIOS QUE RECOMIENDO
 
