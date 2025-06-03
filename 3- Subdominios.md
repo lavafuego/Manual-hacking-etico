@@ -6,7 +6,7 @@
     - [🔎 IP-Based](#-ip-based)
     - [🔎 Port-Based](#-port-based)
     - [🔎 Name-Based](#-name-based)
-  - [🚀 Fuzzing de Subdominios Wfuzz](#-fuzzing-de-subdominios)
+  - [🚀 Fuzzing de Subdominios con Wfuzz](#wfuzz)
     - [🛠️ Otras opciones útiles](#otras-opciones)
 - [📚 DICCIONARIOS QUE RECOMIENDO](#-diccionarios-que-recomiendo)
   - [1. directory-list-2.3-medium.txt](#1-directory-list-23-mediumtxt)
@@ -60,7 +60,8 @@ Más difícil. Se alojan en la misma IP y puerto (`80` o `443`), diferenciándos
     DocumentRoot /var/www/ejemplo2
 </VirtualHost>
 ```
-## 🚀 FUZZING DE SUBDOMINIOS WFUZZ
+<a name="wfuzz"></a>
+## 🚀 FUZZING DE SUBDOMINIOS CON WFUZZ
 Una vez que sospechamos que hay Virtual Hosts, podemos detectarlos con herramientas de fuzzing de subdominios como wfuzz y gobuster.
 ```bash
 wfuzz -c --hc=404 -w <DICCIONARIO> -H "Host: FUZZ.DOMINIO" http://DOMINIO | tee dominios
