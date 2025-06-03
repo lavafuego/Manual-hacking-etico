@@ -232,3 +232,48 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
   --script http-enum: usa el script adecuado.
 
   --script-args http-enum.basepath=/login.php: indica el path desde donde empezar a buscar directorios (debe ser relativo, no incluir el host/IP).
+
+ ### 🔹 GOBUSTER
+  otra herramienta que tenemos esta vez escrita en go y que gusta por su rapidez en el scaneo es gobuster.
+  Su uso es simple:
+  ```bash
+  gobuster dir -u http://www.example.com/ -w /path/to/dictionary <OPXIONES>
+  ```
+    dir → activa el modo de enumeración de directorios/archivos.
+
+    -u / --url → URL sobre la que se hará el fuzzing.
+
+    -w / --wordlist → diccionario de posibles nombres (por ejemplo, common.txt).
+
+      Otros flags frecuentes:
+
+      -x php,txt,backup fuerza extensiones concretas.
+
+      -t 50 número de hilos (conexiones simultáneas).
+
+      -s 200,301,302 filtra códigos HTTP a mostrar.
+
+      -r recursivo (entra en cada directorio encontrado).
+
+      -o resultado.txt guarda salida en fichero. 
+Ejemplo:
+```
+gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -t 50 -x php,html,txt -o gobuster_17217.log
+```
+
+| Sub-comando | ¿Qué enumera?                              | Uso típico                                     |
+|-------------|---------------------------------------------|------------------------------------------------|
+| `dir`       | Directorios y ficheros dentro de una web    | Buscar `/admin`, `backup.zip`, etc.           |
+| `dns`       | Subdominios                                 | Encontrar `mail.ejemplo.com`, `cdn.ejemplo.com`|
+| `vhost`     | Virtual hosts (cabecera Host)               | Detectar sites virtuales en la misma IP        |
+
+Buenas prácticas rápidas
+  Usa diccionarios específicos: para apps PHP prueba php-related; para APIs usa listas de endpoints (e.g. api-wordlist.txt).
+
+  Filtra códigos irrelevantes (-s) y excluye respuestas de tamaño fijo (--exclude-length) para afinar resultados.
+
+  Respeta al servidor: no envíes cientos de hilos contra un site frágil; 10-50 suele ser suficiente.
+
+  Combina con -e (expand) para mostrar redirecciones y con -r para profundizar.
+
+  Con esto ya sabes qué hace la opción dir y cómo sacarle partido en tus auditorías.
