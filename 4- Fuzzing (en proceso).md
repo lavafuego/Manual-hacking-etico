@@ -8,6 +8,7 @@
     - [📖Fuzzeo por niveles con Wfuzz](#fuzz-niveles)
     - [📖fuzzeo autentificado, opciones de cabecera](#aut-cabezera)
   - [🔹Nmap](#nmap)
+  - [🔹Gobuster](#gobuster)
 ---
 <a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
@@ -233,6 +234,7 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
 
   --script-args http-enum.basepath=/login.php: indica el path desde donde empezar a buscar directorios (debe ser relativo, no incluir el host/IP).
 
+<a name="gobuster"></a>
  ### 🔹 GOBUSTER
   otra herramienta que tenemos esta vez escrita en go y que gusta por su rapidez en el scaneo es gobuster.
   Su uso es simple:
