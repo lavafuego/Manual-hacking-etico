@@ -247,7 +247,7 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
     -u / --url → URL sobre la que se hará el fuzzing.
 
     -w / --wordlist → diccionario de posibles nombres (por ejemplo, common.txt).
-
+```
       Otros flags frecuentes:
 ```
       -x php,txt,backup fuerza extensiones concretas.
