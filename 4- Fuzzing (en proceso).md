@@ -400,17 +400,17 @@ gobuster dir \
 -H "Cookie: sessionid=abc123xyz; user=admin" \
 -H "X-CSRF-Token: a1b2c3d4e5" \
 -p http://127.0.0.1:8080
-
-> ## 📡 ¿Qué verás en Burp?
+```
+## 📡 ¿Qué verás en Burp?
 > Cada solicitud de **Gobuster** pasará por **Burp Suite**.  
 > Puedes interceptar, modificar o dejar pasar las peticiones.
 >
-> ### 🧩 Esto es útil para:
+ ### 🧩 Esto es útil para:
 > - Ver si el token CSRF cambia por cada petición  
 > - Detectar rutas ocultas protegidas por cookies  
 > - Identificar firewalls o respuestas personalizadas  
 >
-> ### 🛠️ Consejo adicional
+ ### 🛠️ Consejo adicional
 > - En `Burp > Proxy > Intercept`, desactiva **"Intercept is on"** para dejar pasar todas las peticiones automáticamente  
 > - Activa la extensión **Logger++** para registrar todas las solicitudes sin necesidad de interceptarlas manualmente
 
