@@ -279,4 +279,139 @@ Buenas prácticas rápidas
 
   Combina con -e (expand) para mostrar redirecciones y con -r para profundizar.
 
-  Con esto ya sabes qué hace la opción dir y cómo sacarle partido en tus auditorías.
+  otas opciones interesantes son las autentificacions como el User (-U) y el password (-P)
+
+  ```bash
+gobuster dir -u http://example.com -U usuario -P contraseña -w /usr/share/wordlists/dirb/common.txt
+```
+🔎 Explicación:
+  dir: Modo de escaneo de directorios.
+
+  -u http://example.com: URL del sitio objetivo.
+
+  -U usuario: Nombre de usuario para autenticación básica.
+
+  -P contraseña: Contraseña para autenticación básica.
+
+  -w /usr/share/wordlists/dirb/common.txt: Wordlist de directorios a probar.
+
+Otra opcion interesante son las cabeceras, puedes incluir cookies por ejemplo:
+```bash
+Cookie: sessionid=abc123; user=admin
+```
+Entonces el comando de gobuster sería:
+```bash
+gobuster dir -u http://example.com -w /usr/share/wordlists/dirb/common.txt -H "Cookie: sessionid=abc123; user=admin"
+```
+✅ También puedes combinar con usuario y contraseña si es necesario:
+```bash
+gobuster dir -u http://example.com -U admin -P supersegura -w /usr/share/wordlists/dirb/common.txt -H "Cookie: sessionid=abc123"
+```
+📌 Nota importante:
+  Asegúrate de que las cookies no expiren rápidamente.
+
+  Puedes usar varias cabeceras con múltiples -H, por ejemplo:
+  ```bash
+-H "Cookie: ..." -H "User-Agent: CustomScanner/1.0"
+```
+vamos con un ejemplo realista:
+```
+Autenticación básica (-U, -P)
+
+Cookies (-H)
+
+Token CSRF (-H)
+
+Proxy (-p)
+```
+🧪 Escenario:
+  Estás probando una aplicación protegida con:
+
+  Autenticación HTTP básica
+
+  Token CSRF incluido como cookie o header
+
+  Sesión mantenida por sessionid
+
+  Estás interceptando tráfico con Burp Suite en 127.0.0.1:8080
+
+  Credenciales y tokens:
+
+  Usuario: admin
+
+  Contraseña: supersegura
+
+  Cookie: sessionid=abc123xyz; loggedin=true
+
+  CSRF Token (por header): X-CSRF-Token: kdj92jd9sjdlsd
+
+  🧨 Comando final:
+  ```
+gobuster dir \
+-u http://intranet.empresa.local \
+-U admin \
+-P supersegura \
+-w /usr/share/wordlists/dirb/common.txt \
+-H "Cookie: sessionid=abc123xyz; loggedin=true" \
+-H "X-CSRF-Token: kdj92jd9sjdlsd" \
+-p http://127.0.0.1:8080
+```
+
+
+## ¿cómo ver las solicitudes en burp suite?
+# 🧰 OBJETIVO
+
+Realizar un escaneo de directorios con **Gobuster** a través de **Burp Suite**, usando:
+
+- ✅ Autenticación HTTP básica  
+- ✅ Cookies personalizadas  
+- ✅ Tokens CSRF  
+- ✅ Wordlist  
+- ✅ Intercepción en Burp  
+
+---
+
+## 🔧 PASOS
+
+### 1. 🔌 Configura Burp Suite como proxy
+
+- Ve a `Proxy > Options`
+- Asegúrate de tener un **listener** en `127.0.0.1:8080` (puerto por defecto)
+
+---
+
+### 2. 🧠 Captura tus cookies y tokens
+
+- Inicia sesión manualmente en la web con tu navegador
+- Ve a `Proxy > HTTP history` o usa la pestaña `Inspector` para copiar:
+  - 🍪 Cookie completa
+  - 🛡️ Header con `X-CSRF-Token` (si aplica)
+
+---
+
+### 3. 🖥️ Lanza Gobuster con proxy y headers
+
+```bash
+gobuster dir \
+-u http://example.com \
+-w /usr/share/wordlists/dirb/common.txt \
+-U admin \
+-P supersegura \
+-H "Cookie: sessionid=abc123xyz; user=admin" \
+-H "X-CSRF-Token: a1b2c3d4e5" \
+-p http://127.0.0.1:8080
+
+> ## 📡 ¿Qué verás en Burp?
+> Cada solicitud de **Gobuster** pasará por **Burp Suite**.  
+> Puedes interceptar, modificar o dejar pasar las peticiones.
+>
+> ### 🧩 Esto es útil para:
+> - Ver si el token CSRF cambia por cada petición  
+> - Detectar rutas ocultas protegidas por cookies  
+> - Identificar firewalls o respuestas personalizadas  
+>
+> ### 🛠️ Consejo adicional
+> - En `Burp > Proxy > Intercept`, desactiva **"Intercept is on"** para dejar pasar todas las peticiones automáticamente  
+> - Activa la extensión **Logger++** para registrar todas las solicitudes sin necesidad de interceptarlas manualmente
+
+
