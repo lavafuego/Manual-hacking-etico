@@ -9,6 +9,7 @@
     - [📖fuzzeo autentificado, opciones de cabecera](#aut-cabezera)
   - [🔹Nmap](#nmap)
   - [🔹Gobuster](#gobuster)
+- [🔍¿Cómo interceptar las peticiones con Burpsuite](#burpsuite)
 ---
 <a name="qué-es-hacer-fuzzing"></a>
 ## ❓ ¿Qué es hacer Fuzzing?
@@ -357,8 +358,8 @@ gobuster dir \
 -p http://127.0.0.1:8080
 ```
 
-
-## ¿cómo ver las solicitudes en burp suite?
+<a name="burpsuite"></a>
+## 🔍 ¿CÓMO INTERCEPTAR LAS SOLICITUDES CON BURP SUITE?
 # 🧰 OBJETIVO
 
 Realizar un escaneo de directorios con **Gobuster** a través de **Burp Suite**, usando:
