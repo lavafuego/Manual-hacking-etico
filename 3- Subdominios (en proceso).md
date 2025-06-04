@@ -62,43 +62,58 @@ Más difícil. Se alojan en la misma IP y puerto (`80` o `443`), diferenciándos
 </VirtualHost>
 ```
 <a name="wfuzz"></a>
-## 🚀 FUZZING DE SUBDOMINIOS CON WFUZZ
-Una vez que sospechamos que hay Virtual Hosts, podemos detectarlos con herramientas de fuzzing de subdominios como wfuzz y gobuster.
+## ## 🚀 Fuzzing de Subdominios con WFUZZ
+
+Una vez que sospechamos que un servidor web podría estar manejando múltiples **Virtual Hosts**, podemos usar herramientas de fuzzing como **Wfuzz** para descubrir **subdominios ocultos o virtual hosts mal configurados**.
+
+### 📌 Comando básico
+
 ```bash
 wfuzz -c --hc=404 -w <DICCIONARIO> -H "Host: FUZZ.DOMINIO" http://DOMINIO | tee dominios
 ```
-| Parámetro                    | Descripción                                                                   |                                                                 |
-| ---------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `-c`                         | Colorea la salida                                                             |                                                                 |
-| `--hc=404`                   | Oculta respuestas con código HTTP 404 (Not Found)                             |                                                                 |
-| `-w`                         | Diccionario con posibles subdominios                                          |                                                                 |
-| `-H "Host: FUZZ.realgob.dl"` | FUZZ se reemplaza por cada entrada del diccionario (`admin.realgob.dl`, etc.) |                                                                 |
-| `http://realgob.dl`          | Dominio base que responde al virtual host                                     |                                                                 |
-| \`                           | tee dominios\`                                                                | Guarda la salida en un archivo y también la muestra en pantalla |
-
-<a name="otras-opciones"></a>
-### 🛠️ Otras opciones útiles
-
-
--L → Sigue redirecciones
-
---hl=<líneas> → Oculta respuestas con cierta cantidad de líneas (ej: --hl=140)
-
---hh=<bytes> → Oculta respuestas con cierto número de caracteres
-
---hw=<palabras> → Oculta respuestas con número específico de palabras
-
-| Parámetro          | Descripción                                                     |
-| ------------------ | --------------------------------------------------------------- |
-| `vhost`            | Modo de búsqueda de subdominios usando cabecera `Host`          |
-| `-u hackzones.hl`  | Dominio objetivo                                                |
-| `-w`               | Diccionario con posibles subdominios                            |
-| `--append-domain`  | Añade automáticamente el dominio a cada entrada del diccionario |
-| `--exclude-status` | Oculta códigos HTTP específicos (como 400, 404)                 |
-💡 En caso de que --exclude-status falle, puedes usar un grep -v como alternativa:
-```bash
-gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|404"
+| Parámetro                 | Descripción                                                                             |                                                                                    |
+| ------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `-c`                      | Colorea la salida para facilitar la lectura                                             |                                                                                    |
+| `--hc=404`                | Oculta todas las respuestas con código HTTP `404 Not Found`                             |                                                                                    |
+| `-w <DICCIONARIO>`        | Wordlist con posibles nombres de subdominios (por ejemplo: `admin`, `dev`, `api`, etc.) |                                                                                    |
+| `-H "Host: FUZZ.DOMINIO"` | Inserta `FUZZ` en la cabecera `Host:` para probar con cada entrada del diccionario      |                                                                                    |
+| `http://DOMINIO`          | URL base del servidor al que se envían las peticiones                                   |                                                                                    |
+| \`                        | tee dominios\`                                                                          | Guarda la salida en un archivo llamado `dominios` y también la muestra en pantalla |
 ```
+wfuzz -c --hc=404 -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H "Host: FUZZ.realgob.dl" http://realgob.dl | tee subdominios.txt
+
+```
+💡 Nota: Asegúrate de que realgob.dl resuelva a la IP correcta (usa /etc/hosts si es necesario):
+```
+127.0.0.1 realgob.dl
+
+```
+🛠️ Otras opciones útiles
+
+| Opción     | Descripción                                                                           |
+| ---------- | ------------------------------------------------------------------------------------- |
+| `-L`       | Sigue redirecciones (`Location:` headers)                                             |
+| `--hl=<n>` | Oculta respuestas con `<n>` líneas exactas (útil para filtrar páginas tipo plantilla) |
+| `--hh=<n>` | Oculta respuestas con `<n>` bytes de cuerpo (body size)                               |
+| `--hw=<n>` | Oculta respuestas con `<n>` palabras                                                  |
+
+📁 Diccionarios recomendados (SecLists)
+```
+/usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+
+/usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt
+```
+✅ Buenas prácticas
+  Usa --hc, --hl, --hh o --hw para reducir ruido y falsos positivos.
+
+  Valida que el servidor diferencie bien por Host; si no, todos los subdominios devolverán lo mismo.
+
+  Si no ves resultados útiles, prueba cambiando el código a excluir (--hc=200, por ejemplo), ya que algunos servidores devuelven 200 OK incluso cuando el contenido no existe.
+
+
+
+
+
 <a name="gobuuster"></a>
 ## 🚀 FUZZING DE SUBDOMINIOS CON GOBUSTER
 Otra herramienta que gusta por su rapidez es Gobuster, la forma de buscr subdominios con esta herramienta es la siguiente:
@@ -140,6 +155,11 @@ añdir la opcion --append-domain, ejemplo:
 gobuster vhost -u pl0t.nyx -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt --append-domain
 ```
 ocultar codigos de estado con con -b y ocultar estados con --no-error, ejemplo:
+
+```bash
+gobuster dir -u http://realgob.dl -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt -x php,txt,html,py,db,js,png,jpg -t 200 -b 404,403 --no-error
+```
+
 | Parte                                  | Significado                                                                                                                  |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `gobuster dir`                         | Usa el subcomando `dir`, para buscar directorios y archivos en un sitio web.                                                 |
@@ -149,6 +169,13 @@ ocultar codigos de estado con con -b y ocultar estados con --no-error, ejemplo:
 | `-t 200`                               | Usa 200 hilos (conexiones paralelas) para máxima velocidad. ⚠️ Puede ser demasiado para servidores frágiles.                 |
 | `-b 404,403`                           | Oculta resultados con códigos de estado HTTP 404 (no encontrado) y 403 (prohibido). Útil para reducir "ruido".               |
 | `--no-error`                           | Oculta errores de red (timeouts, etc.) para que la salida sea más limpia.                                                    |
+
+
+      |
+💡 En caso de que --exclude-status falle o -b , puedes usar un grep -v como alternativa:
+```bash
+gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|404"
+```
 
 
 
