@@ -242,15 +242,15 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
   ```bash
   gobuster dir -u http://www.example.com/ -w /path/to/dictionary <OPXIONES>
   ```
-```bash
+    ```bash
     dir → activa el modo de enumeración de directorios/archivos.
 
     -u / --url → URL sobre la que se hará el fuzzing.
 
     -w / --wordlist → diccionario de posibles nombres (por ejemplo, common.txt).
-```
-      Otros flags frecuentes:
-```
+    ```
+      Otras flags frecuentes:
+    ```
       -x php,txt,backup fuerza extensiones concretas.
 
       -t 50 número de hilos (conexiones simultáneas).
@@ -260,7 +260,7 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
       -r recursivo (entra en cada directorio encontrado).
 
       -o resultado.txt guarda salida en fichero.
-``` 
+  ``` 
 Ejemplo:
 ```
 gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -t 50 -x php,html,txt -o gobuster_17217.log
