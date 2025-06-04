@@ -283,10 +283,11 @@ Buenas prácticas rápidas
   Combina con -e (expand) para mostrar redirecciones y con -r para profundizar.
 
   otas opciones interesantes son las autentificacions como el User (-U) y el password (-P)
-
-  ```bash
-gobuster dir -u http://example.com -U usuario -P contraseña -w /usr/share/wordlists/dirb/common.txt
 ```
+
+ ```bash
+ gobuster dir -u http://example.com -U usuario -P contraseña -w /usr/share/wordlists/dirb/common.txt
+ ```
 🔎 Explicación:
   dir: Modo de escaneo de directorios.
 
