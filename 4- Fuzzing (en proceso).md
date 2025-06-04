@@ -250,6 +250,7 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
     -w / --wordlist → diccionario de posibles nombres (por ejemplo, common.txt).
     
    Otras flags frecuentes:
+  
     ```
       -x php,txt,backup fuerza extensiones concretas.
 
