@@ -114,7 +114,7 @@ wfuzz -c --hc=404 -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-50
 
 
 
-<a name="gobuuster"></a>
+<a name="gobuster"></a>
 ## 🚀 FUZZING DE SUBDOMINIOS CON GOBUSTER
 Otra herramienta que gusta por su rapidez es Gobuster, la forma de buscr subdominios con esta herramienta es la siguiente:
   # 🛠️ Sintaxis básica
