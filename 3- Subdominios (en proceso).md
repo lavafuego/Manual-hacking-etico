@@ -176,8 +176,15 @@ gobuster dir -u http://realgob.dl -w /usr/share/wordlists/seclists/Discovery/Web
 ```bash
 gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|404"
 ```
+Si la página tiene login usar -U y -P, para user y password respectivamente:
+```bash
+gobuster vhost -u http://www.example.com/ -w /path/to/dictionary -U username -P password
+```
 
-
+en gobuster podemos utilizar indiferentemente el método GET o POST, aunque por defecto ya utiliza GET
+```bash
+gobuster vhost -u http://www.example.com/ -w /path/to/dictionary -m POST
+```
 
 
 
