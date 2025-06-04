@@ -102,9 +102,56 @@ gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|
 <a name="gobuuster"></a>
 ## 🚀 FUZZING DE SUBDOMINIOS CON GOBUSTER
 Otra herramienta que gusta por su rapidez es Gobuster, la forma de buscr subdominios con esta herramienta es la siguiente:
+  # 🛠️ Sintaxis básica
+  ```bash
+  gobuster vhost -u http://<dominio> -w <DICCIONARIO> <OPCIONES>
+  ```
+  vhost → subcomando para enumerar virtual hosts.
+
+  -u / --url → URL base del objetivo (debe incluir el protocolo).
+
+  -w / --wordlist → diccionario de posibles subdominios.
+
+  [opciones] → parámetros opcionales como número de hilos, filtros, etc.
+  EJEMPLO:
+  ```
+  gobuster vhost -u http://ejemplo.com -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50
+  ```
+⚙️ Recomendaciones
+Editar /etc/hosts si estás trabajando con entornos locales o staging:
 ```bash
-gobuster vhost -u http://<dominio> -w <DICCIONARIO> <OPCIONES>
+192.168.1.10 ejemplo.com
 ```
+Combina con Burp o DNS resolvers si necesitas más precisión o bypass.
+
+Usa diccionarios específicos para subdominios como los de SecLists.
+
+📁 Diccionarios recomendados
+```
+/usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt
+
+/usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt
+```
+
+condideraciones finales
+
+añdir la opcion --append-domain, ejemplo:
+```bash
+gobuster vhost -u pl0t.nyx -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt --append-domain
+```
+ocultar codigos de estado con con -b y ocultar estados con --no-error, ejemplo:
+| Parte                                  | Significado                                                                                                                  |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `gobuster dir`                         | Usa el subcomando `dir`, para buscar directorios y archivos en un sitio web.                                                 |
+| `-u http://realgob.dl`                 | URL objetivo donde se buscarán rutas. Puede ser IP o dominio.                                                                |
+| `-w /usr/share/wordlists/seclists/...` | Diccionario de nombres de archivos/directorios a probar. En este caso, una lista de palabras en minúsculas con tamaño medio. |
+| `-x php,txt,html,py,db,js,png,jpg`     | Probará cada palabra del diccionario con estas extensiones. Ej: `login.php`, `admin.html`, `config.py`, etc.                 |
+| `-t 200`                               | Usa 200 hilos (conexiones paralelas) para máxima velocidad. ⚠️ Puede ser demasiado para servidores frágiles.                 |
+| `-b 404,403`                           | Oculta resultados con códigos de estado HTTP 404 (no encontrado) y 403 (prohibido). Útil para reducir "ruido".               |
+| `--no-error`                           | Oculta errores de red (timeouts, etc.) para que la salida sea más limpia.                                                    |
+
+
+
 
 
 # 📚 DICCIONARIOS QUE RECOMIENDO
