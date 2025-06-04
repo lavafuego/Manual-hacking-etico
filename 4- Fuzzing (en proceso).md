@@ -286,7 +286,10 @@ Buenas prácticas rápidas
 
   Combina con -e (expand) para mostrar redirecciones y con -r para profundizar.
 
-  otas opciones interesantes son las autentificacions como el User (-U) y el password (-P)
+ 
+  
+  
+  ✅ otas opciones interesantes son las autentificacions como el User (-U) y el password (-P)
 
 
  ```bash
