@@ -239,7 +239,7 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
  ### 🔹 GOBUSTER
   otra herramienta que tenemos esta vez escrita en go y que gusta por su rapidez en el scaneo es gobuster.
   Su uso es simple:
-  ```bash
+  ```
   gobuster dir -u http://www.example.com/ -w /path/to/dictionary <OPXIONES>
   ```
     
@@ -266,7 +266,7 @@ Ejemplo:
 ```
 gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -t 50 -x php,html,txt -o gobuster_17217.log
 ```
-
+```
 | Sub-comando | ¿Qué enumera?                              | Uso típico                                     |
 |-------------|---------------------------------------------|------------------------------------------------|
 | `dir`       | Directorios y ficheros dentro de una web    | Buscar `/admin`, `backup.zip`, etc.           |
