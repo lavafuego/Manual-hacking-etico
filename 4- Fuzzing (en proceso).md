@@ -242,6 +242,7 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
   ```bash
   gobuster dir -u http://www.example.com/ -w /path/to/dictionary <OPXIONES>
   ```
+```bash
     dir → activa el modo de enumeración de directorios/archivos.
 
     -u / --url → URL sobre la que se hará el fuzzing.
