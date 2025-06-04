@@ -120,9 +120,9 @@ wfuzz -c --hc=404 -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-50
 Otra herramienta que gusta por su rapidez es Gobuster, la forma de buscar subdominios con esta herramienta es la siguiente:
 
 ### 🛠️ Sintaxis básica
-
+```
 gobuster vhost -u http://<dominio> -w <DICCIONARIO> <OPCIONES>
-
+```
 - **vhost**: Subcomando para enumerar virtual hosts.
 
 - **-u / --url**: URL base del objetivo (debe incluir el protocolo).
@@ -132,17 +132,17 @@ gobuster vhost -u http://<dominio> -w <DICCIONARIO> <OPCIONES>
 - **[opciones]**: Parámetros opcionales como número de hilos, filtros, etc.
 
 ### Ejemplo
-
+```
 gobuster vhost -u http://ejemplo.com -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50
-
+```
 ---
 
 ### ⚙️ Recomendaciones
 
 Editar `/etc/hosts` si estás trabajando con entornos locales o staging:
-
+```
 192.168.1.10 ejemplo.com
-
+```
 Combina con Burp o DNS resolvers si necesitas más precisión o bypass.
 
 Usa diccionarios específicos para subdominios como los de SecLists.
@@ -150,39 +150,39 @@ Usa diccionarios específicos para subdominios como los de SecLists.
 ---
 
 ### 📁 Diccionarios recomendados
-
+```
 /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt
 
 /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt
-
+```
 ---
 
 ### 🛠️ Otras opciones útiles
 
 Añadir la opción `--append-domain`, ejemplo:
-
+```
 gobuster vhost -u pl0t.nyx -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt --append-domain
-
+```
 Ocultar códigos de estado con `-b` y ocultar errores con `--no-error`, ejemplo:
-
+```
 gobuster dir -u http://realgob.dl -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt -x php,txt,html,py,db,js,png,jpg -t 200 -b 404,403 --no-error
-
+```
 En caso de que `--exclude-status` o `-b` fallen, puedes usar un `grep -v` como alternativa:
-
+```
 gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|404"
-
+```
 Si la página tiene login usar `-U` y `-P` para usuario y contraseña respectivamente:
-
+```
 gobuster vhost -u http://www.example.com/ -w /path/to/dictionary -U username -P password
-
+```
 Gobuster puede utilizar indistintamente el método GET o POST, aunque por defecto usa GET:
-
+```
 gobuster vhost -u http://www.example.com/ -w /path/to/dictionary -m POST
-
+```
 Cuando estás enumerando directorios en un sitio con certificado TLS autofirmado o inválido y no quieres que falle la verificación SSL, usa `-k`:
-
+```
 gobuster dir -u https://target.local -w /usr/share/wordlists/dirb/common.txt -k
-
+```
 ---
 
 ### 📚 Tabla completa de opciones comunes
