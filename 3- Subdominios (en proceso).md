@@ -115,76 +115,89 @@ wfuzz -c --hc=404 -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-50
 
 
 <a name="gobuster"></a>
-## 🚀 FUZZING DE SUBDOMINIOS CON GOBUSTER
-Otra herramienta que gusta por su rapidez es Gobuster, la forma de buscr subdominios con esta herramienta es la siguiente:
-  # 🛠️ Sintaxis básica
-  ```bash
-  gobuster vhost -u http://<dominio> -w <DICCIONARIO> <OPCIONES>
-  ```
-  vhost → subcomando para enumerar virtual hosts.
+## 🚀 Fuzzing de Subdominios con Gobuster
 
-  -u / --url → URL base del objetivo (debe incluir el protocolo).
+Otra herramienta que gusta por su rapidez es Gobuster, la forma de buscar subdominios con esta herramienta es la siguiente:
 
-  -w / --wordlist → diccionario de posibles subdominios.
+### 🛠️ Sintaxis básica
 
-  [opciones] → parámetros opcionales como número de hilos, filtros, etc.
-  EJEMPLO:
-  ```
-  gobuster vhost -u http://ejemplo.com -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50
-  ```
-⚙️ Recomendaciones
-Editar /etc/hosts si estás trabajando con entornos locales o staging:
-```bash
+gobuster vhost -u http://<dominio> -w <DICCIONARIO> <OPCIONES>
+
+- **vhost**: Subcomando para enumerar virtual hosts.
+
+- **-u / --url**: URL base del objetivo (debe incluir el protocolo).
+
+- **-w / --wordlist**: Diccionario de posibles subdominios.
+
+- **[opciones]**: Parámetros opcionales como número de hilos, filtros, etc.
+
+### Ejemplo
+
+gobuster vhost -u http://ejemplo.com -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -t 50
+
+---
+
+### ⚙️ Recomendaciones
+
+Editar `/etc/hosts` si estás trabajando con entornos locales o staging:
+
 192.168.1.10 ejemplo.com
-```
+
 Combina con Burp o DNS resolvers si necesitas más precisión o bypass.
 
 Usa diccionarios específicos para subdominios como los de SecLists.
 
-📁 Diccionarios recomendados
-```
+---
+
+### 📁 Diccionarios recomendados
+
 /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt
 
 /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt
-```
-<a name="otras-opciones"></a>
-## 🛠️ Otras opciones útiles
 
-añdir la opcion --append-domain, ejemplo:
-```bash
+---
+
+### 🛠️ Otras opciones útiles
+
+Añadir la opción `--append-domain`, ejemplo:
+
 gobuster vhost -u pl0t.nyx -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt --append-domain
-```
-ocultar codigos de estado con con -b y ocultar estados con --no-error, ejemplo:
 
-```bash
+Ocultar códigos de estado con `-b` y ocultar errores con `--no-error`, ejemplo:
+
 gobuster dir -u http://realgob.dl -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-lowercase-2.3-medium.txt -x php,txt,html,py,db,js,png,jpg -t 200 -b 404,403 --no-error
-```
 
-| Parte                                  | Significado                                                                                                                  |
-| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `gobuster dir`                         | Usa el subcomando `dir`, para buscar directorios y archivos en un sitio web.                                                 |
-| `-u http://realgob.dl`                 | URL objetivo donde se buscarán rutas. Puede ser IP o dominio.                                                                |
-| `-w /usr/share/wordlists/seclists/...` | Diccionario de nombres de archivos/directorios a probar. En este caso, una lista de palabras en minúsculas con tamaño medio. |
-| `-x php,txt,html,py,db,js,png,jpg`     | Probará cada palabra del diccionario con estas extensiones. Ej: `login.php`, `admin.html`, `config.py`, etc.                 |
-| `-t 200`                               | Usa 200 hilos (conexiones paralelas) para máxima velocidad. ⚠️ Puede ser demasiado para servidores frágiles.                 |
-| `-b 404,403`                           | Oculta resultados con códigos de estado HTTP 404 (no encontrado) y 403 (prohibido). Útil para reducir "ruido".               |
-| `--no-error`                           | Oculta errores de red (timeouts, etc.) para que la salida sea más limpia.                                                    |
+En caso de que `--exclude-status` o `-b` fallen, puedes usar un `grep -v` como alternativa:
 
-
-      |
-💡 En caso de que --exclude-status falle o -b , puedes usar un grep -v como alternativa:
-```bash
 gobuster vhost -u hackzones.hl -w <diccionario> --append-domain | grep -v "400\|404"
-```
-Si la página tiene login usar -U y -P, para user y password respectivamente:
-```bash
-gobuster vhost -u http://www.example.com/ -w /path/to/dictionary -U username -P password
-```
 
-en gobuster podemos utilizar indiferentemente el método GET o POST, aunque por defecto ya utiliza GET
-```bash
+Si la página tiene login usar `-U` y `-P` para usuario y contraseña respectivamente:
+
+gobuster vhost -u http://www.example.com/ -w /path/to/dictionary -U username -P password
+
+Gobuster puede utilizar indistintamente el método GET o POST, aunque por defecto usa GET:
+
 gobuster vhost -u http://www.example.com/ -w /path/to/dictionary -m POST
-```
+
+Cuando estás enumerando directorios en un sitio con certificado TLS autofirmado o inválido y no quieres que falle la verificación SSL, usa `-k`:
+
+gobuster dir -u https://target.local -w /usr/share/wordlists/dirb/common.txt -k
+
+---
+
+### 📚 Tabla completa de opciones comunes
+
+| Opción                         | Descripción                                                                  |
+|-------------------------------|------------------------------------------------------------------------------|
+| `-c`                          | Cookies que se usarán en las solicitudes                                     |
+| `-x`                          | Extensión(es) de archivo a buscar (ej: `php`, `txt`, `html`)                 |
+| `-H`                          | Especificar encabezados HTTP, por ejemplo: `-H "Header: valor"`              |
+| `-k`                          | Omitir la verificación del certificado TLS (útil con certificados autofirmados) |
+| `-n`                          | No imprimir códigos de estado en la salida                                  |
+| `-P`                          | Contraseña para autenticación básica                                         |
+| `-s`                          | Lista de códigos de estado HTTP a considerar como positivos                 |
+| `-b`                          | Lista de códigos de estado HTTP a excluir (blacklist)                       |
+| `-U`                          | Usuario para autenticación básica                                            |
 
 
 
