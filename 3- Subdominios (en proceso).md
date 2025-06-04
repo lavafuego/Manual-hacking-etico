@@ -147,8 +147,8 @@ Usa diccionarios específicos para subdominios como los de SecLists.
 
 /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt
 ```
-
-condideraciones finales
+<a name="otras-opciones"></a>
+## 🛠️ Otras opciones útiles
 
 añdir la opcion --append-domain, ejemplo:
 ```bash
