@@ -248,7 +248,7 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
     -w / --wordlist → diccionario de posibles nombres (por ejemplo, common.txt).
 
       Otros flags frecuentes:
-
+```
       -x php,txt,backup fuerza extensiones concretas.
 
       -t 50 número de hilos (conexiones simultáneas).
@@ -257,7 +257,8 @@ nmap -p 80 172.17.0.2 --script http-enum --script-args http-enum.basepath=/login
 
       -r recursivo (entra en cada directorio encontrado).
 
-      -o resultado.txt guarda salida en fichero. 
+      -o resultado.txt guarda salida en fichero.
+``` 
 Ejemplo:
 ```
 gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -t 50 -x php,html,txt -o gobuster_17217.log
