@@ -272,8 +272,12 @@ gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -t 50
 | `dir`       | Directorios y ficheros dentro de una web    | Buscar `/admin`, `backup.zip`, etc.           |
 | `dns`       | Subdominios                                 | Encontrar `mail.ejemplo.com`, `cdn.ejemplo.com`|
 | `vhost`     | Virtual hosts (cabecera Host)               | Detectar sites virtuales en la misma IP        |
+```
+
+
 
 Buenas prácticas rápidas
+
   Usa diccionarios específicos: para apps PHP prueba php-related; para APIs usa listas de endpoints (e.g. api-wordlist.txt).
 
   Filtra códigos irrelevantes (-s) y excluye respuestas de tamaño fijo (--exclude-length) para afinar resultados.
@@ -283,7 +287,7 @@ Buenas prácticas rápidas
   Combina con -e (expand) para mostrar redirecciones y con -r para profundizar.
 
   otas opciones interesantes son las autentificacions como el User (-U) y el password (-P)
-```
+
 
  ```bash
  gobuster dir -u http://example.com -U usuario -P contraseña -w /usr/share/wordlists/dirb/common.txt
