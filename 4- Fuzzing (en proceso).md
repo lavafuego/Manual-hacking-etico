@@ -289,7 +289,7 @@ Buenas prácticas rápidas:
  
   
   
-  ✅ otas opciones interesantes son las autentificacions como el User (-U) y el password (-P)
+📌  ✅ otas opciones interesantes son las autentificacions como el User (-U) y el password (-P)
 
 
  ```bash
