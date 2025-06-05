@@ -35,7 +35,7 @@ Usa directamente $_GET['page'] sin validación.
 
   -Por ejemplo, el siguiente payload puede mostrar el contenido de /etc/passwd en sistemas Linux:
   ```
-  http://ejemplo.com/index.php?page=../../../../etc/passwd
+  http://ejemplo.com/index.php?page=../../../../../../../etc/passwd
   ```
 
 ## 🔍 ¿Cómo sospechamos que puede haber un LFI?
