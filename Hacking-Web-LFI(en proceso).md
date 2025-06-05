@@ -70,10 +70,12 @@ Si hay validaciones o filtros, intenta con variantes como:
 si quieres saber más de payloads:
 ```bash
 https://swisskyrepo.github.io/PayloadsAllTheThings/File%20Inclusion/
+https://book.hacktricks.wiki/en/pentesting-web/file-inclusion/index.html?highlight=lfi#file-inclusionpath-traversal
 ```
 si quieres saber más de los wrappers:
 ```bash
 https://swisskyrepo.github.io/PayloadsAllTheThings/File%20Inclusion/Wrappers/
+https://book.hacktricks.wiki/en/pentesting-web/file-inclusion/index.html?highlight=lfi#lfi--rfi-using-php-wrappers--protocols
 ```
 
 ## 🤖 Automatizando con wfuzz
