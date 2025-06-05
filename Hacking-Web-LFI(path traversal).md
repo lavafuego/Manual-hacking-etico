@@ -5,8 +5,9 @@
 2. [❌ ¿Qué hace mal este código?](#mal)
 3. [🔍 ¿Cómo sospechamos que puede haber un LFI?](#-cómo-sospechamos-que-puede-haber-un-lfi)
 4. [🔁 Bypasses comunes](#-bypasses-comunes)
-5. [🤖 Automatizando con `wfuzz`](#-automatizando-con-wfuzz)
-6. [🔎 Caso práctico: LFI en `login.php`](#-caso-práctico-lfi-en-loginphp)
+5. [🔗  Enlaces interesantes](#enlaces)
+6. [🤖 Automatizando con `wfuzz`](#-automatizando-con-wfuzz)
+7. [🔎 Caso práctico: LFI en `login.php`](#-caso-práctico-lfi-en-loginphp)
 
 
 
@@ -66,6 +67,8 @@ Si hay validaciones o filtros, intenta con variantes como:
 | Rutas con doble punto y slash mezclados  | `....//....//etc/passwd`                                                         |
 | Wrappers de PHP                          | `php://filter/convert.base64-encode/resource=index.php` (para ver código fuente) |
 
+<a name="enlaces"></a>
+## Enlaces interesantes
 
 si quieres saber más de payloads:
 ```bash
