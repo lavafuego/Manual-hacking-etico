@@ -278,13 +278,13 @@ gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -t 50
 
 Buenas prácticas rápidas
 
-  Usa diccionarios específicos: para apps PHP prueba php-related; para APIs usa listas de endpoints (e.g. api-wordlist.txt).
+    Usa diccionarios específicos: para apps PHP prueba php-related; para APIs usa listas de endpoints (e.g. api-wordlist.txt).
 
-  Filtra códigos irrelevantes (-s) y excluye respuestas de tamaño fijo (--exclude-length) para afinar resultados.
+    Filtra códigos irrelevantes (-s) y excluye respuestas de tamaño fijo (--exclude-length) para afinar resultados.
 
-  Respeta al servidor: no envíes cientos de hilos contra un site frágil; 10-50 suele ser suficiente.
+    Respeta al servidor: no envíes cientos de hilos contra un site frágil; 10-50 suele ser suficiente.
 
-  Combina con -e (expand) para mostrar redirecciones y con -r para profundizar.
+    Combina con -e (expand) para mostrar redirecciones y con -r para profundizar.
 
  
   
