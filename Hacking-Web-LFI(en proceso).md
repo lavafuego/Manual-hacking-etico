@@ -75,7 +75,7 @@ wfuzz -u "http://target.com/index.php?page=FUZZ" -w /usr/share/seclists/Fuzzing/
 ```
 Diccionarios útiles:
 
-  -/usr/share/seclists/Fuzzing/LFI/
+  -Seclist (dentro de /Fuzzing/LFI)
 
   -SecLists/Fuzzing/LFI/LFI-Jhaddix.txt
 
