@@ -67,6 +67,10 @@ Si hay validaciones o filtros, intenta con variantes como:
 | Wrappers de PHP                          | `php://filter/convert.base64-encode/resource=index.php` (para ver código fuente) |
 
 
+si quieres saber más de payloads:
+```bash
+https://swisskyrepo.github.io/PayloadsAllTheThings/File%20Inclusion/
+```
 si quieres saber más de los wrappers:
 ```bash
 https://swisskyrepo.github.io/PayloadsAllTheThings/File%20Inclusion/Wrappers/
