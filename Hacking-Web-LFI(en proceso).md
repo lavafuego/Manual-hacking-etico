@@ -1,8 +1,8 @@
 
 ## 📑 Índice de Contenidos
 
-1. [🔥 Ejemplo vulnerable](#-ejemplo-vulnerable)
-2. [❌ ¿Qué hace mal este código?](#-qué-hace-mal-este-código)
+1. [🔥 Ejemplo vulnerable](#lfi)
+2. [❌ ¿Qué hace mal este código?](#mal)
 3. [🔍 ¿Cómo sospechamos que puede haber un LFI?](#-cómo-sospechamos-que-puede-haber-un-lfi)
 4. [🔁 Bypasses comunes](#-bypasses-comunes)
 5. [🤖 Automatizando con `wfuzz`](#-automatizando-con-wfuzz)
@@ -10,7 +10,7 @@
 
 
 
-
+<a name="lfi"></a>
 🗂️ LFI (Local File Inclusion)
 Una mala configuración en una aplicación web puede permitir al atacante incluir archivos del sistema, revelando información sensible. A continuación, un ejemplo típico en PHP:
 
@@ -27,6 +27,7 @@ if (isset($_GET['page'])) {
 ?>
 ```
 
+<a name="mal"></a>
 ❌ ¿Qué hace mal este código?
 Usa directamente $_GET['page'] sin validación.
 
