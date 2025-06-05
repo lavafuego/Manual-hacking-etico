@@ -7,7 +7,7 @@
 4. [🔁 Bypasses comunes](#-bypasses-comunes)
 5. [🤖 Automatizando con `wfuzz`](#-automatizando-con-wfuzz)
 6. [🔎 Caso práctico: LFI en `login.php`](#-caso-práctico-lfi-en-loginphp)
-7. [🏁 Objetivo: Encontrar la flag](#-objetivo-encontrar-la-flag)
+
 
 
 
