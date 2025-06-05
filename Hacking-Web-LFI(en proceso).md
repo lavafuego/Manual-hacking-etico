@@ -67,6 +67,11 @@ Si hay validaciones o filtros, intenta con variantes como:
 | Wrappers de PHP                          | `php://filter/convert.base64-encode/resource=index.php` (para ver código fuente) |
 
 
+si quieres saber más de los wrappers:
+```bash
+https://swisskyrepo.github.io/PayloadsAllTheThings/File%20Inclusion/Wrappers/
+```
+
 ## 🤖 Automatizando con wfuzz
 
 Puedes usar wfuzz con diccionarios específicos para encontrar rutas LFI:
