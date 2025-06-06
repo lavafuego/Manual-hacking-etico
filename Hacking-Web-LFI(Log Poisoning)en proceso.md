@@ -1,5 +1,5 @@
 
-```markdown
+
 ## ¿QUÉ ES UN LOG?
 
 Un log en **Apache** es un archivo donde el servidor web **Apache HTTP Server** registra información sobre su actividad.
