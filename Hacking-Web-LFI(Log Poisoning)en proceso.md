@@ -56,10 +56,10 @@ Incluye:
 - problemas de red o hardware  
 
 **Ejemplo de línea típica:**  
-```[Fri Jun 06 12:34:56.789012 2025] [core:error] [pid 1234] [client 192.168.1.1:54321] File does not exist: /var/www/html/missing-page.html```
+```[Fri Jun 06 12:34:56.789012 2025] [core:error] [pid 1234] [client 192.168.1.1:54321] File does not exist: /var/www/html/missing-page.html
 ```
 
-## LFI, LOG POISONING
+### LFI, LOG POISONING
 
 Sabiendo lo que son los logs, si llegamos a tener acceso a ellos, podemos intentar aprovecharlo para ejecutar código malicioso.
 
