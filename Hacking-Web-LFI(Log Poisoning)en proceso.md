@@ -202,7 +202,7 @@ Es lo mismo que el curl pero desde un navegador.
 
 Notas importantes:
 
-Se usa shell_exec en el payload PHP para ejecutar comandos del sistema recibidos a través del parámetro cmd.
+  -Se usa shell_exec en el payload PHP para ejecutar comandos del sistema recibidos a través del parámetro cmd.
 
   -La ruta ../../../../../var/mail/www-data accede al archivo de correo del usuario www-data mediante LFI.
 
