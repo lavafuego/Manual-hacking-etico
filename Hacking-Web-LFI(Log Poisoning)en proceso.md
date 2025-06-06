@@ -9,6 +9,7 @@
 - [📡Verificar si el servidor interpreta PHP en los logs](#verificar)
 - [📝Resumen](#resumen)
 - [📧Ataques vía mail](#mail)
+- [🎯Consejos finales](#consejos)
 
 <a name="log"></a>
 ## 📝¿QUÉ ES UN LOG?
@@ -214,8 +215,8 @@ Notas importantes:
 
   -El punto . en telnet indica el fin del mensaje SMTP.
 
-
-🎯 ### CONSEJOS FINALES
+<a name="consejos"></a>
+ ### 🎯CONSEJOS FINALES
 
 -Si logramos leer los log enviar una consulta el php y ver si se interpreta en el log 
 
