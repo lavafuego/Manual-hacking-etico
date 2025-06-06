@@ -1,15 +1,16 @@
 # Índice
-- [📝¿QUÉ ES UN LOG?](#qué-es-un-log)
-- [📁Ubicación de los logs](#ubicación-de-los-logs)
+- [📝¿QUÉ ES UN LOG?](#log)
+- [📁Ubicación de los logs](#ubicación)
 - [🛠️Configuración](#configuración)
-- [🔥Tipos de logs en Apache](#tipos-de-logs-en-apache)
-  - [1️⃣ Access log (`access.log`)](#1-access-log-accesslog)
-  - [2️⃣ Error log (`error.log`)](#2-error-log-errorlog)
-- [💣LFI, LOG POISONING](#lfi-log-poisoning)
-- [📡Verificar si el servidor interpreta PHP en los logs](#verificar-si-el-servidor-interpreta-php-en-los-logs)
+- [🔥Tipos de logs en Apache](#tipos)
+  - [1️⃣ Access log (`access.log`)](#1)
+  - [2️⃣ Error log (`error.log`)](#2)
+- [💣LFI, LOG POISONING](#lfi)
+- [📡Verificar si el servidor interpreta PHP en los logs](#verificar)
 - [📝Resumen](#resumen)
-- [📧Ataques vía mail](#ataques-vía-mail)
+- [📧Ataques vía mail](#mail)
 
+<a name="log"></a>
 ## 📝¿QUÉ ES UN LOG?
 
 Un log en **Apache** es un archivo donde el servidor web **Apache HTTP Server** registra información sobre su actividad.
@@ -20,7 +21,7 @@ Estos registros son útiles para:
 - diagnosticar errores
 - analizar el rendimiento
 - detectar posibles ataques o comportamientos anómalos
-
+<a name="ubicació"></a>
 ## 📁Ubicación de los logs
 
 La ubicación depende de la configuración y del sistema operativo, pero comúnmente:
@@ -28,6 +29,7 @@ La ubicación depende de la configuración y del sistema operativo, pero comúnm
 - **Linux:** `/var/log/apache2/` o `/var/log/httpd/`
 - **Windows:** dentro del directorio de instalación de Apache
 
+<a name="configuración"></a>
 ## 🛠️Configuración
 
 Los logs se configuran en el archivo de configuración de Apache (`httpd.conf` o `apache2.conf`) mediante las siguientes directivas:
@@ -37,8 +39,10 @@ CustomLog "/var/log/apache2/access.log" combined
 ErrorLog "/var/log/apache2/error.log"
 ```
 
+<a name="tipos"></a>
 ## 🔥Tipos de logs en Apache
 
+<a name="1"></a>
 ### 1️⃣ Access log (`access.log`)
 
 El *Access log* registra **cada solicitud que recibe el servidor**.
@@ -54,6 +58,7 @@ Incluye información como:
 **Ejemplo de línea típica:**  
 ```172.17.0.2 - - [06/Jun/2025:12:34:56 +0000] "GET /index.html HTTP/1.1" 200 1024```
 
+<a name="2"></a>
 ### 2️⃣ Error log (`error.log`)
 
 El *Error log* registra **mensajes de error y advertencias del servidor**.
@@ -70,7 +75,7 @@ Incluye:
 [Fri Jun 06 12:34:56.789012 2025] [core:error] [pid 1234] [client 192.168.1.1:54321] File does not exist: /var/www/html/missing-page.html
 ```
 
-
+<a name="lfi"></a>
 ### 💣LFI, LOG POISONING
 
 Sabiendo lo que son los logs, si llegamos a tener acceso a ellos, podemos intentar aprovecharlo para ejecutar código malicioso.
@@ -114,7 +119,7 @@ habremos conseguido que el log muestre la salida del comando `id`.
 Con esto podemos leer salidas en el log, y también archivos del sistema, como `/etc/passwd` para listar usuarios, etc.
 
 ---
-
+<a name="verificar"></a>
 ### 📡Verificar si el servidor interpreta PHP en los logs
 
 Si además el servidor interpreta PHP dentro de esos logs, podemos enviar código malicioso directamente con `curl`:
@@ -147,12 +152,14 @@ Si logramos incrustar código PHP en el log y que luego sea interpretado, podrem
 
 ---
 
+<a name="resumen"></a>
 📝**Resumen:**  
 - Accedemos a archivos de logs vía LFI  
 - Inyectamos código PHP malicioso en los logs (log poisoning)  
 - Si el log se interpreta como PHP, ejecutamos código remoto usando el parámetro `cmd` para pasar el comando  
 - Esto permite ejecutar comandos en el servidor y leer archivos sensibles
 
+<a name="mail"></a>
 📧En algunos casos podremos hacer lo mismo vía mail:
 
 ```bash
