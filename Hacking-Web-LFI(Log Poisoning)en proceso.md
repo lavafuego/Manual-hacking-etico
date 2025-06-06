@@ -143,4 +143,4 @@ Si logramos incrustar código PHP en el log y que luego sea interpretado, podrem
 - Si el log se interpreta como PHP, ejecutamos código remoto usando el parámetro `cmd` para pasar el comando  
 - Esto permite ejecutar comandos en el servidor y leer archivos sensibles
 
-```
+
