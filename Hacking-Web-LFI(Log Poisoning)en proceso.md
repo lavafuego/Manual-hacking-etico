@@ -1,6 +1,6 @@
 # Índice
 - [📝¿QUÉ ES UN LOG?](#log)
-- [📁Ubicación de los logs](#ubicación)
+- [📁Ubicación de los logs](#ubicacion)
 - [🛠️Configuración](#configuración)
 - [🔥Tipos de logs en Apache](#tipos)
   - [1️⃣ Access log (`access.log`)](#1)
@@ -21,7 +21,7 @@ Estos registros son útiles para:
 - diagnosticar errores
 - analizar el rendimiento
 - detectar posibles ataques o comportamientos anómalos
-<a name="ubicació"></a>
+<a name="ubicacion"></a>
 ## 📁Ubicación de los logs
 
 La ubicación depende de la configuración y del sistema operativo, pero comúnmente:
