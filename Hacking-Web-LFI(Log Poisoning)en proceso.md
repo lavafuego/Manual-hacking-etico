@@ -228,4 +228,4 @@ Notas importantes:
    
     las reverse se pueden ver en https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
 
--sabiendo los puertos abiertos sabremos como intentar leer los log, 22 SSH, 25 SMTP
+-sabiendo los puertos abiertos sabremos como intentar atacar los log, 22 SSH con codigo enviado por ssh o 25 SMTP enviado en un correo
