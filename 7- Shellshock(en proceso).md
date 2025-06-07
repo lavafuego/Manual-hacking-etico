@@ -2,19 +2,19 @@
 # 🐚 Shellshock - Detección y Explotación en CTF
 
 ## Índice
-- [¿Cómo detectar un posible Shellshock?](#cómo-detectar-un-posible-shellshock)
-- [¿En qué consiste?](#en-qué-consiste)
-- [Reconocer pistas en HTTP](#reconocer-pistas-en-http)
-- [Ejemplo de payload para probar](#ejemplo-de-payload-para-probar)
-- [¿Cómo se inyectan?](#cómo-se-inyectan)
-- [¿Qué hace el payload?](#qué-hace-el-payload)
-- [¿Qué necesitas?](#qué-necesitas)
-- [Ejemplo real](#ejemplo-real)
-- [Notas adicionales](#notas-adicionales)
-- [Advertencia](#advertencia)
+- [¿Cómo detectar un posible Shellshock?](#detectar)
+- [¿En qué consiste?](#consiste)
+- [Reconocer pistas en HTTP](#reconocer)
+- [Ejemplo de payload para probar](#ejemplopayload)
+- [¿Cómo se inyectan?](#inyectan)
+- [¿Qué hace el payload?](#payload)
+- [¿Qué necesitas?](#necesitas)
+- [Ejemplo real](#ejemplo)
+- [Notas adicionales](#notas)
+
 
 ---
-
+<a name="detectar"></a>
 ## 🕵️‍♂️ ¿Cómo detectar un posible Shellshock?
 
 Después de enumerar una máquina, si encontramos un servicio HTTP y realizamos un fuzzing, podemos descubrir una ruta como:
@@ -24,7 +24,7 @@ Después de enumerar una máquina, si encontramos un servicio HTTP y realizamos 
 Esto nos da pie para probar este tipo de ataque, ya que los scripts CGI suelen interactuar con Bash.
 
 ---
-
+<a name="consiste"></a>
 ## 🛠️ ¿En qué consiste?
 
 Shellshock permite que un atacante ejecute código arbitrario en el sistema, aprovechando cómo Bash procesa ciertas variables de entorno.
@@ -43,7 +43,7 @@ Si el sistema es vulnerable, mostrará:
 👉 Se ejecutó el `echo Vulnerable` fuera de la función.
 
 ---
-
+<a name="reconocer"></a>
 ## 🔍 Reconocer pistas en HTTP
 
 Si encuentras una URL sospechosa (por ejemplo `/cgi-bin/test.cgi`), puedes probar inyecciones en las siguientes cabeceras HTTP:
@@ -55,7 +55,7 @@ Si encuentras una URL sospechosa (por ejemplo `/cgi-bin/test.cgi`), puedes proba
 👉 Estas cabeceras a veces se pasan como variables de entorno a los scripts CGI.
 
 ---
-
+<a name="ejemplopayload"></a>
 ## 🧪 Ejemplo de payload para probar
 
     () { :; }; echo; echo; /bin/bash -c "echo VULNERABLE"
@@ -69,7 +69,7 @@ O con cabecera:
     nmap --script http-shellshock --script-args uri=/cgi-bin/test.cgi -p 80 <IP>
 
 ---
-
+<a name="inyectan"></a>
 ## 🚀 ¿Cómo se inyectan?
 
 Como hemos dicho, normalmente en la cabecera User-Agent, pero también puede funcionar en Referer o Cookie.
@@ -94,7 +94,7 @@ Como hemos dicho, normalmente en la cabecera User-Agent, pero también puede fun
 | URL final                                          | El recurso vulnerable (normalmente en /cgi-bin/)                  |
 
 ---
-
+<a name="payload"></a>
 ## 🎯 ¿Qué hace el payload?
 
 Está enviando un User-Agent que explota Shellshock.
@@ -106,7 +106,7 @@ Si el servidor es vulnerable, ejecutará:
 👉 Esto crea una reverse shell (una conexión interactiva de Bash de vuelta a tu máquina).
 
 ---
-
+<a name="necesitas"></a>
 ## 🚦 ¿Qué necesitas?
 
 ### 1️⃣ Tener un listener en tu máquina:
@@ -121,7 +121,7 @@ Si el servidor es vulnerable, ejecutará:
 - <RECURSO> → el CGI vulnerable (por ejemplo: test.cgi)
 
 ---
-
+<a name="ejemplo"></a>
 ## 🧑‍💻 Ejemplo real
 
 ### En escucha en tu máquina:
@@ -137,7 +137,7 @@ Si el servidor es vulnerable, ejecutará:
 👉 Si todo sale bien, recibirás una shell interactiva en tu Netcat. 🚀
 
 ---
-
+<a name="notas"></a>
 ## 📝 Notas adicionales
 
 ✅ El ataque también puede realizarse desde Burp Suite, con una cabecera como:
