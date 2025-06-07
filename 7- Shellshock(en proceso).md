@@ -1,4 +1,4 @@
-```markdown
+
 # 🐚 Shellshock - Detección y Explotación en CTF
 
 ## Índice
