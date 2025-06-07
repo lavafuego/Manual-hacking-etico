@@ -219,14 +219,16 @@ Notas importantes:
 <a name="consejos"></a>
  ### 🎯CONSEJOS FINALES
 
--Si logramos leer los log enviar una consulta el php y ver si se interpreta en el log 
+-Si logramos leer los log enviar una consulta en php y ver si se interpreta en el log 
 
--si se interpreta intentar inyectar un comando malicioso
+-Si no la interpreta intentaremos leer archivos internos
 
--las peticiones del comando malicioso normalmente &cmd=<COMANDO O COMANDOS> van a terminar siendo una reverse shell, URLencodearlas para que se interpreten mejor
+-Si se interpreta intentar inyectar un comando malicioso
+
+-Las peticiones del comando malicioso normalmente &cmd=<COMANDO O COMANDOS> van a terminar siendo una reverse shell, URLencodearlas para que se interpreten mejor
     
     lo encodeamos en páginas como https://www.urlencoder.org/
    
     las reverse se pueden ver en https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
 
--sabiendo los puertos abiertos sabremos como intentar atacar los log, 22 SSH con codigo enviado por ssh o 25 SMTP enviado en un correo
+-Sabiendo los puertos abiertos sabremos como intentar atacar los log, 22 SSH con codigo enviado por ssh o 25 SMTP enviado en un correo
