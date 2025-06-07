@@ -156,9 +156,4 @@ Si ves una salida como:
 
 ---
 
-## ⚠️ Advertencia
 
-> Solo usar este tipo de pruebas en entornos controlados (CTF, laboratorio).  
-> Shellshock es una vulnerabilidad crítica que puede otorgar control total del sistema.
-
-# 🚩 ¡A cazar flags! 🏴‍☠️
