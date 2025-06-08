@@ -196,7 +196,7 @@ echo "<?php\nsystem('id');\n?>" > prueba.php
 	
  	-2️⃣ El texto:
 	
- 		```
+ 		```bash
  		"<?php\nsystem('id');\n?>"
 		```
  	
@@ -210,13 +210,13 @@ echo "<?php\nsystem('id');\n?>" > prueba.php
    	
     	Así que este texto:
     	
-     	```
+     	```bash
 	  "<?php\nsystem('id');\n?>"
 	```
  	
   	cuando se imprime realmente se ve así:
 
-	```
+	```bash
  	<?php
 	system('id');
 	?>
