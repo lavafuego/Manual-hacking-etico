@@ -185,9 +185,11 @@ Para crear este archivo desde el editor nano por ejemplo o mediante echo y lo gu
 echo "<?php\nsystem('id');\n?>" > prueba.php
 
 ```
+---
 	🔍 Parte por parte
 	
- 	-1️⃣ echo
+ 	
+  	-1️⃣ echo
   
 		echo imprime texto en la terminal.
 
