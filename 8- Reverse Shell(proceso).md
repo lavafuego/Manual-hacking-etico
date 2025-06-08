@@ -187,11 +187,12 @@ echo "<?php\nsystem('id');\n?>" > prueba.php
 ```
 	🔍 Parte por parte
 	
- 		1️⃣ echo
+ 	-1️⃣ echo
   
 		echo imprime texto en la terminal.
 
-		2️⃣ El texto:
+	
+ 	-2️⃣ El texto:
 	
  		```
  		"<?php\nsystem('id');\n?>"
@@ -199,27 +200,28 @@ echo "<?php\nsystem('id');\n?>" > prueba.php
  	
   		Es un string (texto) que contiene el código que queremos poner en el archivo.
 
-			Ahora, veamos los \n:
+		Ahora, veamos los \n:
 
-				\n es un salto de línea (newline).
+			\n es un salto de línea (newline).
 	
-				Esto hace que el código quede con el formato adecuado (cada línea en su lugar), en vez de todo en una sola línea.
+			Esto hace que el código quede con el formato adecuado (cada línea en su lugar), en vez de todo en una sola línea.
    	
-    		Así que este texto:
+    	Así que este texto:
     	
-     		```
-	     	"<?php\nsystem('id');\n?>"
-		```
+     	```
+	  "<?php\nsystem('id');\n?>"
+	```
  	
-  		cuando se imprime realmente se ve así:
+  	cuando se imprime realmente se ve así:
 
-		```
- 		<?php
-		system('id');
-		?>
-		```
+	```
+ 	<?php
+	system('id');
+	?>
+	```
  	
-  		3️⃣ > prueba.php
+  	
+   	-3️⃣ > prueba.php
 	
  		> redirige la salida del comando (el texto que echo imprime) a un archivo.
 
