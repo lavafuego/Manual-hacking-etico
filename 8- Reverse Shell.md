@@ -6,16 +6,16 @@ Guía rápida para comprender, generar y utilizar reverse shells en entornos de 
 
 ## 📚 Tabla de contenidos
 
-- [¿Qué es una reverse shell?](#que)
-- [Proceso típico](#proceso)
-- [Ejemplo de reverse shell en Bash](#ejemplooo)
-- [Reverse shell: procedimiento práctico](#reverse)
-- [Recursos para encontrar o generar reverse shells](#recursos)
-- [Tips y buenas prácticas](#tips)
+- [🎭¿Qué es una reverse shell?](#que)
+- [🔄Proceso típico](#proceso)
+- [🖥️Ejemplo de reverse shell en Bash](#ejemplooo)
+- [🛠️Reverse shell: procedimiento práctico](#reverse)
+- [🌐Recursos para encontrar o generar reverse shells](#recursos)
+- [🧠 Tips y buenas prácticas](#tips)
   - [Uso de `bash -c`](#uso)
   - [Envío de reverse shell a través de una URL (URL encoding)](#envio)
-- [Recomendaciones adicionales](#recomendaciones)
--  [Subir reverse en PHP (si la página permite subida de archivos)](#subir)
+- [📝Recomendaciones adicionales](#recomendaciones)
+-  [📂Subir reverse en PHP (si la página permite subida de archivos)](#subir)
 
 ---
 <a name="que"></a>
