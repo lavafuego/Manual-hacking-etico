@@ -8,7 +8,7 @@ Guía rápida para comprender, generar y utilizar reverse shells en entornos de 
 
 - [¿Qué es una reverse shell?](#que)
 - [Proceso típico](#proceso)
-- [Ejemplo de reverse shell en Bash](#ejemplo)
+- [Ejemplo de reverse shell en Bash](#ejemplooo)
 - [Reverse shell: procedimiento práctico](#reverse)
 - [Recursos para encontrar o generar reverse shells](#recursos)
 - [Tips y buenas prácticas](#tips)
@@ -35,7 +35,7 @@ De esta forma se pueden evadir restricciones de firewall que bloquean conexiones
 4. El atacante recibe un **prompt de shell** interactivo de la máquina víctima.
 
 ---
-<a name="ejemplo"></a>
+<a name="ejemplooo"></a>
 ## 🖥️ Ejemplo de reverse shell en Bash
 
 ```bash
