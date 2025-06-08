@@ -246,7 +246,9 @@ http://ejemplo.com/product.php?id=-1
 Prueba consultas como:
 
 http://ejemplo.com/product.php?id=1 ORDER BY 1--
+
 http://ejemplo.com/product.php?id=1 ORDER BY 2--
+
 http://ejemplo.com/product.php?id=1 ORDER BY 3--
 ...
 
