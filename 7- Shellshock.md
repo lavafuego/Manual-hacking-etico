@@ -2,15 +2,15 @@
 # 🐚 Shellshock - Detección y Explotación en CTF
 
 ## Índice
-- [¿Cómo detectar un posible Shellshock?](#detectar)
-- [¿En qué consiste?](#consiste)
-- [Reconocer pistas en HTTP](#reconocer)
-- [Ejemplo de payload para probar](#ejemplopayload)
-- [¿Cómo se inyectan?](#inyectan)
-- [¿Qué hace el payload?](#payload)
-- [¿Qué necesitas?](#necesitas)
-- [Ejemplo real](#ejemplo)
-- [Notas adicionales](#notas)
+- [🕵️‍♂️¿Cómo detectar un posible Shellshock?](#detectar)
+- [🛠️¿En qué consiste?](#consiste)
+- [🔍Reconocer pistas en HTTP](#reconocer)
+- [🧪Ejemplo de payload para probar](#ejemplopayload)
+- [🚀¿Cómo se inyectan?](#inyectan)
+- [🎯¿Qué hace el payload?](#payload)
+- [🚦¿Qué necesitas?](#necesitas)
+- [🧑‍💻Ejemplo real](#ejemplo)
+- [📝Notas adicionales](#notas)
 
 
 ---
