@@ -432,7 +432,7 @@ VALUES ('admin             lala', 'hackedpass');
   - **Sobrescribir** al usuario `admin`, dependiendo de cómo esté implementada la lógica de inserción (por ejemplo, si se hace `INSERT OR REPLACE` o `ON DUPLICATE KEY UPDATE`).
 
 ---
-<a name="python"></a>
+<a name="pyhon"></a>
 ## Ejemplo en código (Python + SQLite) 🐍
 
 ```python
