@@ -45,7 +45,6 @@
 - [🗂️ SQL Truncation Attack](#truncation1)
   - [¿Qué supone?](#truncation2)
   - [Ejemplo simple](#truncation3)
-  - [Ejemplo en código (Python + SQLite)](#pyhon)
   - [Resumen y recomendaciones](#resumennn)
 
 ---
@@ -432,39 +431,7 @@ VALUES ('admin             lala', 'hackedpass');
   - **Sobrescribir** al usuario `admin`, dependiendo de cómo esté implementada la lógica de inserción (por ejemplo, si se hace `INSERT OR REPLACE` o `ON DUPLICATE KEY UPDATE`).
 
 ---
-<a name="pyhon"></a>
-## Ejemplo en código (Python + SQLite) 🐍
 
-```python
-import sqlite3
-
-# Crear la base de datos en memoria
-conn = sqlite3.connect(":memory:")
-c = conn.cursor()
-
-# Crear la tabla
-c.execute("""
-CREATE TABLE users (
-    username TEXT UNIQUE,
-    password TEXT
-)
-""")
-
-# Insertar usuario legítimo
-c.execute("INSERT INTO users (username, password) VALUES (?, ?)", ("admin", "securepass"))
-
-# Intento de ataque con truncamiento
-try:
-    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", ("admin           lala", "hackedpass"))
-except sqlite3.IntegrityError as e:
-    print("IntegrityError:", e)
-
-# Ver los usuarios
-for row in c.execute("SELECT username, password FROM users"):
-    print(row)
-
-conn.close()
-```
 
 ---
 <a name="resumennn"></a>
