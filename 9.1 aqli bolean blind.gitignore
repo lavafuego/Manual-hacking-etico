@@ -1,15 +1,15 @@
 # Que es un ataque blind SQL injection Boolean Based?
-Blind SQL Injection Boolean Based es un tipo de ataque a bases de datos donde el atacante envía consultas maliciosas a una página web para obtener información, pero la página no muestra directamente los datos.
+Es un tipo de ataque a bases de datos donde el atacante envía consultas maliciosas a una página web para obtener información, pero la página no muestra directamente los datos.
 
-En lugar de eso, la página responde con "sí" o "no" (verdadero o falso) según si la consulta que puso el atacante es cierta o falsa.
+En lugar de eso, la página responde con "sí" o "no" (verdadero o falso) a la consulta que puso el atacante.
 
 Por ejemplo, el atacante puede preguntar:
 
-"¿La primera letra del nombre de usuario es una 'a'?"
+"¿La primera letra de la base de datos es 'a'?"
 
 Si la página responde igual que cuando la respuesta es verdadera, sabe que la letra es 'a'. Si responde diferente, sabe que no lo es.
 
-Repite estas preguntas cambiando letras y posiciones para ir descubriendo poco a poco la información que quiere, como nombres de bases de datos, tablas o contraseñas, sin que la página muestre los datos directamente.
+Se va iterando por posiciones para saber nombres completos de bases de datos tablas etc.
 
 # ¿como detecto el verdadero o falso?
 
