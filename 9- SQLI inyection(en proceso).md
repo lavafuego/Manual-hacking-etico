@@ -439,11 +439,8 @@ VALUES ('admin             lala', 'hackedpass');
 
 - SQL truncation es un ataque muy sencillo pero efectivo si el tamaño de los campos no está bien validado.
 - Permite, en ciertos casos, **tomar control** de cuentas ya existentes.
-- Es importante:
-  - Validar el tamaño del campo en la aplicación.
-  - No confiar únicamente en la base de datos.
-  - Normalizar (trim, pad) los datos de entrada y de consulta.
-
+- Es importante validar el tamaño del campo en la aplicación.
+ 
 ---
 
 
