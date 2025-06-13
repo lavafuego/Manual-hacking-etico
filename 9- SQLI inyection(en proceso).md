@@ -117,8 +117,8 @@ Lo primero es intentar **escapar del contexto actual** con entradas como:
 "))
 `))
 ```
-
-Luego corregimos la consulta.  
+Esto funciona como delimitadores o terminadores de cadenas o comandos en SQL y podremos inyectar una petición maliciosa posteriormente.
+ 
 Podemos automatizar esta tarea con diccionarios como SecLists.
 
 ---
