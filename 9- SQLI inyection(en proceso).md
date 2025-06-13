@@ -349,7 +349,7 @@ http://ejemplo.com/product.php?id=1 UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUM
 
 - Adaptar el número de columnas a las de la consulta original.
 - Usar `-- -` o `#` para comentar el resto de la consulta original.
-- Hay veces que habrá que URLencodear las consultas
+- Hay veces que habrá que URLencodear las consultas.
 
 ---
 
