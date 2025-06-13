@@ -1,7 +1,9 @@
 # 📚 Guía Básica de Inyección SQL (SQLi) Manual y Automatizada
 
 Ejemplo prático en la máquina Gallery de https://dockerlabs.es/
+
 guía de la máquina:
+
 https://github.com/lavafuego/writeups/blob/main/Gallery.md
 
 ---
