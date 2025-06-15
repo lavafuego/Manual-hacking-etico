@@ -304,7 +304,7 @@ Ejemplo con 3 columnas:
 http://ejemplo.com/product.php?id=1' UNION SELECT 1,2,3-- -
 ```
 
-Si ves 1, 2, 3 en la página, la inyección funciona. Aunque solo apararezca uno de los números nos vale porque es en ese en el que inyectaremos la consulta. la clave es que si metemos el 4 da error y sabemos que las válidas son 3
+Si ves 1, 2, 3 en la página, la inyección funciona. Aunque solo apararezca uno de los números nos vale porque es en ese en el que inyectaremos la consulta. En nuestros ejemplos será la 2
 
 ---
 ---
