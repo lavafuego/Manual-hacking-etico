@@ -12,6 +12,19 @@ Un ejemplo de una tabla sería:
 | 2  | Ana    | Passw0rd123    |
 | 3  | Mateo  | Cesar_6        |
 
+## ¿QUÉ ES SQL?
 
+Sql es un lenguaje para la gestión de bases de datos.
+Los gestores más usados son:
+-MySQL
 
+-MariaDB
+
+-MS SQL
+
+-PostgreSQL
+
+## ¿CÓMO SE ESTRUCTURA UNA BASE DE DATOS?
+
+![Estuctuta sql] (https://github.com/lavafuego/Manual-hacking-etico/blob/main/.assets/esquema%20bases%20de%20datos.jpg)
 
