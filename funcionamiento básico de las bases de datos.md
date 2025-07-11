@@ -1,14 +1,17 @@
 ## FUNDAMENTOS
 
-¿Qué es una base de datos?
-Es un sistema donde almacenar, gestionar y acceder a datos, exiten varios tipos, pero para lo que nos interesan
-con saber que MySQL utiliza un tipo llamado relacional, que lo que hace es conectar tablas entre sí.
+### ¿Qué es una base de datos?
+
+Una base de datos es un sistema que permite almacenar, gestionar y acceder a datos. Existen varios tipos de bases de datos, pero para nuestros fines basta con saber que **MySQL** utiliza un modelo llamado **relacional**. Este tipo de base de datos organiza la información en **tablas** y permite establecer relaciones entre ellas.
+
 Un ejemplo de una tabla sería:
 
-id | nombre | contraseña
-1  | pedro  | Pedro123
-2  | ana    | Passw0rd123
-3  | mateo  | Cesar_6
+| ID | Nombre | Contraseña     |
+|----|--------|----------------|
+| 1  | Pedro  | Pedro123       |
+| 2  | Ana    | Passw0rd123    |
+| 3  | Mateo  | Cesar_6        |
 
-¿Qué
+
+
 
