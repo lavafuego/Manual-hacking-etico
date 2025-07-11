@@ -26,5 +26,6 @@ Los gestores más usados son:
 
 ## ¿CÓMO SE ESTRUCTURA UNA BASE DE DATOS?
 
-![Estuctuta sql] (https://github.com/lavafuego/Manual-hacking-etico/blob/main/.assets/esquema%20bases%20de%20datos.jpg)
+![Esquema de bases de datos](https://github.com/lavafuego/Manual-hacking-etico/raw/main/.assets/esquema%20bases%20de%20datos.jpg)
+
 
